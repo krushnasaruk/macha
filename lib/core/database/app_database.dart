@@ -4,6 +4,7 @@ import 'package:drift/native.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
+import 'tables/menu_tables.dart';
 import 'tables/platform_tables.dart';
 import 'tables/sync_tables.dart';
 
@@ -19,6 +20,14 @@ part 'app_database.g.dart';
   EmployeesTable,
   DevicesTable,
   AuditLogsTable,
+  CategoriesTable,
+  TaxCategoriesTable,
+  ProductsTable,
+  ProductVariantsTable,
+  ModifierGroupsTable,
+  ModifiersTable,
+  ProductModifierGroupsTable,
+  ProductBranchAvailabilityTable,
 ])
 class AppDatabase extends _$AppDatabase {
   AppDatabase([QueryExecutor? e]) : super(e ?? _openConnection());

@@ -1,16 +1,16 @@
 # CaféOS Progress
 
 ## Current state
-- Stage: 2 (Completed) → Stage 3 (Ready to start)
-- Last completed task: Stage 2 Tenant and business foundation (T2.1 through T2.6)
-- Next task: T3.1 Menu management migration (categories, products, variants, modifier_groups, branch availability)
-- Build status: Clean compile, zero analyze issues, 29 tests passing
+- Stage: 3 (Completed) → Stage 4 (Ready to start)
+- Last completed task: Stage 3 Menu management (T3.1 through T3.6)
+- Next task: T4.1 Pure-Dart pricing module (line totals, fixed/percent discounts, CGST/SGST/IGST, inclusive/exclusive tax, round-off)
+- Build status: Clean compile, zero analyze issues, 40 tests passing
 
 ## Stage checklist
 - [x] Stage 0 Inspection
 - [x] Stage 1 Foundation
 - [x] Stage 2 Tenant and business foundation
-- [ ] Stage 3 Menu management
+- [x] Stage 3 Menu management
 - [ ] Stage 4 POS and billing (Milestone M1)
 - [ ] Stage 5 Orders, tables, kitchen (Milestone M2)
 - [ ] Stage 6 Inventory
@@ -64,6 +64,14 @@
 | 2026-11-15 | Stage 2 Gate | `dart run build_runner build` | Drift database code regenerated (1033 outputs) |
 | 2026-11-15 | Stage 2 Gate | `flutter test` | All 29 unit and widget tests passed |
 | 2026-11-15 | Stage 2 Gate | `flutter analyze` | Clean analysis (0 issues) |
+| 2026-11-15 | T3.1 | Migration `0002_menu_management` | Categories, products, variants, modifier groups, modifiers, availability, tax categories |
+| 2026-11-15 | T3.2 | Category CRUD | Drift `CategoriesTable`, data sources, and category selector |
+| 2026-11-15 | T3.3 | Product CRUD | Drift `ProductsTable`, minor-unit price, image placeholder, and persistence |
+| 2026-11-15 | T3.4 | Variants and modifiers | `ProductVariantsTable`, `ModifiersTable`, selection validation (min/max), minor-unit calculation |
+| 2026-11-15 | T3.5 | Branch availability | `ProductBranchAvailabilityTable`, active toggle, price overrides per branch |
+| 2026-11-15 | T3.6 | Menu offline cache & UI | `MenuScreen` with instant offline search, category chips, demo seeder, add product dialog |
+| 2026-11-15 | Stage 3 Gate | `flutter test` | All 40 unit and widget tests passed |
+| 2026-11-15 | Stage 3 Gate | `flutter analyze` | Clean analysis (0 issues) |
 
 ## Environment
 - Flutter/Dart versions: Flutter 3.24.5 • Dart 3.5.4

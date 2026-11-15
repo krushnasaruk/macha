@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:drift/native.dart';
 import 'package:cafe_os/app.dart';
+import 'package:cafe_os/core/database/app_database.dart';
 import 'package:cafe_os/core/identity/identity_models.dart';
 import 'package:cafe_os/core/identity/identity_provider.dart';
 
 void main() {
   testWidgets('Owner role displays all navigation destinations on tablet', (tester) async {
+    final db = AppDatabase.memory(NativeDatabase.memory());
+    addTearDown(db.close);
+
     tester.view.physicalSize = const Size(1280, 800);
     tester.view.devicePixelRatio = 1.0;
     addTearDown(tester.view.resetPhysicalSize);
@@ -16,12 +21,14 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
+          appDatabaseProvider.overrideWithValue(db),
           identityProviderInstance.overrideWithValue(devId),
         ],
         child: const CafeOsApp(),
       ),
     );
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 100));
 
     expect(find.text('POS'), findsOneWidget);
     expect(find.text('Tables'), findsOneWidget);
@@ -33,6 +40,9 @@ void main() {
   });
 
   testWidgets('Cashier role filters out Kitchen, Inventory, and Reports', (tester) async {
+    final db = AppDatabase.memory(NativeDatabase.memory());
+    addTearDown(db.close);
+
     tester.view.physicalSize = const Size(1280, 800);
     tester.view.devicePixelRatio = 1.0;
     addTearDown(tester.view.resetPhysicalSize);
@@ -42,12 +52,14 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
+          appDatabaseProvider.overrideWithValue(db),
           identityProviderInstance.overrideWithValue(devId),
         ],
         child: const CafeOsApp(),
       ),
     );
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 100));
 
     expect(find.text('POS'), findsOneWidget);
     expect(find.text('Tables'), findsOneWidget);
@@ -57,6 +69,9 @@ void main() {
   });
 
   testWidgets('Kitchen staff role displays Kitchen and Menu, but no POS', (tester) async {
+    final db = AppDatabase.memory(NativeDatabase.memory());
+    addTearDown(db.close);
+
     tester.view.physicalSize = const Size(1280, 800);
     tester.view.devicePixelRatio = 1.0;
     addTearDown(tester.view.resetPhysicalSize);
@@ -66,12 +81,14 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
+          appDatabaseProvider.overrideWithValue(db),
           identityProviderInstance.overrideWithValue(devId),
         ],
         child: const CafeOsApp(),
       ),
     );
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 100));
 
     expect(find.text('Kitchen'), findsOneWidget);
     expect(find.text('Menu'), findsOneWidget);

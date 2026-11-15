@@ -3,6 +3,7 @@ import 'package:drift/drift.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
 import '../../../../core/database/app_database.dart';
+import '../../../../core/identity/identity_provider.dart';
 import '../../../../core/network/connectivity_service.dart';
 import '../../../../core/values/money.dart';
 import '../../domain/models/menu_models.dart';
@@ -372,4 +373,18 @@ final menuRepositoryProvider = Provider<MenuRepository>((ref) {
     remoteDataSource: ref.watch(menuRemoteDataSourceProvider),
     connectivityService: ref.watch(connectivityServiceProvider),
   );
+});
+
+final menuCategoriesProvider =
+    FutureProvider.autoDispose<List<Category>>((ref) async {
+  final identity = ref.watch(currentIdentityNotifier);
+  final repo = ref.watch(menuRepositoryProvider);
+  return repo.getCategories(identity.tenant.id);
+});
+
+final menuProductsProvider =
+    FutureProvider.autoDispose<List<Product>>((ref) async {
+  final identity = ref.watch(currentIdentityNotifier);
+  final repo = ref.watch(menuRepositoryProvider);
+  return repo.getProducts(identity.tenant.id);
 });

@@ -12,7 +12,7 @@ void main() {
     });
 
     test('creates from rupees and paise', () {
-      final m = Money.fromRupees(250, 75);
+      const m = Money.fromRupees(250, 75);
       expect(m.paise, 25075);
       expect(m.format(), '₹ 250.75');
     });
@@ -33,8 +33,8 @@ void main() {
     });
 
     test('arithmetic operations preserve exact paise precision', () {
-      final a = Money.fromRupees(100, 50); // 10050
-      final b = Money.fromRupees(49, 75);  // 4975
+      const a = Money.fromRupees(100, 50); // 10050
+      const b = Money.fromRupees(49, 75);  // 4975
 
       expect((a + b).paise, 15025);
       expect((a - b).paise, 5075);
@@ -45,7 +45,7 @@ void main() {
 
     test('percent calculates basis points with half-up rounding', () {
       // 18% of 100.00 = 18.00
-      final m = Money.fromRupees(100);
+      const m = Money.fromRupees(100);
       expect(m.percent(1800).paise, 1800);
 
       // 5% of 99.50 = 4.975 -> rounded to 4.98 (498 paise)
@@ -54,8 +54,8 @@ void main() {
     });
 
     test('comparison operators work correctly', () {
-      final smaller = Money.fromRupees(50);
-      final larger = Money.fromRupees(100);
+      const smaller = Money.fromRupees(50);
+      const larger = Money.fromRupees(100);
 
       expect(smaller < larger, isTrue);
       expect(smaller <= larger, isTrue);

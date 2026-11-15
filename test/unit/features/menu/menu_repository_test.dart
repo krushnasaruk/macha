@@ -84,7 +84,7 @@ void main() {
             name: 'Regular',
             priceDelta: Money.zero,
           ),
-          ProductVariant(
+          const ProductVariant(
             id: 'var_latte_large',
             productId: 'prod_latte',
             name: 'Large',

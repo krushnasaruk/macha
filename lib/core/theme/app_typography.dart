@@ -4,94 +4,108 @@ import 'package:google_fonts/google_fonts.dart';
 abstract final class AppTypography {
   static const List<FontFeature> tabularFigures = [FontFeature.tabularFigures()];
 
-  static TextTheme textTheme(Color textColor) {
-    return TextTheme(
-      displayLarge: GoogleFonts.outfit(
+  static TextStyle get displayLarge => GoogleFonts.outfit(
         fontSize: 32,
         fontWeight: FontWeight.w700,
         letterSpacing: -0.5,
-        color: textColor,
         fontFeatures: tabularFigures,
-      ),
-      displayMedium: GoogleFonts.outfit(
+      );
+
+  static TextStyle get displayMedium => GoogleFonts.outfit(
         fontSize: 28,
         fontWeight: FontWeight.w700,
         letterSpacing: -0.4,
-        color: textColor,
         fontFeatures: tabularFigures,
-      ),
-      displaySmall: GoogleFonts.outfit(
+      );
+
+  static TextStyle get displaySmall => GoogleFonts.outfit(
         fontSize: 24,
         fontWeight: FontWeight.w600,
         letterSpacing: -0.3,
-        color: textColor,
         fontFeatures: tabularFigures,
-      ),
-      headlineMedium: GoogleFonts.outfit(
+      );
+
+  static TextStyle get headlineMedium => GoogleFonts.outfit(
         fontSize: 20,
         fontWeight: FontWeight.w600,
         letterSpacing: -0.2,
-        color: textColor,
         fontFeatures: tabularFigures,
-      ),
-      headlineSmall: GoogleFonts.outfit(
+      );
+
+  static TextStyle get headlineSmall => GoogleFonts.outfit(
         fontSize: 18,
         fontWeight: FontWeight.w600,
-        color: textColor,
         fontFeatures: tabularFigures,
-      ),
-      titleLarge: GoogleFonts.outfit(
+      );
+
+  static TextStyle get titleLarge => GoogleFonts.outfit(
         fontSize: 16,
         fontWeight: FontWeight.w600,
-        color: textColor,
-      ),
-      titleMedium: GoogleFonts.inter(
+      );
+
+  static TextStyle get titleMedium => GoogleFonts.inter(
         fontSize: 15,
         fontWeight: FontWeight.w600,
-        color: textColor,
         fontFeatures: tabularFigures,
-      ),
-      titleSmall: GoogleFonts.inter(
+      );
+
+  static TextStyle get titleSmall => GoogleFonts.inter(
         fontSize: 14,
         fontWeight: FontWeight.w500,
-        color: textColor,
-      ),
-      bodyLarge: GoogleFonts.inter(
+      );
+
+  static TextStyle get bodyLarge => GoogleFonts.inter(
         fontSize: 16,
         fontWeight: FontWeight.w400,
-        color: textColor,
-      ),
-      bodyMedium: GoogleFonts.inter(
+      );
+
+  static TextStyle get bodyMedium => GoogleFonts.inter(
         fontSize: 14,
         fontWeight: FontWeight.w400,
-        color: textColor,
-      ),
-      bodySmall: GoogleFonts.inter(
+      );
+
+  static TextStyle get bodySmall => GoogleFonts.inter(
         fontSize: 12,
         fontWeight: FontWeight.w400,
-        color: textColor,
-      ),
-      labelLarge: GoogleFonts.inter(
+      );
+
+  static TextStyle get labelLarge => GoogleFonts.inter(
         fontSize: 14,
         fontWeight: FontWeight.w600,
         letterSpacing: 0.1,
-        color: textColor,
         fontFeatures: tabularFigures,
-      ),
-      labelMedium: GoogleFonts.inter(
+      );
+
+  static TextStyle get labelMedium => GoogleFonts.inter(
         fontSize: 12,
         fontWeight: FontWeight.w500,
         letterSpacing: 0.1,
-        color: textColor,
         fontFeatures: tabularFigures,
-      ),
-      labelSmall: GoogleFonts.inter(
+      );
+
+  static TextStyle get labelSmall => GoogleFonts.inter(
         fontSize: 10,
         fontWeight: FontWeight.w500,
         letterSpacing: 0.2,
-        color: textColor,
         fontFeatures: tabularFigures,
-      ),
+      );
+
+  static TextTheme textTheme(Color textColor) {
+    return TextTheme(
+      displayLarge: displayLarge.copyWith(color: textColor),
+      displayMedium: displayMedium.copyWith(color: textColor),
+      displaySmall: displaySmall.copyWith(color: textColor),
+      headlineMedium: headlineMedium.copyWith(color: textColor),
+      headlineSmall: headlineSmall.copyWith(color: textColor),
+      titleLarge: titleLarge.copyWith(color: textColor),
+      titleMedium: titleMedium.copyWith(color: textColor),
+      titleSmall: titleSmall.copyWith(color: textColor),
+      bodyLarge: bodyLarge.copyWith(color: textColor),
+      bodyMedium: bodyMedium.copyWith(color: textColor),
+      bodySmall: bodySmall.copyWith(color: textColor),
+      labelLarge: labelLarge.copyWith(color: textColor),
+      labelMedium: labelMedium.copyWith(color: textColor),
+      labelSmall: labelSmall.copyWith(color: textColor),
     );
   }
 

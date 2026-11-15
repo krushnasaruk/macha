@@ -15,9 +15,8 @@ class Money implements Comparable<Money> {
   static const Money zero = Money._(0);
 
   /// Creates a [Money] instance from major units (e.g. Rupees) and minor units.
-  factory Money.fromRupees(int rupees, [int paise = 0]) {
-    return Money._(rupees * 100 + paise);
-  }
+  const Money.fromRupees(int rupees, [int paise = 0])
+      : paise = rupees * 100 + paise;
 
   /// Parses a string representation such as "120" or "120.50" into [Money].
   /// Does not use double parsing; parses string parts directly.

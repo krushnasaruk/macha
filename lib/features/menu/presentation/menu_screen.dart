@@ -87,7 +87,7 @@ class _MenuScreenState extends ConsumerState<MenuScreen> {
             priceDelta: Money.zero,
             sortOrder: 1,
           ),
-          ProductVariant(
+          const ProductVariant(
             id: 'var_cap_lrg',
             productId: 'prod_cappuccino_02',
             name: 'Grande (350ml)',
@@ -334,7 +334,7 @@ class _MenuScreenState extends ConsumerState<MenuScreen> {
           ElevatedButton(
             onPressed: () async {
               final name = nameCtrl.text.trim();
-              final price = Money.tryParse(priceCtrl.text.trim()) ?? Money.fromRupees(100);
+              final price = Money.tryParse(priceCtrl.text.trim()) ?? const Money.fromRupees(100);
               if (name.isNotEmpty) {
                 await repo.saveProduct(
                   id: 'prod_${DateTime.now().millisecondsSinceEpoch}',

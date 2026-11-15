@@ -44,14 +44,14 @@ class _ComponentGalleryScreenState extends State<ComponentGalleryScreen> {
         padding: AppSpacing.paddingLg,
         children: [
           _sectionTitle('1. Typography & CurrencyText (ADR-D2)'),
-          Wrap(
+          const Wrap(
             spacing: 16,
             runSpacing: 8,
             crossAxisAlignment: WrapCrossAlignment.center,
             children: [
               CurrencyText(Money.fromRupees(150), fontSize: 24),
               CurrencyText(Money.fromRupees(1249, 50), fontSize: 20),
-              const CurrencyText(Money.fromPaise(500), fontSize: 16),
+              CurrencyText(Money.fromPaise(500), fontSize: 16),
               CurrencyText(Money.fromRupees(-45), fontSize: 16, color: Colors.red),
             ],
           ),

@@ -10,6 +10,7 @@ class CurrencyText extends StatelessWidget {
   final Color? color;
   final double? fontSize;
   final FontWeight? fontWeight;
+  final TextAlign? textAlign;
 
   const CurrencyText(
     this.amount, {
@@ -19,6 +20,7 @@ class CurrencyText extends StatelessWidget {
     this.color,
     this.fontSize,
     this.fontWeight,
+    this.textAlign,
   });
 
   @override
@@ -32,6 +34,7 @@ class CurrencyText extends StatelessWidget {
 
     return Text(
       amount.format(includeSymbol: includeSymbol),
+      textAlign: textAlign,
       style: baseStyle.copyWith(
         fontFeatures: AppTypography.tabularFigures,
         color: color ?? baseStyle.color,

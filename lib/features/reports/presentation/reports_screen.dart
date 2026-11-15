@@ -15,7 +15,7 @@ class ReportsScreen extends StatelessWidget {
       ),
       body: ListView(
         padding: AppSpacing.paddingLg,
-        children: [
+        children: const [
           Row(
             children: [
               Expanded(
@@ -23,21 +23,21 @@ class ReportsScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text('Gross Sales', style: TextStyle(color: Colors.grey)),
-                      const SizedBox(height: 6),
+                      Text('Gross Sales', style: TextStyle(color: Colors.grey)),
+                      SizedBox(height: 6),
                       CurrencyText(Money.fromRupees(42500), fontSize: 20),
                     ],
                   ),
                 ),
               ),
-              const SizedBox(width: 12),
+              SizedBox(width: 12),
               Expanded(
                 child: AppCard(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text('Net Sales', style: TextStyle(color: Colors.grey)),
-                      const SizedBox(height: 6),
+                      Text('Net Sales', style: TextStyle(color: Colors.grey)),
+                      SizedBox(height: 6),
                       CurrencyText(Money.fromRupees(36017), fontSize: 20),
                     ],
                   ),
@@ -45,7 +45,7 @@ class ReportsScreen extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
           Row(
             children: [
               Expanded(
@@ -53,15 +53,15 @@ class ReportsScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text('GST Collected', style: TextStyle(color: Colors.grey)),
-                      const SizedBox(height: 6),
+                      Text('GST Collected', style: TextStyle(color: Colors.grey)),
+                      SizedBox(height: 6),
                       CurrencyText(Money.fromRupees(6483), fontSize: 20),
                     ],
                   ),
                 ),
               ),
-              const SizedBox(width: 12),
-              const Expanded(
+              SizedBox(width: 12),
+              Expanded(
                 child: AppCard(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

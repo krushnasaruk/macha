@@ -59,7 +59,7 @@ void main() {
   });
 
   group('Price Snapshot Structures & Minor Unit Calculations (T3.4 & ADR-D2)', () {
-    final cappuccino = Product(
+    const cappuccino = Product(
       id: 'prod_cap_01',
       tenantId: 'tenant_demo_001',
       categoryId: 'cat_coffee',
@@ -67,21 +67,21 @@ void main() {
       basePrice: Money.fromRupees(180), // 18000 paise
     );
 
-    final grandeVariant = ProductVariant(
+    const grandeVariant = ProductVariant(
       id: 'var_grande',
       productId: 'prod_cap_01',
       name: 'Grande',
       priceDelta: Money.fromRupees(40), // 4000 paise
     );
 
-    final oatMilk = Modifier(
+    const oatMilk = Modifier(
       id: 'mod_oat',
       groupId: 'grp_milk',
       name: 'Oat Milk',
       priceDelta: Money.fromRupees(40), // 4000 paise
     );
 
-    final extraShot = Modifier(
+    const extraShot = Modifier(
       id: 'mod_shot',
       groupId: 'grp_shots',
       name: 'Extra Espresso Shot',
@@ -111,7 +111,7 @@ void main() {
     });
 
     test('branch override price takes precedence over base price', () {
-      final airportOverride = Money.fromRupees(220); // Airport price 220
+      const airportOverride = Money.fromRupees(220); // Airport price 220
       final price = cappuccino.computeEffectivePrice(
         branchOverridePrice: airportOverride,
         variant: grandeVariant, // +40

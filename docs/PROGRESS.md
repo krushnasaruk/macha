@@ -1,17 +1,19 @@
 # CaféOS Progress
 
 ## Current state
-- Stage: 3 (Completed) → Stage 4 (Ready to start)
-- Last completed task: Stage 3 Menu management (T3.1 through T3.6)
-- Next task: T4.1 Pure-Dart pricing module (line totals, fixed/percent discounts, CGST/SGST/IGST, inclusive/exclusive tax, round-off)
-- Build status: Clean compile, zero analyze issues, 40 tests passing
+- Stage: 4 (Completed) → Stage 5 (Ready to start)
+- Milestone: **M1 (Sellable cash POS) ACHIEVED & VERIFIED**
+- Last completed task: Stage 4 POS and billing (T4.1 through T4.10)
+- Next task: T5.1 Orders, tables, and KDS migration (`0004_orders_and_tables.sql`)
+- Build status: Clean compile, zero analyze issues, 61 tests passing
 
 ## Stage checklist
 - [x] Stage 0 Inspection
 - [x] Stage 1 Foundation
 - [x] Stage 2 Tenant and business foundation
 - [x] Stage 3 Menu management
-- [ ] Stage 4 POS and billing (Milestone M1)
+- [x] Stage 4 POS and billing (Milestone M1 — Sellable cash POS)
+- [ ] Stage 5 Orders, tables, kitchen (Milestone M2)
 - [ ] Stage 5 Orders, tables, kitchen (Milestone M2)
 - [ ] Stage 6 Inventory
 - [ ] Stage 7 Offline engine hardening (Milestone M3)
@@ -72,6 +74,18 @@
 | 2026-11-15 | T3.6 | Menu offline cache & UI | `MenuScreen` with instant offline search, category chips, demo seeder, add product dialog |
 | 2026-11-15 | Stage 3 Gate | `flutter test` | All 40 unit and widget tests passed |
 | 2026-11-15 | Stage 3 Gate | `flutter analyze` | Clean analysis (0 issues) |
+| 2026-11-15 | T4.1 | Pricing engine (pure Dart) | Minor units (paise), round-half-up, inclusive/exclusive GST, round-off, 9 unit tests |
+| 2026-11-15 | T4.2 | Cart controller & persistence | Riverpod `CartController` with SQLite `AppConfigTable` persistence and hold/resume |
+| 2026-11-15 | T4.3 | POS screen | Adaptive phone bottom cart / tablet 2-pane, 1-tap add, -/+ stepper, modifier sheet |
+| 2026-11-15 | T4.4 | Discount flow | Preset chips, custom %, cash, permission checks (`posDiscountApply`, `overrideMax`) |
+| 2026-11-15 | T4.5 | Migration `0003_orders_and_billing` | Orders, items, invoices, payments, refunds, cash sessions, movements + RLS |
+| 2026-11-15 | T4.6 | Server RPC `place_order_and_settle` | Transactional, idempotent by operation UUID, D3 invoice numbering, ledger records |
+| 2026-11-15 | T4.7 | Checkout screen | Exact amount, quick denominations, keypad, change due, offline digital guard |
+| 2026-11-15 | T4.8 | Receipt preview & invoice | Immutable snapshot, GST split (CGST/SGST/IGST), non-blocking printer feedback |
+| 2026-11-15 | T4.9 | Cash drawer management | Open float, cash in/out, shift end closing, expected vs actual variance calculation |
+| 2026-11-15 | T4.10 | Refunds flow | Partial/full refund, reason, cashier drawer reversal, immutable invoice preserved |
+| 2026-11-15 | M1 Milestone Gate | `flutter test` | All 61 unit and widget tests passed |
+| 2026-11-15 | M1 Milestone Gate | `flutter analyze` | Clean analysis (0 issues) |
 
 ## Environment
 - Flutter/Dart versions: Flutter 3.24.5 • Dart 3.5.4

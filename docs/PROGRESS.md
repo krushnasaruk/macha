@@ -1,14 +1,14 @@
 # CaféOS Progress
 
 ## Current state
-- Stage: 0 (Completed) → Stage 1 (Ready to start)
-- Last completed task: T0.3 Workspace inspection documentation and ADR setup
-- Next task: T1.1 Initialise Flutter project with feature-first folder structure
-- Build status: Environment inspected; clean starting state
+- Stage: 1 (Completed) → Stage 2 (Ready to start)
+- Last completed task: Stage 1 Foundation (T1.1 through T1.9)
+- Next task: T2.1 Migration 0001_platform_core (tenants, branches, roles, permissions, employees, devices, audit_logs)
+- Build status: Clean compile (`flutter build bundle`), zero analyze issues, 25 tests passing
 
 ## Stage checklist
 - [x] Stage 0 Inspection
-- [ ] Stage 1 Foundation
+- [x] Stage 1 Foundation
 - [ ] Stage 2 Tenant and business foundation
 - [ ] Stage 3 Menu management
 - [ ] Stage 4 POS and billing (Milestone M1)
@@ -32,8 +32,8 @@
 - [x] D8 Code generation policy (Freezed, Drift, json_serializable) — Accepted ([docs/ARCHITECTURE.md](file:///c:/Users/Krushna/OneDrive/Documents/freelancing/kharadi/cafeOS/docs/ARCHITECTURE.md))
 
 ## Blockers (owner action needed)
-1. **Docker Desktop Daemon**: Docker CLI 29.9.2 is present, but Docker daemon is stopped. Starting Docker Desktop will be needed when running `npx supabase start` for local Supabase. Local tests and pure Dart/Flutter development are unblocked.
-2. **Android SDK Command-line Tools / Licenses**: Missing `cmdline-tools` reported by `flutter doctor`. Can be installed in Android Studio SDK Manager or accepted via `sdkmanager`. Android emulator `test_1` is already created. Flutter Web and Windows desktop targets are operational for immediate UI verification.
+1. **Docker Desktop Daemon**: Docker CLI 29.9.2 is installed, but Docker daemon needs to be running to execute `npx supabase start` for local Supabase database testing. Local tests and pure Dart/Flutter code generation are unblocked.
+2. **Android SDK Command-line Tools / Licenses**: Missing `cmdline-tools` reported by `flutter doctor`. Can be installed in Android Studio SDK Manager or accepted via `sdkmanager`.
 
 ## Known issues
 - none
@@ -42,10 +42,22 @@
 | Date | Task | Command run | Result |
 |---|---|---|---|
 | 2026-11-15 | T0.1 | `flutter --version` | Flutter 3.24.5, Dart 3.5.4 |
-| 2026-11-15 | T0.1 | `flutter doctor -v` | Android SDK 36.1.0 detected, Chrome/Edge/Windows targets detected |
-| 2026-11-15 | T0.1 | `flutter emulators` | 1 emulator found: `test_1` (android) |
+| 2026-11-15 | T0.1 | `flutter doctor -v` | Android SDK 36.1.0, Chrome, Edge, Windows targets |
 | 2026-11-15 | T0.2 | `docker --version`, `npx supabase --version` | Docker 29.9.2, Supabase CLI 3.1.0 available |
 | 2026-11-15 | T0.3 | Git init & ADR setup | Initialized repository, created documentation structure |
+| 2026-11-15 | T1.1 | `flutter create` | Feature-first Flutter project initialized |
+| 2026-11-15 | T1.2 | `flutter pub add` | Compatible dependencies resolved and pinned in `pubspec.yaml` |
+| 2026-11-15 | T1.3 | Design system tokens | `AppColors`, `AppSpacing`, `AppTypography`, `AppTheme` implemented |
+| 2026-11-15 | T1.4 | Core component library | `CurrencyText`, `AppButton`, `AppCard`, `AppTextField`, `AppBadge`, dialogs, states, ComponentGallery |
+| 2026-11-15 | T1.5 | Navigation shell | Responsive phone bottom bar / tablet rail with `GoRouter` |
+| 2026-11-15 | T1.6 | IdentityProvider | `DevIdentityProvider` with 6 seeded roles, 2 branches, 1 demo tenant |
+| 2026-11-15 | T1.7 | Permission engine | Granular permission keys, `RolePermissions` matrix, `canPermissionProvider` |
+| 2026-11-15 | T1.8 | Database & error model | Drift database bootstrap, outbox tables, `AppFailure` hierarchy & mapper |
+| 2026-11-15 | T1.9 | Supabase configuration | `supabase init` completed, `DATABASE.md` documented, env config |
+| 2026-11-15 | Stage 1 Gate | `dart run build_runner build` | Drift database code generated (`app_database.g.dart`) |
+| 2026-11-15 | Stage 1 Gate | `flutter test` | All 25 unit and widget tests passed |
+| 2026-11-15 | Stage 1 Gate | `flutter analyze` | Clean analysis (0 issues) |
+| 2026-11-15 | Stage 1 Gate | `flutter build bundle` | Build successful (exit code 0) |
 
 ## Environment
 - Flutter/Dart versions: Flutter 3.24.5 • Dart 3.5.4

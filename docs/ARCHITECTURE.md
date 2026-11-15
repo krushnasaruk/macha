@@ -65,3 +65,20 @@ This document formalizes critical architectural decisions locked in prior to and
 - **Context:** Drift, Freezed, and JSON serialization require code generation via `build_runner`.
 - **Decision:** Use Freezed and `json_serializable` for immutable models and Drift for database abstraction. Code generation files (`*.g.dart`, `*.freezed.dart`) are generated and maintained consistently, and gitignore policy will reflect project standards.
 - **Consequences:** Consistent, type-safe models across database and domain layers.
+
+---
+
+## Dependency Choices & Rationale (T1.2)
+
+| Need | Selected Package | Version | Reason / Alternatives Rejected |
+| :--- | :--- | :--- | :--- |
+| **State Management** | `flutter_riverpod` | `^2.6.1` | Compile-safe dependency injection, scoping, reactive caching, testability. Rejected `Bloc` (excessive boilerplate for local-first reactive UI) and `Provider` (legacy, lack of scoping and auto-dispose). |
+| **Routing & Navigation** | `go_router` | `^15.1.2` | Declarative routing with deep linking, route guards, redirect logic based on permissions, and nested shell routes for responsive navigation. |
+| **Local Database (SQLite)** | `drift` + `drift_flutter` | `^2.23.1` | Type-safe SQL, relational queries, reactive streams, schema migrations, and seamless outbox transactions. Rejected `Hive` / `Isar` (lack relational integrity and SQL query expressiveness). |
+| **Backend & Realtime** | `supabase_flutter` | `^2.15.4` | Direct integration with PostgreSQL, Row Level Security, Auth, Storage, and Realtime channels. |
+| **Typography & Icons** | `google_fonts` | `^6.3.0` | High-quality typography (Outfit/Manrope + Inter) with tabular figures for currency and numbers. |
+| **Idempotency & IDs** | `uuid` | `^4.6.0` | RFC-4122 v4 UUID generation for offline operation UUIDs and entity keys. |
+| **Connectivity** | `connectivity_plus` | `^7.3.1` | Reactive connectivity status to trigger outbox synchronization when returning online. |
+| **Formatting** | `intl` | `^0.20.2` | Standard date, time, and locale formatting. |
+| **Build Generation** | `drift_dev`, `build_runner` | `^2.23.1`, `^2.4.13` | Code generation for type-safe database schemas and queries. |
+

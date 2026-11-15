@@ -35,16 +35,16 @@ class FloatingBottomNav extends StatelessWidget {
     return SafeArea(
       child: Container(
         height: 68,
-        margin: const EdgeInsets.only(left: 16, right: 16, bottom: 10),
+        margin: const EdgeInsets.only(left: 16, right: 16, bottom: 12),
         padding: const EdgeInsets.symmetric(horizontal: 10),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: const Color(0xFFFFFDF9),
           borderRadius: BorderRadius.circular(36),
-          border: Border.all(color: AppColors.borderLight, width: 1),
+          border: Border.all(color: const Color(0xFFE8DFD5), width: 1.2),
           boxShadow: [
             BoxShadow(
-              color: AppColors.primary.withOpacity(0.06),
-              blurRadius: 20,
+              color: const Color(0xFF342B26).withOpacity(0.08),
+              blurRadius: 22,
               offset: const Offset(0, 8),
             ),
           ],
@@ -63,11 +63,11 @@ class FloatingBottomNav extends StatelessWidget {
                   width: 50,
                   height: 50,
                   decoration: BoxDecoration(
-                    color: isSelected ? AppColors.primary : AppColors.terracotta,
+                    color: isSelected ? AppColors.terracotta : AppColors.primary,
                     shape: BoxShape.circle,
                     boxShadow: [
                       BoxShadow(
-                        color: AppColors.terracotta.withOpacity(0.35),
+                        color: (isSelected ? AppColors.terracotta : AppColors.primary).withOpacity(0.35),
                         blurRadius: 12,
                         offset: const Offset(0, 4),
                       ),
@@ -93,7 +93,7 @@ class FloatingBottomNav extends StatelessWidget {
                     children: [
                       Icon(
                         isSelected ? item.selectedIcon : item.icon,
-                        color: isSelected ? AppColors.primary : AppColors.textSecondaryLight,
+                        color: isSelected ? AppColors.primary : const Color(0xFF8E8278),
                         size: 22,
                       ),
                       const SizedBox(height: 3),
@@ -101,8 +101,8 @@ class FloatingBottomNav extends StatelessWidget {
                         item.label,
                         style: TextStyle(
                           fontSize: 11,
-                          fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
-                          color: isSelected ? AppColors.primary : AppColors.textSecondaryLight,
+                          fontWeight: isSelected ? FontWeight.w800 : FontWeight.w500,
+                          color: isSelected ? AppColors.primary : const Color(0xFF8E8278),
                         ),
                       ),
                     ],

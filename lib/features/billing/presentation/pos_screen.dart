@@ -341,19 +341,19 @@ class _PosScreenState extends ConsumerState<PosScreen> {
 
               final isPhone = MediaQuery.of(context).size.width < 900;
               return GridView.builder(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 gridDelegate: isPhone
                     ? const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
-                        childAspectRatio: 0.88,
-                        crossAxisSpacing: 14,
-                        mainAxisSpacing: 14,
+                        childAspectRatio: 0.80,
+                        crossAxisSpacing: 12,
+                        mainAxisSpacing: 12,
                       )
                     : const SliverGridDelegateWithMaxCrossAxisExtent(
                         maxCrossAxisExtent: 220,
-                        mainAxisExtent: 195,
-                        crossAxisSpacing: 14,
-                        mainAxisSpacing: 14,
+                        mainAxisExtent: 200,
+                        crossAxisSpacing: 12,
+                        mainAxisSpacing: 12,
                       ),
                 itemCount: filtered.length,
                 itemBuilder: (context, index) {
@@ -381,11 +381,11 @@ class _PosScreenState extends ConsumerState<PosScreen> {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: AppColors.borderLight, width: 1),
+        borderRadius: BorderRadius.circular(22),
+        border: Border.all(color: const Color(0xFFEDE2D6), width: 1),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.02),
+            color: Colors.black.withOpacity(0.025),
             blurRadius: 8,
             offset: const Offset(0, 3),
           ),
@@ -394,28 +394,29 @@ class _PosScreenState extends ConsumerState<PosScreen> {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(22),
           onTap: () => _handleProductTap(prod),
           child: Padding(
-            padding: const EdgeInsets.all(12),
+            padding: const EdgeInsets.fromLTRB(12, 10, 12, 12),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Top Drink Image
+                // Top Drink Illustration Container (prominent, filling top of card)
                 Expanded(
                   child: Stack(
+                    alignment: Alignment.center,
                     children: [
+                      // Drink Illustration
                       Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(4),
-                          child: Image.asset(
-                            asset,
-                            fit: BoxFit.contain,
-                            errorBuilder: (_, __, ___) => const Icon(
-                              Icons.coffee_rounded,
-                              size: 44,
-                              color: AppColors.primary,
-                            ),
+                        child: Image.asset(
+                          asset,
+                          fit: BoxFit.contain,
+                          width: 105,
+                          height: 105,
+                          errorBuilder: (_, __, ___) => const Icon(
+                            Icons.coffee_rounded,
+                            size: 48,
+                            color: AppColors.primary,
                           ),
                         ),
                       ),
@@ -424,7 +425,7 @@ class _PosScreenState extends ConsumerState<PosScreen> {
                           top: 0,
                           right: 0,
                           child: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
+                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                             decoration: BoxDecoration(
                               color: AppColors.primary,
                               borderRadius: BorderRadius.circular(10),
@@ -443,33 +444,41 @@ class _PosScreenState extends ConsumerState<PosScreen> {
                   ),
                 ),
                 const SizedBox(height: 6),
-                // Product Name
-                Text(
-                  prod.name,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14,
-                    color: AppColors.primary,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                // Price + Circular '+' button
+                // Product Name + Price on left, circular '+' button on right
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    CurrencyText(
-                      prod.basePrice,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w800,
-                        fontSize: 14,
-                        color: AppColors.primary,
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            prod.name,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w800,
+                              fontSize: 14,
+                              color: AppColors.primary,
+                              letterSpacing: -0.2,
+                            ),
+                          ),
+                          const SizedBox(height: 2),
+                          CurrencyText(
+                            prod.basePrice,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w800,
+                              fontSize: 14,
+                              color: AppColors.primary,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     Container(
-                      width: 28,
-                      height: 28,
+                      width: 30,
+                      height: 30,
                       decoration: const BoxDecoration(
                         color: AppColors.primary,
                         shape: BoxShape.circle,
@@ -478,7 +487,7 @@ class _PosScreenState extends ConsumerState<PosScreen> {
                       child: const Icon(
                         Icons.add_rounded,
                         color: Colors.white,
-                        size: 18,
+                        size: 20,
                       ),
                     ),
                   ],

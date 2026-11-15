@@ -154,7 +154,8 @@ class _InventoryScreenState extends State<InventoryScreen> {
                   Expanded(
                     child: _buildKpiCard(
                       icon: Icons.inventory_2_outlined,
-                      iconColor: AppColors.primary,
+                      iconColor: const Color(0xFF8C6747),
+                      circleBg: const Color(0xFFF1E6D8),
                       value: '$totalItems',
                       label: 'Items',
                     ),
@@ -163,7 +164,8 @@ class _InventoryScreenState extends State<InventoryScreen> {
                   Expanded(
                     child: _buildKpiCard(
                       icon: Icons.check_circle_outline_rounded,
-                      iconColor: const Color(0xFF5EAA81),
+                      iconColor: const Color(0xFF3E8A5E),
+                      circleBg: const Color(0xFFE5F4EB),
                       value: '$inStockCount',
                       label: 'In Stock',
                     ),
@@ -173,6 +175,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
                     child: _buildKpiCard(
                       icon: Icons.warning_amber_rounded,
                       iconColor: const Color(0xFFE89246),
+                      circleBg: const Color(0xFFFDF2E4),
                       value: '$lowStockCount',
                       label: 'Low Stock',
                     ),
@@ -282,15 +285,16 @@ class _InventoryScreenState extends State<InventoryScreen> {
   Widget _buildKpiCard({
     required IconData icon,
     required Color iconColor,
+    required Color circleBg,
     required String value,
     required String label,
   }) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 10),
+      padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 8),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: const Color(0xFFFAF5EE),
         borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: AppColors.borderLight, width: 1),
+        border: Border.all(color: const Color(0xFFEDE3D7), width: 1),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.02),
@@ -302,20 +306,20 @@ class _InventoryScreenState extends State<InventoryScreen> {
       child: Column(
         children: [
           Container(
-            width: 34,
-            height: 34,
-            decoration: const BoxDecoration(
-              color: AppColors.softBeige,
+            width: 36,
+            height: 36,
+            decoration: BoxDecoration(
+              color: circleBg,
               shape: BoxShape.circle,
             ),
             alignment: Alignment.center,
-            child: Icon(icon, size: 18, color: iconColor),
+            child: Icon(icon, size: 19, color: iconColor),
           ),
           const SizedBox(height: 8),
           Text(
             value,
             style: const TextStyle(
-              fontSize: 18,
+              fontSize: 19,
               fontWeight: FontWeight.w800,
               color: AppColors.primary,
             ),
@@ -325,7 +329,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
             label,
             style: const TextStyle(
               fontSize: 11,
-              fontWeight: FontWeight.w500,
+              fontWeight: FontWeight.w600,
               color: AppColors.textSecondaryLight,
             ),
           ),
@@ -339,8 +343,11 @@ class _InventoryScreenState extends State<InventoryScreen> {
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: AppColors.borderLight, width: 1),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+          color: item.isLowStock ? const Color(0xFFF3DEC8) : const Color(0xFFEDE2D6),
+          width: 1,
+        ),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.02),
@@ -351,26 +358,24 @@ class _InventoryScreenState extends State<InventoryScreen> {
       ),
       child: Row(
         children: [
-          // Circular leading illustration
+          // Circular leading illustration container
           Container(
-            width: 48,
-            height: 48,
+            width: 50,
+            height: 50,
             decoration: const BoxDecoration(
-              color: AppColors.creamContainer,
+              color: Color(0xFFF6EFE6),
               shape: BoxShape.circle,
             ),
             alignment: Alignment.center,
-            child: ClipOval(
-              child: Image.asset(
-                item.assetPath,
-                width: 36,
-                height: 36,
-                fit: BoxFit.cover,
-                errorBuilder: (_, __, ___) => const Icon(
-                  Icons.inventory_2_outlined,
-                  size: 24,
-                  color: AppColors.primary,
-                ),
+            child: Image.asset(
+              item.assetPath,
+              width: 36,
+              height: 36,
+              fit: BoxFit.contain,
+              errorBuilder: (_, __, ___) => const Icon(
+                Icons.inventory_2_outlined,
+                size: 24,
+                color: AppColors.primary,
               ),
             ),
           ),
@@ -385,8 +390,9 @@ class _InventoryScreenState extends State<InventoryScreen> {
                   item.name,
                   style: const TextStyle(
                     fontSize: 14,
-                    fontWeight: FontWeight.w700,
+                    fontWeight: FontWeight.w800,
                     color: AppColors.primary,
+                    letterSpacing: -0.2,
                   ),
                 ),
                 const SizedBox(height: 2),
@@ -398,7 +404,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-                const SizedBox(height: 4),
+                const SizedBox(height: 5),
                 StatusPill(
                   label: item.isLowStock ? 'Low Stock' : 'In Stock',
                   type: item.isLowStock ? StatusPillType.lowStock : StatusPillType.inStock,

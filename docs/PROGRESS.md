@@ -1,11 +1,11 @@
 # CaféOS Progress
 
 ## Current state
-- Stage: 4 (Completed) → Stage 5 (Ready to start)
-- Milestone: **M1 (Sellable cash POS) ACHIEVED & VERIFIED**
-- Last completed task: Stage 4 POS and billing (T4.1 through T4.10)
-- Next task: T5.1 Orders, tables, and KDS migration (`0004_orders_and_tables.sql`)
-- Build status: Clean compile, zero analyze issues, 61 tests passing
+- Stage: UX Phase Stage 1 (Completed) → Stage 2 (UX Foundation)
+- Milestone: **M2 (Operating café) ACHIEVED & VERIFIED**
+- Last completed task: UX Phase Stage 0 (Baseline) & Stage 1 (Audit)
+- Next task: UX Phase Stage 2 (UX Foundation: `core/ux/` motion tokens, haptics, skeleton kit, `Pressable`, `SingleFlight`, Dev UX HUD)
+- Build status: Clean compile, zero analyze issues, 77 tests passing
 
 ## Stage checklist
 - [x] Stage 0 Inspection
@@ -13,8 +13,7 @@
 - [x] Stage 2 Tenant and business foundation
 - [x] Stage 3 Menu management
 - [x] Stage 4 POS and billing (Milestone M1 — Sellable cash POS)
-- [ ] Stage 5 Orders, tables, kitchen (Milestone M2)
-- [ ] Stage 5 Orders, tables, kitchen (Milestone M2)
+- [x] Stage 5 Orders, tables, kitchen (Milestone M2)
 - [ ] Stage 6 Inventory
 - [ ] Stage 7 Offline engine hardening (Milestone M3)
 - [ ] Stage 8 Printing and QR ordering
@@ -86,6 +85,16 @@
 | 2026-11-15 | T4.10 | Refunds flow | Partial/full refund, reason, cashier drawer reversal, immutable invoice preserved |
 | 2026-11-15 | M1 Milestone Gate | `flutter test` | All 61 unit and widget tests passed |
 | 2026-11-15 | M1 Milestone Gate | `flutter analyze` | Clean analysis (0 issues) |
+| 2026-11-15 | T5.1 | Migration `0004_orders_and_tables` | Dining tables, table sessions, kitchen stations, product station routing, status history |
+| 2026-11-15 | T5.2 | Order lifecycle state machine | Explicit transitions, kitchen recall allowed, audit trail record generation |
+| 2026-11-15 | T5.3 | Drift table models & code gen | `DiningTablesTable`, `TableSessionsTable`, `KitchenStationsTable`, `OrderStatusHistoryTable` |
+| 2026-11-15 | T5.4 | Table management & session lifecycle | Floor zone filtering, seat guests, table transfer, table merge, atomic outbox writes (ADR-D1) |
+| 2026-11-15 | T5.5 | Kitchen Display System (KDS) | 3-column tablet / tabbed phone KDS, station chips, live timer badges (amber >=10m, red >=15m), bump & 5s undo |
+| 2026-11-15 | T5.6 | Realtime & duplicate suppression | `KitchenRealtimeService` deduplication cache (1000 events), reconnection reconciliation |
+| 2026-11-15 | M2 Milestone Gate | `flutter test` | All 77 unit and widget tests passed |
+| 2026-11-15 | M2 Milestone Gate | `flutter analyze` | Clean analysis (0 issues) |
+| 2026-11-15 | UX Stage 0 | Baseline report & benchmarks | `UX_BASELINE.md`, `UX_BENCHMARKS.md`, `UX_PROGRESS.md`, `UX_CHANGELOG.md` |
+| 2026-11-15 | UX Stage 1 | Audit & principles | `UX_AUDIT.md` (15 reference apps, state matrix, single-flight audit, friction scorecard) & `UX_PRINCIPLES.md` |
 
 ## Environment
 - Flutter/Dart versions: Flutter 3.24.5 • Dart 3.5.4

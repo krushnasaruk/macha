@@ -8,6 +8,11 @@ import '../../../core/components/app_text_field.dart';
 import '../../../core/components/currency_text.dart';
 import '../../../core/components/offline_sync_indicator.dart';
 import '../../../core/components/state_indicators.dart';
+import '../../../core/mascot/mascot_asset_registry.dart';
+import '../../../core/mascot/mascot_celebration.dart';
+import '../../../core/mascot/mascot_dialogue_bubble.dart';
+import '../../../core/mascot/mascot_guided_tour.dart';
+import '../../../core/mascot/mascot_widget.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/ux/interaction/hold_repeat.dart';
 import '../../../core/ux/loading/skeleton.dart';
@@ -294,6 +299,102 @@ class _ComponentGalleryScreenState extends State<ComponentGalleryScreen> {
                       variant: AppButtonVariant.outline,
                       height: 36,
                       onPressed: () => HapticFeedback.heavyImpact(),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 24),
+
+          _sectionTitle('9. Chef Barnaby & Comic Dialogue System'),
+          AppCard(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'A. Mascot with Comic Speech Bubbles',
+                  style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 12),
+                const Center(
+                  child: MascotWidget(
+                    expression: MascotExpression.happy,
+                    height: 130,
+                    dialogue: 'Hey chef! Welcome to CaféOS. Everything is local-first & ready for rush hour!',
+                    dialogueTitle: 'Chef Barnaby',
+                    tailPosition: BubbleTailPosition.bottom,
+                    bubbleStyle: BubbleStyle.welcome,
+                  ),
+                ),
+                const Divider(height: 24),
+                Text(
+                  'B. Speech Bubble Styles',
+                  style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 10),
+                const Wrap(
+                  spacing: 12,
+                  runSpacing: 12,
+                  children: [
+                    MascotDialogueBubble(
+                      title: 'Normal',
+                      text: 'Order #ORD-101 has been sent to the espresso bar.',
+                      style: BubbleStyle.normal,
+                      tailPosition: BubbleTailPosition.none,
+                      maxWidth: 240,
+                    ),
+                    MascotDialogueBubble(
+                      title: 'Thought',
+                      text: 'Hmm, looks like we might need to roast more dark blend soon...',
+                      style: BubbleStyle.thought,
+                      tailPosition: BubbleTailPosition.none,
+                      maxWidth: 240,
+                    ),
+                    MascotDialogueBubble(
+                      title: 'Excited!',
+                      text: 'Record rush! 50 orders cleared without a hitch!',
+                      style: BubbleStyle.excited,
+                      tailPosition: BubbleTailPosition.none,
+                      maxWidth: 240,
+                    ),
+                    MascotDialogueBubble(
+                      title: 'Warning',
+                      text: 'Internet took a coffee break. Working offline safely!',
+                      style: BubbleStyle.warning,
+                      tailPosition: BubbleTailPosition.none,
+                      maxWidth: 240,
+                    ),
+                  ],
+                ),
+                const Divider(height: 24),
+                Text(
+                  'C. Interactive Mascot Modals',
+                  style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 10),
+                Wrap(
+                  spacing: 12,
+                  runSpacing: 12,
+                  children: [
+                    AppButton(
+                      label: 'Launch Guided Tour',
+                      icon: Icons.explore_rounded,
+                      variant: AppButtonVariant.primary,
+                      onPressed: () => MascotGuidedTourModal.show(context),
+                    ),
+                    AppButton(
+                      label: 'Trigger Celebration',
+                      icon: Icons.celebration_rounded,
+                      variant: AppButtonVariant.secondary,
+                      onPressed: () => MascotCelebration.show(
+                        context: context,
+                        title: 'Payment Successful!',
+                        message: 'Cash payment settled and recorded in drawer.',
+                        amountSettled: const Money.fromRupees(420),
+                        invoiceNumber: 'MAIN-01-26-00042',
+                        onDismiss: () {},
+                      ),
                     ),
                   ],
                 ),

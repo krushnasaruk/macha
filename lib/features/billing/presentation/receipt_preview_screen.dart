@@ -6,6 +6,9 @@ import 'package:cafe_os/core/components/app_button.dart';
 import 'package:cafe_os/core/components/app_card.dart';
 import 'package:cafe_os/core/components/currency_text.dart';
 import 'package:cafe_os/core/identity/identity_provider.dart';
+import 'package:cafe_os/core/mascot/mascot_asset_registry.dart';
+import 'package:cafe_os/core/mascot/mascot_dialogue_bubble.dart';
+import 'package:cafe_os/core/mascot/mascot_widget.dart';
 import 'package:cafe_os/core/theme/app_colors.dart';
 import 'package:cafe_os/core/theme/app_spacing.dart';
 import 'package:cafe_os/core/theme/app_typography.dart';
@@ -91,21 +94,16 @@ class _ReceiptPreviewScreenState extends ConsumerState<ReceiptPreviewScreen> {
               constraints: const BoxConstraints(maxWidth: 480),
               child: Column(
                 children: [
-                  // Success Header
-                  Container(
-                    width: 72,
-                    height: 72,
-                    decoration: BoxDecoration(
-                      color: AppColors.success.withOpacity(0.15),
-                      shape: BoxShape.circle,
-                    ),
-                    child: const Icon(
-                      Icons.check_circle_rounded,
-                      color: AppColors.success,
-                      size: 48,
-                    ),
+                  // Success Mascot Header
+                  const MascotWidget(
+                    action: MascotAction.holdingReceipt,
+                    height: 110,
+                    dialogue: 'Payment settled! Order sent to kitchen.',
+                    dialogueTitle: 'Chef Barnaby',
+                    tailPosition: BubbleTailPosition.bottom,
+                    bubbleStyle: BubbleStyle.excited,
                   ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 14),
                   Text(
                     'Payment Successful',
                     style: AppTypography.headlineSmall.copyWith(

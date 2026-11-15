@@ -44,16 +44,13 @@ class AppShell extends ConsumerWidget {
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 child: Column(
                   children: [
-                    Container(
-                      padding: const EdgeInsets.all(8),
-                      decoration: const BoxDecoration(
-                        color: AppColors.primary,
-                        shape: BoxShape.circle,
-                      ),
-                      child: const Icon(
-                        Icons.local_cafe_rounded,
-                        color: Colors.white,
-                        size: 24,
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Image.asset(
+                        'assets/branding/logo/cafeos_app_icon.png',
+                        width: 44,
+                        height: 44,
+                        fit: BoxFit.cover,
                       ),
                     ),
                     const SizedBox(height: 8),

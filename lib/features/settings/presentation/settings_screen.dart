@@ -5,8 +5,12 @@ import '../../../core/components/app_badge.dart';
 import '../../../core/components/app_card.dart';
 import '../../../core/components/offline_sync_indicator.dart';
 import '../../../core/identity/identity_provider.dart';
+import '../../../core/mascot/mascot_asset_registry.dart';
+import '../../../core/mascot/mascot_guided_tour.dart';
+import '../../../core/mascot/mascot_widget.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
+import '../../../core/theme/app_typography.dart';
 import 'dev_tools_sheet.dart';
 
 class SettingsScreen extends ConsumerWidget {
@@ -67,6 +71,52 @@ class SettingsScreen extends ConsumerWidget {
                   icon: const Icon(Icons.swap_horiz_rounded),
                   tooltip: 'Switch Role / Branch',
                   onPressed: () => DevToolsSheet.show(context),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 20),
+
+          // Chef Barnaby Mascot Card
+          AppCard(
+            backgroundColor: Theme.of(context).brightness == Brightness.dark
+                ? const Color(0xFF2C2825)
+                : const Color(0xFFFAF3EC),
+            child: Row(
+              children: [
+                const MascotWidget(
+                  expression: MascotExpression.happy,
+                  height: 64,
+                ),
+                const SizedBox(width: 14),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Chef Barnaby Companion',
+                        style: AppTypography.titleMedium.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.primary,
+                        ),
+                      ),
+                      const SizedBox(height: 2),
+                      const Text(
+                        'Your friendly head chef & guided onboarding tour.',
+                        style: TextStyle(fontSize: 12, color: Colors.grey),
+                      ),
+                    ],
+                  ),
+                ),
+                ElevatedButton.icon(
+                  icon: const Icon(Icons.explore_rounded, size: 16),
+                  label: const Text('Take Tour'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.primary,
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  ),
+                  onPressed: () => MascotGuidedTourModal.show(context),
                 ),
               ],
             ),

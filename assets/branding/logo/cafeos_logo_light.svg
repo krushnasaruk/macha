@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 120" width="100%" height="100%">
+  <!-- Light Logo on Dark Surface -->
+  <g transform="translate(10, 10) scale(0.5)">
+    <!-- Chef Hat -->
+    <path d="M 75 42 C 65 24, 90 10, 100 16 C 110 8, 135 24, 125 42 Z" fill="#F0ECE1" stroke="#FFFFFF" stroke-width="4.5" stroke-linejoin="round"/>
+    <path d="M 82 34 C 74 18, 92 8, 100 12 C 108 8, 126 18, 118 34 Z" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="4.5" stroke-linejoin="round"/>
+    <path d="M 82 40 L 118 40 C 120 40, 121 48, 119 50 L 81 50 C 79 48, 80 40, 82 40 Z" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="4.5" stroke-linejoin="round"/>
+    <!-- Ears -->
+    <path d="M 46 64 C 34 50, 52 32, 68 44 C 74 48, 68 62, 58 66 Z" fill="#393635" stroke="#FFFFFF" stroke-width="4" stroke-linejoin="round"/>
+    <path d="M 154 64 C 166 50, 148 32, 132 44 C 126 48, 132 62, 142 66 Z" fill="#393635" stroke="#FFFFFF" stroke-width="4" stroke-linejoin="round"/>
+    <!-- Head Base -->
+    <path d="M 100 48 C 50 48, 38 78, 38 116 C 38 156, 62 178, 100 178 C 138 178, 162 156, 162 116 C 162 78, 150 48, 100 48 Z" fill="#393635" stroke="#FFFFFF" stroke-width="4.5" stroke-linejoin="round"/>
+    <!-- Tan Spectacle Patches -->
+    <path d="M 84 86 C 88 72, 60 68, 52 82 C 45 94, 60 114, 76 110 C 86 107, 82 94, 84 86 Z" fill="#D2B18E" stroke="#171615" stroke-width="3.5" stroke-linejoin="round"/>
+    <path d="M 116 86 C 112 72, 140 68, 148 82 C 155 94, 140 114, 124 110 C 114 107, 118 94, 116 86 Z" fill="#D2B18E" stroke="#171615" stroke-width="3.5" stroke-linejoin="round"/>
+    <!-- Cream Snout -->
+    <path d="M 100 102 C 86 102, 74 114, 74 130 C 74 148, 86 156, 100 156 C 114 156, 126 148, 126 130 C 126 114, 114 102, 100 102 Z" fill="#EEE0CF" stroke="#171615" stroke-width="4" stroke-linejoin="round"/>
+    <!-- Eyes, Nose, Mouth -->
+    <ellipse cx="68" cy="91" rx="4.5" ry="5.5" fill="#171615"/>
+    <ellipse cx="132" cy="91" rx="4.5" ry="5.5" fill="#171615"/>
+    <ellipse cx="100" cy="122" rx="10.5" ry="7.5" fill="#171615"/>
+    <path d="M 100 129 L 100 141 M 94 143 C 97 141, 103 141, 106 143" fill="none" stroke="#171615" stroke-width="3.5" stroke-linecap="round"/>
+  </g>
+
+  <!-- Typography -->
+  <text x="130" y="68" font-family="Plus Jakarta Sans, Inter, system-ui, -apple-system, sans-serif" font-size="52" font-weight="800" fill="#FFFFFF" letter-spacing="-1">
+    Café<tspan fill="#D4A373">OS</tspan>
+  </text>
+  <text x="132" y="92" font-family="Plus Jakarta Sans, Inter, system-ui, -apple-system, sans-serif" font-size="11" font-weight="700" fill="#D2B18E" letter-spacing="3">
+    KITCHEN &amp; BILLING ENGINE
+  </text>
+</svg>

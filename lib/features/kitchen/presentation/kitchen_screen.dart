@@ -6,6 +6,7 @@ import '../../../core/components/app_button.dart';
 import '../../../core/components/app_card.dart';
 import '../../../core/components/state_indicators.dart';
 import '../../../core/identity/identity_provider.dart';
+import '../../../core/mascot/mascot_empty_state.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_typography.dart';
 import '../../orders/domain/models/order_and_table_models.dart';
@@ -82,11 +83,7 @@ class _KitchenScreenState extends ConsumerState<KitchenScreen> {
               ),
               data: (tickets) {
                 if (tickets.isEmpty) {
-                  return const AppEmptyState(
-                    icon: Icons.soup_kitchen_outlined,
-                    title: 'Kitchen is Clear',
-                    description: 'No active orders waiting in the queue.',
-                  );
+                  return MascotEmptyState.kitchen();
                 }
 
                 final confirmed = tickets.where((t) => t.status == OrderLifecycleStatus.confirmed).toList();

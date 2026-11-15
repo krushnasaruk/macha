@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import '../../../core/components/app_badge.dart';
 import '../../../core/components/app_button.dart';
 import '../../../core/components/app_card.dart';
@@ -7,6 +8,7 @@ import '../../../core/components/app_text_field.dart';
 import '../../../core/components/currency_text.dart';
 import '../../../core/components/state_indicators.dart';
 import '../../../core/identity/identity_provider.dart';
+import '../../../core/mascot/mascot_empty_state.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_typography.dart';
@@ -79,10 +81,8 @@ class OrdersScreen extends ConsumerWidget {
               ),
               data: (orders) {
                 if (orders.isEmpty) {
-                  return const AppEmptyState(
-                    icon: Icons.receipt_long_outlined,
-                    title: 'No Orders Found',
-                    description: 'No orders match the current filter or search criteria.',
+                  return MascotEmptyState.orders(
+                    onNewOrder: () => context.go('/pos'),
                   );
                 }
 

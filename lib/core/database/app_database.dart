@@ -8,6 +8,7 @@ import 'tables/billing_tables.dart';
 import 'tables/menu_tables.dart';
 import 'tables/platform_tables.dart';
 import 'tables/sync_tables.dart';
+import 'tables/table_and_kitchen_tables.dart';
 
 part 'app_database.g.dart';
 
@@ -38,6 +39,11 @@ part 'app_database.g.dart';
   CashSessionsTable,
   CashMovementsTable,
   CartHoldTable,
+  DiningTablesTable,
+  TableSessionsTable,
+  KitchenStationsTable,
+  ProductStationRoutingTable,
+  OrderStatusHistoryTable,
 ])
 class AppDatabase extends _$AppDatabase {
   AppDatabase([QueryExecutor? e]) : super(e ?? _openConnection());

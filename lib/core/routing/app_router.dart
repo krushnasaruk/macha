@@ -5,6 +5,7 @@ import '../../features/billing/presentation/pos_screen.dart';
 import '../../features/inventory/presentation/inventory_screen.dart';
 import '../../features/kitchen/presentation/kitchen_screen.dart';
 import '../../features/menu/presentation/menu_screen.dart';
+import '../../features/orders/presentation/orders_screen.dart';
 import '../../features/orders/presentation/tables_screen.dart';
 import '../../features/reports/presentation/reports_screen.dart';
 import '../../features/settings/presentation/component_gallery_screen.dart';
@@ -38,6 +39,13 @@ const List<NavDestination> allDestinations = [
     label: 'POS',
     icon: Icons.point_of_sale_outlined,
     selectedIcon: Icons.point_of_sale_rounded,
+    requiredPermission: AppPermissions.posAccess,
+  ),
+  NavDestination(
+    path: '/orders',
+    label: 'Orders',
+    icon: Icons.receipt_long_outlined,
+    selectedIcon: Icons.receipt_long_rounded,
     requiredPermission: AppPermissions.posAccess,
   ),
   NavDestination(
@@ -117,6 +125,10 @@ final appRouterProvider = Provider<GoRouter>((ref) {
           GoRoute(
             path: '/pos',
             pageBuilder: (context, state) => const NoTransitionPage(child: PosScreen()),
+          ),
+          GoRoute(
+            path: '/orders',
+            pageBuilder: (context, state) => const NoTransitionPage(child: OrdersScreen()),
           ),
           GoRoute(
             path: '/tables',

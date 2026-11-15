@@ -37,6 +37,9 @@ void main() {
     expect(find.text('Inventory'), findsOneWidget);
     expect(find.text('Reports'), findsOneWidget);
     expect(find.text('Settings'), findsOneWidget);
+
+    await tester.pumpWidget(const SizedBox());
+    await tester.pump(const Duration(milliseconds: 50));
   });
 
   testWidgets('Cashier role filters out Kitchen, Inventory, and Reports', (tester) async {
@@ -66,6 +69,9 @@ void main() {
     expect(find.text('Kitchen'), findsNothing);
     expect(find.text('Inventory'), findsNothing);
     expect(find.text('Reports'), findsNothing);
+
+    await tester.pumpWidget(const SizedBox());
+    await tester.pump(const Duration(milliseconds: 50));
   });
 
   testWidgets('Kitchen staff role displays Kitchen and Menu, but no POS', (tester) async {
@@ -94,5 +100,9 @@ void main() {
     expect(find.text('Menu'), findsOneWidget);
     expect(find.text('POS'), findsNothing);
     expect(find.text('Reports'), findsNothing);
+
+    // Cleanly unmount to let Drift stream queries finish disposing
+    await tester.pumpWidget(const SizedBox());
+    await tester.pump(const Duration(milliseconds: 50));
   });
 }

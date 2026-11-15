@@ -38,11 +38,15 @@ abstract final class AppTheme {
         margin: EdgeInsets.zero,
       ),
       appBarTheme: AppBarTheme(
-        backgroundColor: AppColors.surfaceLight,
+        backgroundColor: AppColors.backgroundLight,
         foregroundColor: AppColors.textPrimaryLight,
         elevation: 0,
-        scrolledUnderElevation: 1,
-        titleTextStyle: textTheme.titleLarge,
+        scrolledUnderElevation: 0,
+        titleTextStyle: textTheme.titleLarge?.copyWith(
+          fontWeight: FontWeight.bold,
+          color: AppColors.textPrimaryLight,
+          fontSize: 20,
+        ),
         centerTitle: false,
       ),
       dividerTheme: const DividerThemeData(

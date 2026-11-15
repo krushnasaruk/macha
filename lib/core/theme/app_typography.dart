@@ -4,86 +4,86 @@ import 'package:google_fonts/google_fonts.dart';
 abstract final class AppTypography {
   static const List<FontFeature> tabularFigures = [FontFeature.tabularFigures()];
 
-  static TextStyle get displayLarge => GoogleFonts.outfit(
+  static TextStyle get displayLarge => GoogleFonts.dmSans(
         fontSize: 32,
         fontWeight: FontWeight.w700,
         letterSpacing: -0.5,
         fontFeatures: tabularFigures,
       );
 
-  static TextStyle get displayMedium => GoogleFonts.outfit(
+  static TextStyle get displayMedium => GoogleFonts.dmSans(
         fontSize: 28,
         fontWeight: FontWeight.w700,
         letterSpacing: -0.4,
         fontFeatures: tabularFigures,
       );
 
-  static TextStyle get displaySmall => GoogleFonts.outfit(
+  static TextStyle get displaySmall => GoogleFonts.dmSans(
         fontSize: 24,
-        fontWeight: FontWeight.w600,
+        fontWeight: FontWeight.w700,
         letterSpacing: -0.3,
         fontFeatures: tabularFigures,
       );
 
-  static TextStyle get headlineMedium => GoogleFonts.outfit(
+  static TextStyle get headlineMedium => GoogleFonts.dmSans(
         fontSize: 20,
-        fontWeight: FontWeight.w600,
+        fontWeight: FontWeight.w700,
         letterSpacing: -0.2,
         fontFeatures: tabularFigures,
       );
 
-  static TextStyle get headlineSmall => GoogleFonts.outfit(
+  static TextStyle get headlineSmall => GoogleFonts.dmSans(
         fontSize: 18,
         fontWeight: FontWeight.w600,
         fontFeatures: tabularFigures,
       );
 
-  static TextStyle get titleLarge => GoogleFonts.outfit(
+  static TextStyle get titleLarge => GoogleFonts.dmSans(
         fontSize: 16,
-        fontWeight: FontWeight.w600,
+        fontWeight: FontWeight.w700,
       );
 
-  static TextStyle get titleMedium => GoogleFonts.inter(
+  static TextStyle get titleMedium => GoogleFonts.dmSans(
         fontSize: 15,
         fontWeight: FontWeight.w600,
         fontFeatures: tabularFigures,
       );
 
-  static TextStyle get titleSmall => GoogleFonts.inter(
+  static TextStyle get titleSmall => GoogleFonts.dmSans(
         fontSize: 14,
         fontWeight: FontWeight.w500,
       );
 
-  static TextStyle get bodyLarge => GoogleFonts.inter(
+  static TextStyle get bodyLarge => GoogleFonts.dmSans(
         fontSize: 16,
         fontWeight: FontWeight.w400,
       );
 
-  static TextStyle get bodyMedium => GoogleFonts.inter(
+  static TextStyle get bodyMedium => GoogleFonts.dmSans(
         fontSize: 14,
         fontWeight: FontWeight.w400,
       );
 
-  static TextStyle get bodySmall => GoogleFonts.inter(
+  static TextStyle get bodySmall => GoogleFonts.dmSans(
         fontSize: 12,
         fontWeight: FontWeight.w400,
       );
 
-  static TextStyle get labelLarge => GoogleFonts.inter(
+  static TextStyle get labelLarge => GoogleFonts.dmSans(
         fontSize: 14,
         fontWeight: FontWeight.w600,
         letterSpacing: 0.1,
         fontFeatures: tabularFigures,
       );
 
-  static TextStyle get labelMedium => GoogleFonts.inter(
+  static TextStyle get labelMedium => GoogleFonts.dmSans(
         fontSize: 12,
         fontWeight: FontWeight.w500,
         letterSpacing: 0.1,
         fontFeatures: tabularFigures,
       );
 
-  static TextStyle get labelSmall => GoogleFonts.inter(
+  static TextStyle get labelSmall => GoogleFonts.dmSans(
         fontSize: 10,
         fontWeight: FontWeight.w500,
         letterSpacing: 0.2,
@@ -115,7 +115,7 @@ abstract final class AppTypography {
     FontWeight fontWeight = FontWeight.w600,
     Color? color,
   }) {
-    return GoogleFonts.inter(
+    return GoogleFonts.dmSans(
       fontSize: fontSize,
       fontWeight: fontWeight,
       fontFeatures: tabularFigures,

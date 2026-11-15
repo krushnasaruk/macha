@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cafe_os/core/components/app_button.dart';
-import 'package:cafe_os/core/components/app_card.dart';
 import 'package:cafe_os/core/components/currency_text.dart';
+import 'package:cafe_os/core/components/floating_cart_bar.dart';
+import 'package:cafe_os/core/components/pill_filter_chip.dart';
 import 'package:cafe_os/core/theme/app_colors.dart';
 import 'package:cafe_os/core/theme/app_spacing.dart';
 import 'package:cafe_os/core/theme/app_typography.dart';
@@ -54,6 +55,19 @@ class _PosScreenState extends ConsumerState<PosScreen> {
       appBar: AppBar(
         title: const Text('CaféOS POS'),
         actions: [
+          // QR Scanner Icon (Reference Design)
+          IconButton(
+            icon: const Icon(Icons.qr_code_scanner_rounded),
+            tooltip: 'Scan QR Code',
+            onPressed: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('QR Scanner ready for item / customer scan'),
+                  duration: Duration(seconds: 1),
+                ),
+              );
+            },
+          ),
           // Order Type Selector
           PopupMenuButton<OrderType>(
             initialValue: cart.orderType,
@@ -211,35 +225,50 @@ class _PosScreenState extends ConsumerState<PosScreen> {
           error: (_, __) => const SizedBox.shrink(),
         ),
 
-        // Search Bar
+        // Search Bar (Pill shape)
         Padding(
-          padding: const EdgeInsets.fromLTRB(16, 8, 16, 4),
-          child: TextField(
-            controller: _searchCtrl,
-            decoration: InputDecoration(
-              hintText: 'Search menu by name…',
-              prefixIcon: const Icon(Icons.search_rounded),
-              suffixIcon: _searchQuery.isNotEmpty
-                  ? IconButton(
-                      icon: const Icon(Icons.clear_rounded),
-                      onPressed: () {
-                        setState(() {
-                          _searchCtrl.clear();
-                          _searchQuery = '';
-                        });
-                      },
-                    )
-                  : null,
-              contentPadding: const EdgeInsets.symmetric(vertical: 10),
-              border: const OutlineInputBorder(
-                borderRadius: AppSpacing.roundedMd,
-              ),
+          padding: const EdgeInsets.fromLTRB(16, 8, 16, 6),
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(24),
+              border: Border.all(color: AppColors.borderLight, width: 1),
             ),
-            onChanged: (val) => setState(() => _searchQuery = val.trim()),
+            child: TextField(
+              controller: _searchCtrl,
+              decoration: InputDecoration(
+                hintText: 'Search menu...',
+                hintStyle: const TextStyle(
+                  color: AppColors.textSecondaryLight,
+                  fontSize: 14,
+                ),
+                prefixIcon: const Icon(
+                  Icons.search_rounded,
+                  color: AppColors.primary,
+                  size: 20,
+                ),
+                suffixIcon: _searchQuery.isNotEmpty
+                    ? IconButton(
+                        icon: const Icon(Icons.clear_rounded, size: 18),
+                        onPressed: () {
+                          setState(() {
+                            _searchCtrl.clear();
+                            _searchQuery = '';
+                          });
+                        },
+                      )
+                    : null,
+                contentPadding: const EdgeInsets.symmetric(vertical: 12),
+                border: InputBorder.none,
+                enabledBorder: InputBorder.none,
+                focusedBorder: InputBorder.none,
+              ),
+              onChanged: (val) => setState(() => _searchQuery = val.trim()),
+            ),
           ),
         ),
 
-        // Category Chips
+        // Category Chips (Using PillFilterChip)
         categoriesAsync.when(
           data: (cats) {
             if (cats.isEmpty) return const SizedBox.shrink();
@@ -265,10 +294,10 @@ class _PosScreenState extends ConsumerState<PosScreen> {
                           cat.id == 'ALL') ||
                       (_selectedCategoryId == cat.id);
 
-                  return FilterChip(
-                    label: Text(cat.name),
-                    selected: isSelected,
-                    onSelected: (_) {
+                  return PillFilterChip(
+                    label: cat.name,
+                    isSelected: isSelected,
+                    onTap: () {
                       setState(() {
                         _selectedCategoryId =
                             cat.id == 'ALL' ? null : cat.id;
@@ -310,14 +339,22 @@ class _PosScreenState extends ConsumerState<PosScreen> {
                 );
               }
 
+              final isPhone = MediaQuery.of(context).size.width < 900;
               return GridView.builder(
-                padding: AppSpacing.paddingMd,
-                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: 220,
-                  mainAxisExtent: 155,
-                  crossAxisSpacing: 12,
-                  mainAxisSpacing: 12,
-                ),
+                padding: const EdgeInsets.all(16),
+                gridDelegate: isPhone
+                    ? const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        childAspectRatio: 0.88,
+                        crossAxisSpacing: 14,
+                        mainAxisSpacing: 14,
+                      )
+                    : const SliverGridDelegateWithMaxCrossAxisExtent(
+                        maxCrossAxisExtent: 220,
+                        mainAxisExtent: 195,
+                        crossAxisSpacing: 14,
+                        mainAxisSpacing: 14,
+                      ),
                 itemCount: filtered.length,
                 itemBuilder: (context, index) {
                   final prod = filtered[index];
@@ -339,92 +376,129 @@ class _PosScreenState extends ConsumerState<PosScreen> {
   }
 
   Widget _buildProductTile(Product prod, int inCartCount) {
-    return AppCard(
-      padding: const EdgeInsets.all(12),
-      onTap: () {
-        // Tap budget: 1 tap adds directly if no mandatory choices
-        _handleProductTap(prod);
-      },
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: Text(
-                  prod.name,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTypography.titleSmall.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              if (inCartCount > 0)
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
-                  decoration: const BoxDecoration(
-                    color: AppColors.primary,
-                    borderRadius: AppSpacing.roundedSm,
-                  ),
-                  child: Text(
-                    '$inCartCount',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 12,
-                    ),
-                  ),
-                ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              CurrencyText(
-                prod.basePrice,
-                style: AppTypography.bodyMedium.copyWith(
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.primary,
-                ),
-              ),
-              if (inCartCount == 0)
-                IconButton.filledTonal(
-                  icon: const Icon(Icons.add_rounded, size: 20),
-                  onPressed: () => _handleProductTap(prod),
-                )
-              else
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    IconButton.filledTonal(
-                      icon: const Icon(Icons.remove_rounded, size: 16),
-                      visualDensity: VisualDensity.compact,
-                      onPressed: () {
-                        final line = cartControllerRef(ref)
-                            .items
-                            .lastWhere((i) => i.productId == prod.id);
-                        ref
-                            .read(cartControllerProvider.notifier)
-                            .decrementQuantity(line.id);
-                      },
-                    ),
-                    const SizedBox(width: 4),
-                    IconButton.filledTonal(
-                      icon: const Icon(Icons.add_rounded, size: 16),
-                      visualDensity: VisualDensity.compact,
-                      onPressed: () => _handleProductTap(prod),
-                    ),
-                  ],
-                ),
-            ],
+    final asset = _productAsset(prod.name);
+
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: AppColors.borderLight, width: 1),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.02),
+            blurRadius: 8,
+            offset: const Offset(0, 3),
           ),
         ],
       ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(20),
+          onTap: () => _handleProductTap(prod),
+          child: Padding(
+            padding: const EdgeInsets.all(12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Top Drink Image
+                Expanded(
+                  child: Stack(
+                    children: [
+                      Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(4),
+                          child: Image.asset(
+                            asset,
+                            fit: BoxFit.contain,
+                            errorBuilder: (_, __, ___) => const Icon(
+                              Icons.coffee_rounded,
+                              size: 44,
+                              color: AppColors.primary,
+                            ),
+                          ),
+                        ),
+                      ),
+                      if (inCartCount > 0)
+                        Positioned(
+                          top: 0,
+                          right: 0,
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
+                            decoration: BoxDecoration(
+                              color: AppColors.primary,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Text(
+                              '$inCartCount',
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 11,
+                              ),
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 6),
+                // Product Name
+                Text(
+                  prod.name,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                    color: AppColors.primary,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                // Price + Circular '+' button
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    CurrencyText(
+                      prod.basePrice,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w800,
+                        fontSize: 14,
+                        color: AppColors.primary,
+                      ),
+                    ),
+                    Container(
+                      width: 28,
+                      height: 28,
+                      decoration: const BoxDecoration(
+                        color: AppColors.primary,
+                        shape: BoxShape.circle,
+                      ),
+                      alignment: Alignment.center,
+                      child: const Icon(
+                        Icons.add_rounded,
+                        color: Colors.white,
+                        size: 18,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
+  }
+
+  String _productAsset(String name) {
+    final lower = name.toLowerCase();
+    if (lower.contains('cappuccino')) return 'assets/menu/cappuccino.png';
+    if (lower.contains('mocha')) return 'assets/menu/mocha.png';
+    if (lower.contains('americano')) return 'assets/menu/americano.png';
+    if (lower.contains('iced') || lower.contains('cold brew')) return 'assets/menu/iced_latte.png';
+    if (lower.contains('cold')) return 'assets/menu/cold_coffee.png';
+    return 'assets/menu/latte.png';
   }
 
   CartState cartControllerRef(WidgetRef r) => r.read(cartControllerProvider);
@@ -806,50 +880,14 @@ class _PosScreenState extends ConsumerState<PosScreen> {
   Widget _buildPhoneBottomCartBar(CartState cart) {
     final calc = cart.calculation;
 
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.08),
-            blurRadius: 8,
-            offset: const Offset(0, -2),
-          ),
-        ],
-      ),
-      child: Row(
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                '${cart.totalItemCount} items',
-                style: AppTypography.labelSmall.copyWith(
-                  color: AppColors.textSecondaryLight,
-                ),
-              ),
-              CurrencyText(
-                calc.finalPayable,
-                style: AppTypography.titleMedium.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.primary,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: AppButton(
-              label: 'View Cart & Charge',
-              icon: Icons.shopping_bag_rounded,
-              onPressed: () {
-                _showPhoneCartSheet(cart);
-              },
-            ),
-          ),
-        ],
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: FloatingCartBar(
+        itemCount: cart.totalItemCount,
+        totalAmount: calc.finalPayable,
+        onViewCart: () {
+          _showPhoneCartSheet(cart);
+        },
       ),
     );
   }

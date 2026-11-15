@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../features/settings/presentation/dev_tools_sheet.dart';
 import '../components/app_badge.dart';
+import '../components/floating_bottom_nav.dart';
 import '../identity/identity_provider.dart';
 import '../permissions/role_permissions.dart';
 import '../theme/app_colors.dart';
@@ -97,21 +98,65 @@ class AppShell extends ConsumerWidget {
       );
     }
 
-    // Phone Bottom Navigation
+    // Phone Floating Capsule Bottom Navigation (Reference Design)
+    const mobileDestinations = [
+      FloatingBottomNavItem(
+        path: '/home',
+        label: 'Home',
+        icon: Icons.home_outlined,
+        selectedIcon: Icons.home_rounded,
+      ),
+      FloatingBottomNavItem(
+        path: '/orders',
+        label: 'Orders',
+        icon: Icons.receipt_long_outlined,
+        selectedIcon: Icons.receipt_long_rounded,
+      ),
+      FloatingBottomNavItem(
+        path: '/pos',
+        label: 'POS',
+        icon: Icons.add_rounded,
+        selectedIcon: Icons.add_rounded,
+        isCenterFab: true,
+      ),
+      FloatingBottomNavItem(
+        path: '/inventory',
+        label: 'Stock',
+        icon: Icons.inventory_2_outlined,
+        selectedIcon: Icons.inventory_2_rounded,
+      ),
+      FloatingBottomNavItem(
+        path: '/settings',
+        label: 'More',
+        icon: Icons.more_horiz_rounded,
+        selectedIcon: Icons.more_horiz_rounded,
+      ),
+    ];
+
+    int mobileIndex = mobileDestinations.indexWhere((d) => d.path == location);
+    if (mobileIndex < 0) {
+      if (location.startsWith('/orders')) {
+        mobileIndex = 1;
+      } else if (location.startsWith('/pos')) {
+        mobileIndex = 2;
+      } else if (location.startsWith('/inventory')) {
+        mobileIndex = 3;
+      } else if (location.startsWith('/settings')) {
+        mobileIndex = 4;
+      } else {
+        mobileIndex = 0;
+      }
+    }
+
     return Scaffold(
+      backgroundColor: AppColors.backgroundLight,
       body: UxHudOverlay(child: child),
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: safeIndex,
-        onDestinationSelected: (index) {
-          context.go(allowedDestinations[index].path);
+      bottomNavigationBar: FloatingBottomNav(
+        selectedIndex: mobileIndex,
+        items: mobileDestinations,
+        onItemSelected: (index) {
+          context.go(mobileDestinations[index].path);
         },
-        destinations: allowedDestinations.map((dest) {
-          return NavigationDestination(
-            icon: Icon(dest.icon),
-            selectedIcon: Icon(dest.selectedIcon),
-            label: dest.label,
-          );
-        }).toList(),
       ),
     );
   }

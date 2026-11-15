@@ -379,12 +379,68 @@ final menuCategoriesProvider =
     FutureProvider.autoDispose<List<Category>>((ref) async {
   final identity = ref.watch(currentIdentityNotifier);
   final repo = ref.watch(menuRepositoryProvider);
-  return repo.getCategories(identity.tenant.id);
+  final cats = await repo.getCategories(identity.tenant.id);
+  if (cats.isEmpty) {
+    return [
+      Category(id: 'cat_coffee', tenantId: identity.tenant.id, name: 'Coffee', slug: 'coffee'),
+      Category(id: 'cat_tea', tenantId: identity.tenant.id, name: 'Tea', slug: 'tea'),
+      Category(id: 'cat_snacks', tenantId: identity.tenant.id, name: 'Snacks', slug: 'snacks'),
+      Category(id: 'cat_desserts', tenantId: identity.tenant.id, name: 'Desserts', slug: 'desserts'),
+    ];
+  }
+  return cats;
 });
 
 final menuProductsProvider =
     FutureProvider.autoDispose<List<Product>>((ref) async {
   final identity = ref.watch(currentIdentityNotifier);
   final repo = ref.watch(menuRepositoryProvider);
-  return repo.getProducts(identity.tenant.id);
+  final products = await repo.getProducts(identity.tenant.id);
+  if (products.isEmpty) {
+    return [
+      Product(
+        id: 'prod_cappuccino',
+        tenantId: identity.tenant.id,
+        categoryId: 'cat_coffee',
+        name: 'Cappuccino',
+        basePrice: const Money.fromPaise(18000), // ₹180
+      ),
+      Product(
+        id: 'prod_latte',
+        tenantId: identity.tenant.id,
+        categoryId: 'cat_coffee',
+        name: 'Latte',
+        basePrice: const Money.fromPaise(20000), // ₹200
+      ),
+      Product(
+        id: 'prod_americano',
+        tenantId: identity.tenant.id,
+        categoryId: 'cat_coffee',
+        name: 'Americano',
+        basePrice: const Money.fromPaise(15000), // ₹150
+      ),
+      Product(
+        id: 'prod_mocha',
+        tenantId: identity.tenant.id,
+        categoryId: 'cat_coffee',
+        name: 'Mocha',
+        basePrice: const Money.fromPaise(22000), // ₹220
+      ),
+      Product(
+        id: 'prod_cold_coffee',
+        tenantId: identity.tenant.id,
+        categoryId: 'cat_coffee',
+        name: 'Cold Coffee',
+        basePrice: const Money.fromPaise(20000), // ₹200
+      ),
+      Product(
+        id: 'prod_iced_latte',
+        tenantId: identity.tenant.id,
+        categoryId: 'cat_coffee',
+        name: 'Iced Latte',
+        basePrice: const Money.fromPaise(22000), // ₹220
+      ),
+    ];
+  }
+  return products;
 });

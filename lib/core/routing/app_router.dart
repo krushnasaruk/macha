@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../features/billing/presentation/pos_screen.dart';
+import '../../features/home/presentation/home_dashboard_screen.dart';
 import '../../features/inventory/presentation/inventory_screen.dart';
 import '../../features/kitchen/presentation/kitchen_screen.dart';
 import '../../features/menu/presentation/menu_screen.dart';
@@ -122,6 +123,10 @@ final appRouterProvider = Provider<GoRouter>((ref) {
           return AppShell(child: child);
         },
         routes: [
+          GoRoute(
+            path: '/home',
+            pageBuilder: (context, state) => const NoTransitionPage(child: HomeDashboardScreen()),
+          ),
           GoRoute(
             path: '/pos',
             pageBuilder: (context, state) => const NoTransitionPage(child: PosScreen()),

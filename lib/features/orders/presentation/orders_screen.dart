@@ -3,74 +3,121 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/components/app_badge.dart';
 import '../../../core/components/app_button.dart';
-import '../../../core/components/app_card.dart';
 import '../../../core/components/app_text_field.dart';
 import '../../../core/components/currency_text.dart';
+import '../../../core/components/pill_filter_chip.dart';
 import '../../../core/components/state_indicators.dart';
+import '../../../core/components/status_pill.dart';
 import '../../../core/identity/identity_provider.dart';
 import '../../../core/mascot/mascot_empty_state.dart';
 import '../../../core/theme/app_colors.dart';
-import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_typography.dart';
+import '../../../core/ux/interaction/pressable.dart';
 import '../../../core/values/money.dart';
 import '../domain/models/order_and_table_models.dart';
 import '../domain/state_machine/order_lifecycle.dart';
 import 'controllers/orders_providers.dart';
 
-class OrdersScreen extends ConsumerWidget {
+class OrdersScreen extends ConsumerStatefulWidget {
   const OrdersScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<OrdersScreen> createState() => _OrdersScreenState();
+}
+
+class _OrdersScreenState extends ConsumerState<OrdersScreen> {
+  bool _showSearchBar = false;
+  final TextEditingController _searchCtrl = TextEditingController();
+
+  @override
+  void dispose() {
+    _searchCtrl.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final ordersAsync = ref.watch(ordersStreamProvider);
     final filter = ref.watch(ordersFilterProvider);
     final filterNotifier = ref.watch(ordersFilterProvider.notifier);
 
     return Scaffold(
+      backgroundColor: AppColors.backgroundLight,
       appBar: AppBar(
-        title: const Text('Orders'),
+        backgroundColor: AppColors.backgroundLight,
+        elevation: 0,
+        title: Text(
+          'Orders',
+          style: AppTypography.headlineMedium.copyWith(
+            fontWeight: FontWeight.w800,
+            color: AppColors.primary,
+          ),
+        ),
+        actions: [
+          IconButton(
+            icon: Icon(
+              _showSearchBar ? Icons.close_rounded : Icons.search_rounded,
+              color: AppColors.primary,
+            ),
+            tooltip: 'Search Orders',
+            onPressed: () {
+              setState(() {
+                _showSearchBar = !_showSearchBar;
+                if (!_showSearchBar) {
+                  _searchCtrl.clear();
+                  filterNotifier.setSearchQuery('');
+                }
+              });
+            },
+          ),
+          const SizedBox(width: 8),
+        ],
       ),
       body: Column(
         children: [
-          // Search & Filter Header
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: Column(
+          // Collapsible or explicit search bar
+          if (_showSearchBar)
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 4, 16, 8),
+              child: AppTextField(
+                controller: _searchCtrl,
+                hint: 'Search by order #, customer, or phone...',
+                prefixIcon: const Icon(Icons.search_rounded),
+                onChanged: (val) => filterNotifier.setSearchQuery(val),
+              ),
+            ),
+
+          // Status Filter Pills matching reference design
+          Container(
+            height: 46,
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: ListView(
+              scrollDirection: Axis.horizontal,
               children: [
-                AppTextField(
-                  hint: 'Search by order #, customer, or phone...',
-                  prefixIcon: const Icon(Icons.search_rounded),
-                  onChanged: (val) => filterNotifier.setSearchQuery(val),
+                PillFilterChip(
+                  label: 'All Statuses',
+                  isSelected: filter.statusFilter == null,
+                  onTap: () => filterNotifier.setStatusFilter(null),
                 ),
-                const SizedBox(height: 8),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      FilterChip(
-                        label: const Text('All Statuses'),
-                        selected: filter.statusFilter == null,
-                        onSelected: (_) => filterNotifier.setStatusFilter(null),
+                const SizedBox(width: 8),
+                ...OrderLifecycleStatus.values.map((status) {
+                  final isSelected = filter.statusFilter == status;
+                  return Padding(
+                    padding: const EdgeInsets.only(right: 8),
+                    child: PillFilterChip(
+                      label: status.label,
+                      isSelected: isSelected,
+                      onTap: () => filterNotifier.setStatusFilter(
+                        isSelected ? null : status,
                       ),
-                      const SizedBox(width: 8),
-                      ...OrderLifecycleStatus.values.map((status) {
-                        final isSelected = filter.statusFilter == status;
-                        return Padding(
-                          padding: const EdgeInsets.only(right: 8),
-                          child: FilterChip(
-                            label: Text(status.name.toUpperCase()),
-                            selected: isSelected,
-                            onSelected: (_) => filterNotifier.setStatusFilter(isSelected ? null : status),
-                          ),
-                        );
-                      }),
-                    ],
-                  ),
-                ),
+                    ),
+                  );
+                }),
               ],
             ),
           ),
-          const Divider(height: 1),
+          const SizedBox(height: 10),
+
           // Orders List
           Expanded(
             child: ordersAsync.when(
@@ -86,16 +133,75 @@ class OrdersScreen extends ConsumerWidget {
                   );
                 }
 
-                return ListView.builder(
-                  padding: AppSpacing.paddingLg,
-                  itemCount: orders.length,
-                  itemBuilder: (context, index) {
-                    final order = orders[index];
-                    return _OrderCard(
-                      order: order,
-                      onTap: () => _showOrderDetailDialog(context, ref, order),
-                    );
-                  },
+                final queueCount = orders
+                    .where((o) =>
+                        o.status == OrderLifecycleStatus.created ||
+                        o.status == OrderLifecycleStatus.confirmed ||
+                        o.status == OrderLifecycleStatus.preparing)
+                    .length;
+
+                return Column(
+                  children: [
+                    Expanded(
+                      child: ListView.separated(
+                        padding: const EdgeInsets.fromLTRB(16, 4, 16, 16),
+                        itemCount: orders.length,
+                        separatorBuilder: (_, __) => const SizedBox(height: 12),
+                        itemBuilder: (context, index) {
+                          final order = orders[index];
+                          return _OrderCard(
+                            order: order,
+                            onTap: () => _showOrderDetailDialog(context, ref, order),
+                          );
+                        },
+                      ),
+                    ),
+                    // Bottom Queue Banner (matching reference design)
+                    if (queueCount > 0)
+                      Container(
+                        margin: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                        decoration: BoxDecoration(
+                          color: AppColors.warmCream,
+                          borderRadius: BorderRadius.circular(16),
+                          border: Border.all(color: AppColors.borderLight, width: 1),
+                        ),
+                        child: Row(
+                          children: [
+                            Container(
+                              width: 36,
+                              height: 36,
+                              decoration: const BoxDecoration(
+                                color: AppColors.softBeige,
+                                shape: BoxShape.circle,
+                              ),
+                              alignment: Alignment.center,
+                              child: const Icon(
+                                Icons.coffee_rounded,
+                                color: AppColors.primary,
+                                size: 18,
+                              ),
+                            ),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: Text(
+                                '$queueCount orders in queue',
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                  color: AppColors.primary,
+                                ),
+                              ),
+                            ),
+                            const Icon(
+                              Icons.arrow_forward_rounded,
+                              size: 18,
+                              color: AppColors.primary,
+                            ),
+                          ],
+                        ),
+                      ),
+                  ],
                 );
               },
             ),
@@ -109,7 +215,11 @@ class OrdersScreen extends ConsumerWidget {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text('Order #${order.orderNumber}'),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        title: Text(
+          'Order #${order.orderNumber}',
+          style: const TextStyle(fontWeight: FontWeight.bold),
+        ),
         content: SizedBox(
           width: 500,
           child: SingleChildScrollView(
@@ -296,56 +406,131 @@ class _OrderCard extends StatelessWidget {
 
   const _OrderCard({required this.order, required this.onTap});
 
+  String _thumbnailForOrder() {
+    final name = order.items.isNotEmpty ? order.items.first.productName.toLowerCase() : '';
+    if (name.contains('cold') || name.contains('nitro')) return 'assets/menu/cold_coffee.png';
+    if (name.contains('mocha')) return 'assets/menu/mocha.png';
+    if (name.contains('americano')) return 'assets/menu/americano.png';
+    if (name.contains('latte')) return 'assets/menu/latte.png';
+    return 'assets/menu/cappuccino.png';
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 12),
-      child: AppCard(
-        onTap: onTap,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+    final timeStr =
+        '${order.createdAt.hour.toString().padLeft(2, '0')}:${order.createdAt.minute.toString().padLeft(2, '0')}';
+    final itemsText = '${order.items.length} item${order.items.length == 1 ? "" : "s"}';
+
+    return Pressable(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.all(14),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(18),
+          border: Border.all(color: AppColors.borderLight, width: 1),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.02),
+              blurRadius: 8,
+              offset: const Offset(0, 3),
+            ),
+          ],
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Row(
+            // Left: Drink thumbnail squircle
+            ClipRRect(
+              borderRadius: BorderRadius.circular(14),
+              child: Container(
+                width: 52,
+                height: 52,
+                color: AppColors.creamContainer,
+                child: Image.asset(
+                  _thumbnailForOrder(),
+                  fit: BoxFit.cover,
+                  errorBuilder: (_, __, ___) => const Icon(
+                    Icons.local_cafe_rounded,
+                    color: AppColors.primary,
+                    size: 24,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(width: 14),
+
+            // Middle Column: Order #, items & time, and Dine-in/Takeaway tag
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '#${order.orderNumber}',
+                    style: const TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w800,
+                      color: AppColors.primary,
+                      letterSpacing: -0.3,
+                    ),
+                  ),
+                  const SizedBox(height: 3),
+                  Text(
+                    '$itemsText • $timeStr',
+                    style: const TextStyle(
+                      fontSize: 12,
+                      color: AppColors.textSecondaryLight,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  const SizedBox(height: 6),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                    decoration: BoxDecoration(
+                      color: AppColors.creamContainer,
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: AppColors.borderLight, width: 0.8),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          order.tableName != null
+                              ? Icons.table_restaurant_rounded
+                              : Icons.takeout_dining_rounded,
+                          size: 13,
+                          color: AppColors.textSecondaryLight,
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          order.tableName != null ? 'Table ${order.tableName}' : 'Takeaway',
+                          style: const TextStyle(
+                            fontSize: 11,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.primary,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            // Right Column: Status pill badge & bold formatted price
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  '#${order.orderNumber}',
-                  style: AppTypography.titleMedium.copyWith(fontWeight: FontWeight.bold),
-                ),
-                _badgeForStatus(order.status),
-              ],
-            ),
-            const SizedBox(height: 6),
-            Row(
-              children: [
-                Icon(
-                  order.tableName != null ? Icons.table_restaurant_rounded : Icons.takeout_dining_rounded,
-                  size: 16,
-                  color: Colors.grey.shade600,
-                ),
-                const SizedBox(width: 4),
-                Text(
-                  order.tableName ?? 'Takeaway',
-                  style: TextStyle(fontSize: 13, color: Colors.grey.shade700, fontWeight: FontWeight.w500),
-                ),
-                const Spacer(),
-                Text(
-                  '${order.createdAt.hour.toString().padLeft(2, '0')}:${order.createdAt.minute.toString().padLeft(2, '0')}',
-                  style: TextStyle(fontSize: 12, color: Colors.grey.shade500),
-                ),
-              ],
-            ),
-            const Divider(height: 16),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  '${order.items.length} item${order.items.length == 1 ? "" : "s"}',
-                  style: const TextStyle(fontSize: 13, color: Colors.grey),
-                ),
+                StatusPill.fromOrderStatus(order.status.name),
+                const SizedBox(height: 14),
                 CurrencyText(
                   Money.fromPaise(order.finalTotalPaise),
-                  style: AppTypography.titleSmall.copyWith(fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w800,
+                    color: AppColors.primary,
+                  ),
                 ),
               ],
             ),
@@ -353,9 +538,5 @@ class _OrderCard extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  Widget _badgeForStatus(OrderLifecycleStatus status) {
-    return AppBadge.status(status.name);
   }
 }

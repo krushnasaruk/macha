@@ -86,6 +86,7 @@ flutter:
     - assets/branding/logo/
     - assets/branding/
     - assets/branding/macha/
+    - assets/food/
     - assets/menu/
     - assets/inventory/
 

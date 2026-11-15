@@ -9,6 +9,7 @@ import '../../../core/ux/interaction/pressable.dart';
 import '../../../core/values/money.dart';
 import '../../orders/domain/state_machine/order_lifecycle.dart';
 import '../../orders/presentation/controllers/orders_providers.dart';
+import '../domain/daily_food_special.dart';
 
 class HomeDashboardScreen extends StatelessWidget {
   const HomeDashboardScreen({super.key});
@@ -19,11 +20,18 @@ class HomeDashboardScreen extends StatelessWidget {
   }
 }
 
-class _HomeDashboardContent extends ConsumerWidget {
+class _HomeDashboardContent extends ConsumerStatefulWidget {
   const _HomeDashboardContent();
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<_HomeDashboardContent> createState() => _HomeDashboardContentState();
+}
+
+class _HomeDashboardContentState extends ConsumerState<_HomeDashboardContent> {
+  int? _previewWeekday;
+
+  @override
+  Widget build(BuildContext context) {
     final identity = ref.watch(currentIdentityNotifier);
     final ordersAsync = ref.watch(ordersStreamProvider);
 
@@ -235,77 +243,127 @@ class _HomeDashboardContent extends ConsumerWidget {
       }
     });
 
-    return Container(
-      width: double.infinity,
-      height: 155,
-      decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            Color(0xFF382B24),
-            Color(0xFF251C17),
-          ],
-        ),
-        borderRadius: BorderRadius.circular(26),
-        boxShadow: [
-          BoxShadow(
-            color: const Color(0xFF251C17).withOpacity(0.3),
-            blurRadius: 18,
-            offset: const Offset(0, 8),
-          ),
-        ],
-      ),
-      child: Stack(
-        children: [
-          // Warm Tabletop Curve on the right behind cup
-          Positioned(
-            right: -20,
-            bottom: -20,
-            child: Container(
-              width: 170,
-              height: 170,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: const Color(0xFF4C3A30).withOpacity(0.7),
-              ),
-            ),
-          ),
+    final currentWeekday = DateTime.now().weekday;
+    final activeWeekday = _previewWeekday ?? currentWeekday;
+    final special = DailyFoodSpecial.forWeekday(activeWeekday);
 
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 20),
-            child: Row(
+    return Padding(
+      padding: const EdgeInsets.only(top: 22, bottom: 4),
+      child: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          // 1. Dark Espresso Base Card Container
+          Container(
+            width: double.infinity,
+            height: 160,
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Color(0xFF382B24),
+                  Color(0xFF251C17),
+                ],
+              ),
+              borderRadius: BorderRadius.circular(26),
+              boxShadow: [
+                BoxShadow(
+                  color: const Color(0xFF251C17).withOpacity(0.35),
+                  blurRadius: 20,
+                  offset: const Offset(0, 10),
+                ),
+              ],
+            ),
+            child: Stack(
               children: [
-                Expanded(
+                // Warm Tabletop Curve on the right behind food
+                Positioned(
+                  right: -25,
+                  bottom: -25,
+                  child: Container(
+                    width: 190,
+                    height: 190,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: const Color(0xFF4C3A30).withOpacity(0.65),
+                    ),
+                  ),
+                ),
+
+                // Metrics & Daily Special Label on the left
+                Padding(
+                  padding: const EdgeInsets.only(left: 20, top: 16, bottom: 16, right: 155),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        'Today’s Sales',
-                        style: TextStyle(
-                          color: const Color(0xFFD5C4B4).withOpacity(0.9),
-                          fontSize: 13,
-                          fontWeight: FontWeight.w600,
-                          letterSpacing: 0.2,
-                        ),
+                      // Header Row: Today's Sales + Interactive Weekday Tag
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            'Today’s Sales',
+                            style: TextStyle(
+                              color: const Color(0xFFD5C4B4).withOpacity(0.9),
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                              letterSpacing: 0.2,
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          // Weekday Tag Pill (tap to preview other days)
+                          GestureDetector(
+                            onTap: () => _showWeeklySpecialsSheet(context),
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
+                              decoration: BoxDecoration(
+                                color: const Color(0xFFE89246).withOpacity(0.2),
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(
+                                  color: const Color(0xFFE89246).withOpacity(0.35),
+                                  width: 0.8,
+                                ),
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    special.dayName,
+                                    style: const TextStyle(
+                                      color: Color(0xFFFFD199),
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 2),
+                                  const Icon(
+                                    Icons.keyboard_arrow_down_rounded,
+                                    size: 12,
+                                    color: Color(0xFFFFD199),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                       const SizedBox(height: 6),
                       Text(
                         salesDisplay,
                         style: const TextStyle(
                           color: Color(0xFFFFFDF9),
-                          fontSize: 30,
+                          fontSize: 28,
                           fontWeight: FontWeight.w800,
                           letterSpacing: -0.8,
                         ),
                       ),
-                      const SizedBox(height: 10),
+                      const SizedBox(height: 8),
+                      // Growth Chip
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                         decoration: BoxDecoration(
                           color: const Color(0xFFE89246).withOpacity(0.22),
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(10),
                           border: Border.all(
                             color: const Color(0xFFE89246).withOpacity(0.4),
                             width: 1,
@@ -317,42 +375,273 @@ class _HomeDashboardContent extends ConsumerWidget {
                             Icon(
                               Icons.trending_up_rounded,
                               color: Color(0xFFFFD199),
-                              size: 14,
+                              size: 13,
                             ),
-                            SizedBox(width: 4),
+                            SizedBox(width: 3),
                             Text(
                               '↑ 12.5%',
                               style: TextStyle(
                                 color: Color(0xFFFFD199),
-                                fontSize: 12,
+                                fontSize: 11,
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
                           ],
                         ),
                       ),
+                      const SizedBox(height: 6),
+                      // Daily Dish Name
+                      Text(
+                        special.title,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          color: const Color(0xFFD5C4B4).withOpacity(0.85),
+                          fontSize: 11,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
                     ],
-                  ),
-                ),
-                // Steaming Coffee Cup Illustration
-                SizedBox(
-                  width: 125,
-                  height: 115,
-                  child: Image.asset(
-                    'assets/branding/hero_coffee.png',
-                    fit: BoxFit.contain,
-                    errorBuilder: (_, __, ___) => const Icon(
-                      Icons.coffee_rounded,
-                      size: 64,
-                      color: AppColors.warmCream,
-                    ),
                   ),
                 ),
               ],
             ),
           ),
+
+          // 2. Overlapping Food Image ("a little over the dive")
+          Positioned(
+            right: -2,
+            top: -24, // Floats 24px ABOVE the card boundary!
+            bottom: -8, // Anchors the dish drop-shadow to the tabletop
+            width: 175,
+            child: GestureDetector(
+              onTap: () => _showWeeklySpecialsSheet(context),
+              child: Image.asset(
+                special.assetPath,
+                fit: BoxFit.contain,
+                alignment: Alignment.centerRight,
+                filterQuality: FilterQuality.high,
+                errorBuilder: (_, __, ___) => const Icon(
+                  Icons.restaurant_rounded,
+                  size: 64,
+                  color: AppColors.warmCream,
+                ),
+              ),
+            ),
+          ),
         ],
       ),
+    );
+  }
+
+  void _showWeeklySpecialsSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      builder: (ctx) {
+        final currentWeekday = DateTime.now().weekday;
+        return Container(
+          decoration: const BoxDecoration(
+            color: Color(0xFFFFF9F2),
+            borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
+          ),
+          padding: const EdgeInsets.fromLTRB(20, 14, 20, 28),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Center(
+                child: Container(
+                  width: 44,
+                  height: 4,
+                  decoration: BoxDecoration(
+                    color: AppColors.borderLight,
+                    borderRadius: BorderRadius.circular(2),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+              Row(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: AppColors.primary.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: const Icon(
+                      Icons.calendar_month_rounded,
+                      color: AppColors.primary,
+                      size: 20,
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          '7-Day Chef’s Showcase',
+                          style: AppTypography.titleMedium.copyWith(
+                            fontWeight: FontWeight.w800,
+                            color: AppColors.primary,
+                          ),
+                        ),
+                        Text(
+                          'Hero dish rotates dynamically every day of the week',
+                          style: AppTypography.bodySmall.copyWith(
+                            color: AppColors.textSecondaryLight,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
+              ConstrainedBox(
+                constraints: BoxConstraints(
+                  maxHeight: MediaQuery.of(context).size.height * 0.55,
+                ),
+                child: ListView.separated(
+                  shrinkWrap: true,
+                  itemCount: DailyFoodSpecial.allSpecials.length,
+                  separatorBuilder: (_, __) => const SizedBox(height: 8),
+                  itemBuilder: (ctx, i) {
+                    final item = DailyFoodSpecial.allSpecials[i];
+                    final isToday = item.weekday == currentWeekday;
+                    final isSelected = (_previewWeekday ?? currentWeekday) == item.weekday;
+
+                    return InkWell(
+                      onTap: () {
+                        setState(() {
+                          _previewWeekday = item.weekday;
+                        });
+                        Navigator.pop(ctx);
+                      },
+                      borderRadius: BorderRadius.circular(16),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                        decoration: BoxDecoration(
+                          color: isSelected
+                              ? AppColors.primary.withOpacity(0.08)
+                              : Colors.white,
+                          borderRadius: BorderRadius.circular(16),
+                          border: Border.all(
+                            color: isSelected
+                                ? AppColors.primary
+                                : AppColors.borderLight,
+                            width: isSelected ? 1.5 : 1.0,
+                          ),
+                        ),
+                        child: Row(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: Container(
+                                width: 50,
+                                height: 50,
+                                color: const Color(0xFF382B24),
+                                child: Image.asset(
+                                  item.assetPath,
+                                  fit: BoxFit.contain,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Text(
+                                        item.dayName,
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 13,
+                                          color: isSelected
+                                              ? AppColors.primary
+                                              : AppColors.textPrimaryLight,
+                                        ),
+                                      ),
+                                      if (isToday) ...[
+                                        const SizedBox(width: 6),
+                                        Container(
+                                          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 1),
+                                          decoration: BoxDecoration(
+                                            color: const Color(0xFFE89246),
+                                            borderRadius: BorderRadius.circular(6),
+                                          ),
+                                          child: const Text(
+                                            'TODAY',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 9,
+                                              fontWeight: FontWeight.w800,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ],
+                                  ),
+                                  const SizedBox(height: 2),
+                                  Text(
+                                    item.title,
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w600,
+                                      color: AppColors.textPrimaryLight.withOpacity(0.85),
+                                    ),
+                                  ),
+                                  Text(
+                                    item.description,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
+                                      fontSize: 11,
+                                      color: AppColors.textSecondaryLight,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            if (isSelected)
+                              const Icon(
+                                Icons.check_circle_rounded,
+                                color: AppColors.primary,
+                                size: 20,
+                              ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+              if (_previewWeekday != null) ...[
+                const SizedBox(height: 12),
+                Center(
+                  child: TextButton.icon(
+                    icon: const Icon(Icons.restore_rounded, size: 16),
+                    label: const Text('Reset to Today’s Special'),
+                    style: TextButton.styleFrom(
+                      foregroundColor: AppColors.primary,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _previewWeekday = null;
+                      });
+                      Navigator.pop(ctx);
+                    },
+                  ),
+                ),
+              ],
+            ],
+          ),
+        );
+      },
     );
   }
 

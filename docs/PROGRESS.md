@@ -99,6 +99,9 @@
 | 2026-11-16 | MΛCHA Brand Identity | Brand Generator Script | Generated custom architectural `Λ` wordmarks, standalone monogram, app icons, color palette, POS receipt, and cup mockups |
 | 2026-11-16 | Quality Gate | `flutter test` | All 99 unit and widget tests passed |
 | 2026-11-16 | Quality Gate | `flutter analyze` | Clean analysis (0 issues) |
+| 2026-11-16 | Home UI & 7-Day Showcase | Weekly Food Image Rotation | Integrated 7 photorealistic transparent food assets into 'over the div' floating hero card with modal selector |
+| 2026-11-16 | Quality Gate | `flutter test` | All 101 unit and widget tests passed |
+| 2026-11-16 | Quality Gate | `flutter analyze` | Clean analysis (0 issues) |
 
 ## Environment
 - Flutter/Dart versions: Flutter 3.24.5 • Dart 3.5.4

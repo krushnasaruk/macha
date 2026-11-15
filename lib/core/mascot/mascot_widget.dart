@@ -12,6 +12,8 @@ class MascotWidget extends StatefulWidget {
   final MascotInteraction? interaction;
   final MascotStateIllustration? stateIllustration;
   final MascotPose? pose;
+  final MascotPawStudy? pawStudy;
+  final MascotObjectInteraction? objectInteraction;
 
   final double height;
   final double? width;
@@ -30,6 +32,8 @@ class MascotWidget extends StatefulWidget {
     this.interaction,
     this.stateIllustration,
     this.pose,
+    this.pawStudy,
+    this.objectInteraction,
     this.height = 140.0,
     this.width,
     this.animate = true,
@@ -121,6 +125,8 @@ class _MascotWidgetState extends State<MascotWidget>
     if (widget.interaction != null) return widget.interaction!.path;
     if (widget.stateIllustration != null) return widget.stateIllustration!.path;
     if (widget.pose != null) return widget.pose!.path;
+    if (widget.objectInteraction != null) return widget.objectInteraction!.path;
+    if (widget.pawStudy != null) return widget.pawStudy!.path;
     return MascotExpression.neutral.path;
   }
 

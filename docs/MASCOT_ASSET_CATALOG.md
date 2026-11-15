@@ -11,10 +11,14 @@ Complete inventory of all 67 individual mascot illustrations and brand assets ge
 | **REF-01** | `assets/mascot/reference/master_character.png` | Master Standing Turnaround | Source of truth, baseline visual reference | Original 228×364 |
 | **REF-02** | `assets/mascot/reference/master_character_transparent.png` | Master Clean Isolated Alpha | Canonical master asset for composite scenes | 228×364 |
 | **REF-03** | `assets/mascot/reference/character_sheet.png` | Multi-view 10-pose Turnaround Sheet | Front, 3/4, profile, back, sit, walk, close-up | 1376×768 |
+| **REF-04** | `assets/mascot/reference/facial_expression_sheet.png` | 16-Panel Facial Expression Sheet | Complete emotional range with consistent facial identity | 1120×1220 |
+| **REF-05** | `assets/mascot/reference/paw_anatomy_sheet.png` | 15-Panel Paw Anatomy & Articulation | 3-pad digit arch + thumb, seamless arm connection | 1020×1540 |
+| **REF-06** | `assets/mascot/reference/object_interaction_sheet.png` | 12-Panel Physical Object Grips | Depth-sorted occlusion, physical wrap, weight balance | 1020×1580 |
+| **REF-07** | `assets/mascot/reference/pose_reference_sheet.png` | 12-Panel Body Language & Pose Dynamics | Center-of-gravity, active limbs, dynamic posture | 1020×1580 |
 
 ---
 
-## 2. Category A — Everyday Expressions (15)
+## 2. Category A — Everyday Expressions (16)
 
 Location: `assets/mascot/expressions/`
 
@@ -30,11 +34,12 @@ Location: `assets/mascot/expressions/`
 | **EXP-08** | `thinking.png` | Pupils shifted up, paw on chin | Inventory / Analytics | Forecasting, calculating float | 200×260 | Gentle sway |
 | **EXP-09** | `sleepy.png` | Half-closed lids, floating Zzz | Drawer Close | End-of-day drawer reconciliation | 200×260 | Slow breathe |
 | **EXP-10** | `worried.png` | Angled brows, small tight mouth | Network / Printer | Connection drop, hardware jam | 180×240 | Micro shake |
-| **EXP-11** | `proud.png` | Puffed chest, confident chef stance | Kitchen KDS | Shift complete, 0 pending tickets | 220×280 | Chest expand |
-| **EXP-12** | `disappointed.png` | Drooping shoulders, downcast eyes | Order Cancel | Order voided or refunded | 180×240 | Slight slump |
-| **EXP-13** | `embarrassed.png` | Pink blush ovals on tan eye patches | Form Validation | Missing required form field | 180×240 | Soft fade |
-| **EXP-14** | `curious.png` | Head tilted sideways, wide eyes | Onboarding / Tips | Feature discovery hint | 200×260 | Head tilt |
-| **EXP-15** | `determined.png` | Resolute firm mouth, tight fists | Rush Hour Mode | Peak Saturday morning queue | 200×260 | Stable |
+| **EXP-11** | `sad.png` | Drooping outer eyes, downward mouth | Void / Refund | Order canceled or payment rejected | 180×240 | Gentle drop |
+| **EXP-12** | `proud.png` | Puffed chest, confident chef stance | Kitchen KDS | Shift complete, 0 pending tickets | 220×280 | Chest expand |
+| **EXP-13** | `disappointed.png` | Drooping shoulders, downcast eyes | Order Cancel | Order voided or refunded | 180×240 | Slight slump |
+| **EXP-14** | `embarrassed.png` | Pink blush ovals on tan eye patches | Form Validation | Missing required form field | 180×240 | Soft fade |
+| **EXP-15** | `curious.png` | Head tilted sideways, wide eyes | Onboarding / Tips | Feature discovery hint | 200×260 | Head tilt |
+| **EXP-16** | `determined.png` | Resolute firm mouth, tight fists | Rush Hour Mode | Peak Saturday morning queue | 200×260 | Stable |
 
 ---
 
@@ -104,7 +109,52 @@ Location: `assets/mascot/application_states/`
 
 ---
 
-## 6. Official Brand & Logo Assets (6)
+## 6. Category E — Bear Paw Anatomy Studies (15)
+
+Location: `assets/mascot/paws/`
+
+| Asset ID | Filename | Anatomy / Articulation | Context / Usage | Dimensions |
+|---|---|---|---|---|
+| **PAW-01** | `front_facing.png` | Symmetrical 3-knuckle paw arch with wrist taper | Neutral paw guide | 320×260 |
+| **PAW-02** | `side_facing.png` | Profile silhouette with natural wrist contour | Profile reach | 320×260 |
+| **PAW-03** | `open_relaxed.png` | Flat open palm showing inner charcoal pad `#2C2928` | Gentle gesture | 320×260 |
+| **PAW-04** | `closed_paw.png` | Solid curled fist with articulated digit folds | Clenched grip | 320×260 |
+| **PAW-05** | `pointing.png` | Extended index knuckle with folded secondary digits | Screen guide | 320×260 |
+| **PAW-06** | `waving.png` | Raised palm with motion arcs and flexed wrist | Greetings | 320×260 |
+| **PAW-07** | `thumbs_up.png` | Upright articulated thumb digit over curled fist | Confirmation | 320×260 |
+| **PAW-08** | `holding_cup.png` | Paws wrapped around ceramic mug with thumb on rim | Coffee handling | 320×260 |
+| **PAW-09** | `holding_handle.png` | Cylindrical wrap around wooden cookware handle | Sauté / pan grip | 320×260 |
+| **PAW-10** | `gripping_object.png` | Opposing clamping grip | General prop clutch | 320×260 |
+| **PAW-11** | `supporting_underneath.png`| Open upward palm supporting platter base | Tray service | 320×260 |
+| **PAW-12** | `resting_surface.png` | Weight-bearing paw spread flat on tabletop | Counter lean | 320×260 |
+| **PAW-13** | `holding_pen.png` | Precision pinch grip on POS stylus | Audit / signature | 320×260 |
+| **PAW-14** | `touching_screen.png` | Single paw digit tip contacting interactive display | POS checkout | 320×260 |
+| **PAW-15** | `both_paws_holding.png` | Symmetrical dual-paw wrap around container | Heavy ingredient jar | 320×260 |
+
+---
+
+## 7. Category F — Physical Object Interactions (12)
+
+Location: `assets/mascot/object_interactions/`
+
+| Asset ID | Filename | Physical Prop | Occlusion & Physics | Dimensions |
+|---|---|---|---|---|
+| **OBJ-01** | `coffee_cup.png` | Steaming ceramic coffee mug | Digits wrap mug front; thumb hooks handle | 320×380 |
+| **OBJ-02** | `serving_tray.png` | Stainless silver tray with cloche | Both paws cradling rim from underneath | 320×380 |
+| **OBJ-03** | `receipt.png` | Printed thermal order slip | Paw clamping top edge with realistic paper curl | 320×380 |
+| **OBJ-04** | `menu.png` | Hardcover café menu binder | Dual paws holding side binding edges | 320×380 |
+| **OBJ-05** | `spatula.png` | Stainless grill spatula | Firm fist grip around wooden handle | 320×380 |
+| **OBJ-06** | `cooking_pan.png` | Sauté pan with sizzle & steam | Paw gripping long handle during active prep | 320×380 |
+| **OBJ-07** | `laptop.png` | Modern POS terminal | Dual paws resting on keyboard deck | 320×380 |
+| **OBJ-08** | `shopping_basket.png` | Wire grocery basket | Paw looped through overhead swing handle | 320×380 |
+| **OBJ-09** | `coffee_pot.png` | Glass decanter carafe | Paw locked around heat-insulated handle | 320×380 |
+| **OBJ-10** | `cake.png` | 2-tier celebration cake | Symmetrical dual paws supporting platter pedestal | 320×380 |
+| **OBJ-11** | `checklist.png` | Wooden audit clipboard | Paw holding top clip; visible green checkmarks | 320×380 |
+| **OBJ-12** | `trophy.png` | Gold championship barista cup | Dual paws clutching twin side handles | 320×380 |
+
+---
+
+## 8. Official Brand & Logo Assets (6)
 
 Location: `assets/branding/logo/`
 

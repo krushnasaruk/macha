@@ -398,11 +398,168 @@ class _ComponentGalleryScreenState extends State<ComponentGalleryScreen> {
                     ),
                   ],
                 ),
+                const Divider(height: 24),
+                Text(
+                  'D. Refined Anatomy & Studio Model Sheets',
+                  style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 8),
+                const Text(
+                  'Approved reference sheets establishing the 16-expression system, 15 paw anatomy studies, 12 object physics interactions, and 12 full-body poses.',
+                  style: TextStyle(fontSize: 12, color: Colors.grey),
+                ),
+                const SizedBox(height: 14),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      _buildModelSheetThumbnail(
+                        context,
+                        '16 Facial Expressions',
+                        MascotAssetRegistry.facialExpressionSheet,
+                      ),
+                      const SizedBox(width: 14),
+                      _buildModelSheetThumbnail(
+                        context,
+                        '15 Paw Anatomy Studies',
+                        MascotAssetRegistry.pawAnatomySheet,
+                      ),
+                      const SizedBox(width: 14),
+                      _buildModelSheetThumbnail(
+                        context,
+                        '12 Object Interactions',
+                        MascotAssetRegistry.objectInteractionSheet,
+                      ),
+                      const SizedBox(width: 14),
+                      _buildModelSheetThumbnail(
+                        context,
+                        '12 Dynamic Poses',
+                        MascotAssetRegistry.poseReferenceSheet,
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  'E. Live Paw & Object Interaction Samples',
+                  style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 10),
+                const SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      MascotWidget(
+                        objectInteraction: MascotObjectInteraction.coffeeCup,
+                        height: 90,
+                      ),
+                      SizedBox(width: 8),
+                      MascotWidget(
+                        objectInteraction: MascotObjectInteraction.servingTray,
+                        height: 90,
+                      ),
+                      SizedBox(width: 8),
+                      MascotWidget(
+                        objectInteraction: MascotObjectInteraction.receipt,
+                        height: 90,
+                      ),
+                      SizedBox(width: 8),
+                      MascotWidget(
+                        objectInteraction: MascotObjectInteraction.spatula,
+                        height: 90,
+                      ),
+                      SizedBox(width: 8),
+                      MascotWidget(
+                        objectInteraction: MascotObjectInteraction.cake,
+                        height: 90,
+                      ),
+                      SizedBox(width: 8),
+                      MascotWidget(
+                        objectInteraction: MascotObjectInteraction.trophy,
+                        height: 90,
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
           const SizedBox(height: 32),
         ],
+      ),
+    );
+  }
+
+  Widget _buildModelSheetThumbnail(BuildContext context, String title, String assetPath) {
+    return InkWell(
+      onTap: () {
+        showDialog(
+          context: context,
+          builder: (context) => Dialog(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 800, maxHeight: 700),
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          title,
+                          style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.close_rounded),
+                          onPressed: () => Navigator.of(context).pop(),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                    Expanded(
+                      child: InteractiveViewer(
+                        child: Image.asset(assetPath, fit: BoxFit.contain),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+      borderRadius: BorderRadius.circular(12),
+      child: Container(
+        width: 140,
+        padding: const EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey.shade300),
+          borderRadius: BorderRadius.circular(12),
+          color: Theme.of(context).colorScheme.surface,
+        ),
+        child: Column(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: Image.asset(
+                assetPath,
+                height: 100,
+                width: 124,
+                fit: BoxFit.cover,
+              ),
+            ),
+            const SizedBox(height: 6),
+            Text(
+              title,
+              style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
+        ),
       ),
     );
   }

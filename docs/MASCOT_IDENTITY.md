@@ -102,3 +102,43 @@ The mascot expresses emotions through restrained, physical cues:
 - **Sleepy / Shift-End**: Half-lidded eyes, chef hat tilted slightly backward, arms resting comfortably on apron.
 - **Celebration**: Both paws raised with coffee cup or tray, happy eye arcs, small confetti burst.
 - **Concerned / Offline**: Slightly furrowed brow line within tan markings, holding a disconnected plug or coffee mug looking down.
+
+---
+
+## 6. Official Studio Reference Sheets
+
+To eliminate anatomical defects and ensure consistent character acting, four dedicated master studio reference sheets are established:
+
+1. **Facial Expression Reference Sheet** (`assets/mascot/reference/facial_expression_sheet.png`):
+   - 16 distinct emotional panels: Neutral, Slightly Happy, Happy, Laughing, Excited, Surprised, Confused, Curious, Thinking, Sleepy, Worried, Sad, Disappointed, Proud, Determined, Embarrassed.
+   - Standardized head proportions, eye spacing, and tan spectacle patch flex.
+
+2. **Paw Anatomy Reference Sheet** (`assets/mascot/reference/paw_anatomy_sheet.png`):
+   - 15 anatomical studies establishing how Chef Barnaby's paws articulate:
+     - Front-facing, side-facing, open relaxed palm, closed fist, pointing, waving, thumbs-up.
+     - Object grips: holding ceramic cup, gripping cylindrical handle, clamping object, supporting platter from underneath, resting flat on surface, precision stylus grip, touching POS screen, dual-paw grip.
+
+3. **Object Interaction Reference Sheet** (`assets/mascot/reference/object_interaction_sheet.png`):
+   - 12 verified physical object interactions:
+     - Coffee cup, serving tray, order receipt, hardcover menu, grill spatula, cooking pan, POS laptop terminal, supplies shopping basket, glass decanter pot, 2-tier platter cake, inventory checklist, golden champion trophy.
+   - Enforces 3-layer depth sorting: (1) Back arm & palm -> (2) Held object -> (3) Front wrapped digits and clamping thumb. Zero floating props.
+
+4. **Body Language & Pose Reference Sheet** (`assets/mascot/reference/pose_reference_sheet.png`):
+   - 12 full-body dynamics:
+     - Standing, sitting on stool, walking stride, leaning on counter, waving, pointing, carrying box, holding signature drink, celebrating with raised arms, thinking with chin paw, cooking at station, resting post-rush.
+
+---
+
+## 7. Paw Anatomy & Articulation Standard
+
+Chef Barnaby is a bear, not a human wearing a suit.
+- **Digit Formula**: Exactly 3 rounded bear finger pads + 1 articulated inner thumb digit. Never 5 human fingers.
+- **Forearm Taper**: Charcoal-brown fur (`#393635`) flows continuously from shoulder to wrist with a smooth 3-4px black outline (`#171615`).
+- **Inner Palm Pad**: When the palm faces forward, a soft warm charcoal inner pad (`#2C2928`) is visible.
+- **Weight Bearing**: Paws resting on counters or trays flatten naturally to communicate physical weight.
+
+---
+
+## 8. Quality Assurance Checklist
+
+Every new asset must be validated against `docs/MASCOT_QUALITY_CHECKLIST.md` prior to inclusion in the Flutter asset catalog. Illustrations that display floating props, broken wrists, generic human eyes, or missing tan spectacle patches are immediately rejected.

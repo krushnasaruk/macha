@@ -74,6 +74,8 @@ flutter:
   assets:
     - assets/mascot/reference/
     - assets/mascot/expressions/
+    - assets/mascot/paws/
+    - assets/mascot/object_interactions/
     - assets/mascot/chef_actions/
     - assets/mascot/poses/
     - assets/mascot/app_interactions/

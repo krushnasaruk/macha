@@ -17,6 +17,26 @@ void main() {
       expect(MascotExpression.neutral.path, contains('neutral.png'));
       expect(MascotExpression.happy.path, contains('happy.png'));
       expect(MascotExpression.thinking.path, contains('thinking.png'));
+      expect(MascotExpression.sad.path, contains('sad.png'));
+    });
+
+    test('All paw studies resolve to expected paths', () {
+      expect(MascotPawStudy.pointing.path, contains('paws/pointing.png'));
+      expect(MascotPawStudy.thumbsUp.path, contains('paws/thumbs_up.png'));
+      expect(MascotPawStudy.holdingCup.path, contains('paws/holding_cup.png'));
+    });
+
+    test('All object interactions resolve to expected paths', () {
+      expect(MascotObjectInteraction.coffeeCup.path, contains('object_interactions/coffee_cup.png'));
+      expect(MascotObjectInteraction.servingTray.path, contains('object_interactions/serving_tray.png'));
+      expect(MascotObjectInteraction.trophy.path, contains('object_interactions/trophy.png'));
+    });
+
+    test('Model sheets are registered in MascotAssetRegistry', () {
+      expect(MascotAssetRegistry.facialExpressionSheet, contains('facial_expression_sheet.png'));
+      expect(MascotAssetRegistry.pawAnatomySheet, contains('paw_anatomy_sheet.png'));
+      expect(MascotAssetRegistry.objectInteractionSheet, contains('object_interaction_sheet.png'));
+      expect(MascotAssetRegistry.poseReferenceSheet, contains('pose_reference_sheet.png'));
     });
 
     test('All chef actions resolve to expected paths', () {
@@ -50,6 +70,29 @@ void main() {
 
       expect(find.text('Chef Barnaby'), findsOneWidget);
       expect(find.text('Welcome to CaféOS!'), findsOneWidget);
+    });
+
+    testWidgets('MascotWidget renders with object interaction and paw study', (tester) async {
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: Scaffold(
+            body: Column(
+              children: [
+                MascotWidget(
+                  objectInteraction: MascotObjectInteraction.coffeeCup,
+                  height: 120,
+                ),
+                MascotWidget(
+                  pawStudy: MascotPawStudy.thumbsUp,
+                  height: 100,
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+
+      expect(find.byType(MascotWidget), findsNWidgets(2));
     });
 
     testWidgets('MascotEmptyState renders with action button', (tester) async {

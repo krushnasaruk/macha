@@ -17,7 +17,8 @@ enum MascotExpression {
   disappointed('disappointed.png'),
   embarrassed('embarrassed.png'),
   curious('curious.png'),
-  determined('determined.png');
+  determined('determined.png'),
+  sad('sad.png');
 
   final String filename;
   const MascotExpression(this.filename);
@@ -90,9 +91,20 @@ enum MascotStateIllustration {
 
 enum MascotPose {
   standingRelaxed('standing_relaxed.png'),
+  standing('standing.png'),
+  sitting('sitting.png'),
+  walking('walking.png'),
+  leaning('leaning.png'),
+  waving('waving.png'),
+  pointing('pointing.png'),
   pointingLeft('pointing_left.png'),
   pointingRight('pointing_right.png'),
+  carrying('carrying.png'),
+  holding('holding.png'),
   celebrating('celebrating.png'),
+  thinking('thinking.png'),
+  cooking('cooking.png'),
+  resting('resting.png'),
   lookingCorner('looking_corner.png'),
   sleeping('sleeping.png');
 
@@ -102,12 +114,59 @@ enum MascotPose {
   String get path => 'assets/mascot/poses/$filename';
 }
 
+enum MascotPawStudy {
+  frontFacing('front_facing.png'),
+  sideFacing('side_facing.png'),
+  openRelaxed('open_relaxed.png'),
+  closedPaw('closed_paw.png'),
+  pointing('pointing.png'),
+  waving('waving.png'),
+  thumbsUp('thumbs_up.png'),
+  holdingCup('holding_cup.png'),
+  holdingHandle('holding_handle.png'),
+  grippingObject('gripping_object.png'),
+  supportingUnderneath('supporting_underneath.png'),
+  restingSurface('resting_surface.png'),
+  holdingPen('holding_pen.png'),
+  touchingScreen('touching_screen.png'),
+  bothPawsHolding('both_paws_holding.png');
+
+  final String filename;
+  const MascotPawStudy(this.filename);
+
+  String get path => 'assets/mascot/paws/$filename';
+}
+
+enum MascotObjectInteraction {
+  coffeeCup('coffee_cup.png'),
+  servingTray('serving_tray.png'),
+  receipt('receipt.png'),
+  menu('menu.png'),
+  spatula('spatula.png'),
+  cookingPan('cooking_pan.png'),
+  laptop('laptop.png'),
+  shoppingBasket('shopping_basket.png'),
+  coffeePot('coffee_pot.png'),
+  cake('cake.png'),
+  checklist('checklist.png'),
+  trophy('trophy.png');
+
+  final String filename;
+  const MascotObjectInteraction(this.filename);
+
+  String get path => 'assets/mascot/object_interactions/$filename';
+}
+
 class MascotAssetRegistry {
   const MascotAssetRegistry._();
 
   static const String masterReference = 'assets/mascot/reference/master_character.png';
   static const String masterTransparent = 'assets/mascot/reference/master_character_transparent.png';
   static const String characterSheet = 'assets/mascot/reference/character_sheet.png';
+  static const String facialExpressionSheet = 'assets/mascot/reference/facial_expression_sheet.png';
+  static const String pawAnatomySheet = 'assets/mascot/reference/paw_anatomy_sheet.png';
+  static const String objectInteractionSheet = 'assets/mascot/reference/object_interaction_sheet.png';
+  static const String poseReferenceSheet = 'assets/mascot/reference/pose_reference_sheet.png';
 
   // Branding
   static const String logoPrimary = 'assets/branding/logo/cafeos_primary.svg';

@@ -4,11 +4,22 @@ import 'package:drift/native.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
+import 'tables/platform_tables.dart';
 import 'tables/sync_tables.dart';
 
 part 'app_database.g.dart';
 
-@DriftDatabase(tables: [SyncOutboxTable, SyncStateTable, AppConfigTable])
+@DriftDatabase(tables: [
+  SyncOutboxTable,
+  SyncStateTable,
+  AppConfigTable,
+  TenantsTable,
+  TenantSettingsTable,
+  BranchesTable,
+  EmployeesTable,
+  DevicesTable,
+  AuditLogsTable,
+])
 class AppDatabase extends _$AppDatabase {
   AppDatabase([QueryExecutor? e]) : super(e ?? _openConnection());
 

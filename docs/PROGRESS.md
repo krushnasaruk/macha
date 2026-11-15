@@ -1,15 +1,15 @@
 # CaféOS Progress
 
 ## Current state
-- Stage: 1 (Completed) → Stage 2 (Ready to start)
-- Last completed task: Stage 1 Foundation (T1.1 through T1.9)
-- Next task: T2.1 Migration 0001_platform_core (tenants, branches, roles, permissions, employees, devices, audit_logs)
-- Build status: Clean compile (`flutter build bundle`), zero analyze issues, 25 tests passing
+- Stage: 2 (Completed) → Stage 3 (Ready to start)
+- Last completed task: Stage 2 Tenant and business foundation (T2.1 through T2.6)
+- Next task: T3.1 Menu management migration (categories, products, variants, modifier_groups, branch availability)
+- Build status: Clean compile, zero analyze issues, 29 tests passing
 
 ## Stage checklist
 - [x] Stage 0 Inspection
 - [x] Stage 1 Foundation
-- [ ] Stage 2 Tenant and business foundation
+- [x] Stage 2 Tenant and business foundation
 - [ ] Stage 3 Menu management
 - [ ] Stage 4 POS and billing (Milestone M1)
 - [ ] Stage 5 Orders, tables, kitchen (Milestone M2)
@@ -54,10 +54,16 @@
 | 2026-11-15 | T1.7 | Permission engine | Granular permission keys, `RolePermissions` matrix, `canPermissionProvider` |
 | 2026-11-15 | T1.8 | Database & error model | Drift database bootstrap, outbox tables, `AppFailure` hierarchy & mapper |
 | 2026-11-15 | T1.9 | Supabase configuration | `supabase init` completed, `DATABASE.md` documented, env config |
-| 2026-11-15 | Stage 1 Gate | `dart run build_runner build` | Drift database code generated (`app_database.g.dart`) |
 | 2026-11-15 | Stage 1 Gate | `flutter test` | All 25 unit and widget tests passed |
-| 2026-11-15 | Stage 1 Gate | `flutter analyze` | Clean analysis (0 issues) |
-| 2026-11-15 | Stage 1 Gate | `flutter build bundle` | Build successful (exit code 0) |
+| 2026-11-15 | T2.1 | Migration `0001_platform_core` | Core platform tables, RLS helpers, audit log created |
+| 2026-11-15 | T2.2 | RLS policies | Tenant isolation policies on public platform tables |
+| 2026-11-15 | T2.3 | Seed script | `supabase/seed.sql` with idempotent ON CONFLICT clauses |
+| 2026-11-15 | T2.4 | Drift platform tables | `TenantsTable`, `TenantSettingsTable`, `BranchesTable`, `EmployeesTable`, `DevicesTable`, `AuditLogsTable` |
+| 2026-11-15 | T2.5 | Repository pattern template | `BranchRepository` single-write path (local transaction → outbox row) |
+| 2026-11-15 | T2.6 | Tenant settings & branch selector | `TenantSettingsScreen` with live Drift persistence and outbox enqueue |
+| 2026-11-15 | Stage 2 Gate | `dart run build_runner build` | Drift database code regenerated (1033 outputs) |
+| 2026-11-15 | Stage 2 Gate | `flutter test` | All 29 unit and widget tests passed |
+| 2026-11-15 | Stage 2 Gate | `flutter analyze` | Clean analysis (0 issues) |
 
 ## Environment
 - Flutter/Dart versions: Flutter 3.24.5 • Dart 3.5.4

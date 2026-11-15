@@ -9,6 +9,7 @@ import '../../features/orders/presentation/tables_screen.dart';
 import '../../features/reports/presentation/reports_screen.dart';
 import '../../features/settings/presentation/component_gallery_screen.dart';
 import '../../features/settings/presentation/settings_screen.dart';
+import '../../features/settings/presentation/tenant_settings_screen.dart';
 import '../identity/identity_models.dart';
 import '../identity/identity_provider.dart';
 import '../permissions/permission_keys.dart';
@@ -146,6 +147,10 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/gallery',
         builder: (context, state) => const ComponentGalleryScreen(),
+      ),
+      GoRoute(
+        path: '/settings/tenant',
+        builder: (context, state) => const TenantSettingsScreen(),
       ),
     ],
   );

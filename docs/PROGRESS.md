@@ -95,6 +95,10 @@
 | 2026-11-15 | M2 Milestone Gate | `flutter analyze` | Clean analysis (0 issues) |
 | 2026-11-15 | UX Stage 0 | Baseline report & benchmarks | `UX_BASELINE.md`, `UX_BENCHMARKS.md`, `UX_PROGRESS.md`, `UX_CHANGELOG.md` |
 | 2026-11-15 | UX Stage 1 | Audit & principles | `UX_AUDIT.md` (15 reference apps, state matrix, single-flight audit, friction scorecard) & `UX_PRINCIPLES.md` |
+| 2026-11-15 | Mobile UI Refinement | Screen Redesign & Visual Match | Redesigned Home Dashboard, POS, Inventory, Orders, and More to match approved warm reference design |
+| 2026-11-16 | MΛCHA Brand Identity | Brand Generator Script | Generated custom architectural `Λ` wordmarks, standalone monogram, app icons, color palette, POS receipt, and cup mockups |
+| 2026-11-16 | Quality Gate | `flutter test` | All 99 unit and widget tests passed |
+| 2026-11-16 | Quality Gate | `flutter analyze` | Clean analysis (0 issues) |
 
 ## Environment
 - Flutter/Dart versions: Flutter 3.24.5 • Dart 3.5.4

@@ -21,10 +21,10 @@ class DailyFoodSpecial {
     DailyFoodSpecial(
       weekday: DateTime.monday, // 1
       dayName: 'Monday',
-      title: 'Artisanal Cappuccino & Croissant',
-      tag: 'Monday Kickstart 🥐',
+      title: 'Artisanal Latte on Saucer',
+      tag: 'Monday Kickstart ☕',
       assetPath: 'assets/food/food_day_1_monday.png',
-      description: 'Golden flaky French butter croissant paired with fresh heart-foam cappuccino.',
+      description: 'Velvety microfoam latte with rosetta art in ceramic cup on saucer.',
     ),
     DailyFoodSpecial(
       weekday: DateTime.tuesday, // 2
@@ -53,10 +53,10 @@ class DailyFoodSpecial {
     DailyFoodSpecial(
       weekday: DateTime.friday, // 5
       dayName: 'Friday',
-      title: 'Gourmet Truffle Panini',
+      title: 'Gourmet Toasted Panini',
       tag: 'Friday Feast 🥪',
       assetPath: 'assets/food/food_day_5_friday.png',
-      description: 'Toasted artisan sourdough with melted mozzarella, sautéed mushrooms and herbs.',
+      description: 'Toasted artisan sandwich with melted mozzarella, savory fillings and herbs.',
     ),
     DailyFoodSpecial(
       weekday: DateTime.saturday, // 6

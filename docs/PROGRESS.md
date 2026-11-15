@@ -102,6 +102,15 @@
 | 2026-11-16 | Home UI & 7-Day Showcase | Weekly Food Image Rotation | Integrated 7 photorealistic transparent food assets into 'over the div' floating hero card with modal selector |
 | 2026-11-16 | Quality Gate | `flutter test` | All 101 unit and widget tests passed |
 | 2026-11-16 | Quality Gate | `flutter analyze` | Clean analysis (0 issues) |
+| 2026-11-16 | MΛCHA Transformation | Deep Forest Matcha Palette | Enforced `#293D32` Deep Forest Matcha, `#A5B98A` Matcha Green, `#B9A7CE` Soft Lavender, `#FFF9F2` Vanilla Cream |
+| 2026-11-16 | Fixed Bottom Navigation | Pinned Full-Width Bar | Replaced floating capsule with fixed 5-tab bar (Home, Orders, POS, Inventory, More) pinned to bottom edge |
+| 2026-11-16 | Food Photography & Assets | Padding & Sunday Dessert | Eliminated edge cutting (`touch_edge=False`), replaced Sunday bread with French Glazed Strawberry Tart |
+| 2026-11-16 | Mascot Identity Refinement | Strictly 2 Arms & Organic Paws | Resolved 4-arm bug in poses 4-12 (`get_base_body`), regenerated cuddly bear paw anatomy sheet |
+| 2026-11-16 | User-Uploaded Food Images | ImageStorageService | Added `image_picker`, local persistent storage, Supabase storage remote sync, safe placeholder fallback |
+| 2026-11-16 | Menu Management Feature | Add/Edit Product & Category Modals | Image picker with camera/gallery, category selector, price in Rupees, live food photography display |
+| 2026-11-16 | Inventory Management Feature | Comprehensive Stock Control | KPI cards, stock adjustment modal (Restock/Waste/Audit), quick deltas, stock movement audit trail |
+| 2026-11-16 | Screen Redesigns | MΛCHA Identity Refresh | Updated Home Dashboard, POS Screen, Settings/More, and Orders with MΛCHA branding and colors |
+| 2026-11-16 | Final Quality Gate | `flutter analyze` & `flutter test` | Clean analysis (0 issues), 101/101 tests passed (100% pass rate) |
 
 ## Environment
 - Flutter/Dart versions: Flutter 3.24.5 • Dart 3.5.4

@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../features/settings/presentation/dev_tools_sheet.dart';
 import '../components/app_badge.dart';
-import '../components/floating_bottom_nav.dart';
+import '../components/fixed_bottom_nav.dart';
 import '../identity/identity_provider.dart';
 import '../permissions/role_permissions.dart';
 import '../theme/app_colors.dart';
@@ -46,20 +46,40 @@ class AppShell extends ConsumerWidget {
                 child: Column(
                   children: [
                     ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(12),
                       child: Image.asset(
-                        'assets/branding/logo/cafeos_app_icon.png',
+                        'assets/branding/macha/macha_app_icon_forest.png',
                         width: 44,
                         height: 44,
                         fit: BoxFit.cover,
+                        errorBuilder: (_, __, ___) => Container(
+                          width: 44,
+                          height: 44,
+                          decoration: const BoxDecoration(
+                            color: AppColors.primary,
+                            shape: BoxShape.circle,
+                          ),
+                          alignment: Alignment.center,
+                          child: const Text(
+                            'Λ',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 22,
+                              fontWeight: FontWeight.w900,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                     const SizedBox(height: 8),
-                    Text(
-                      'CaféOS',
-                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
+                    const Text(
+                      'MΛCHA',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w900,
+                        fontSize: 16,
+                        letterSpacing: 1.0,
+                        color: AppColors.primary,
+                      ),
                     ),
                     const SizedBox(height: 4),
                     AppBadge(
@@ -98,34 +118,34 @@ class AppShell extends ConsumerWidget {
       );
     }
 
-    // Phone Floating Capsule Bottom Navigation (Reference Design)
+    // Official MΛCHA Full-Width Fixed Bottom Navigation
     const mobileDestinations = [
-      FloatingBottomNavItem(
+      BottomNavItem(
         path: '/home',
         label: 'Home',
         icon: Icons.home_outlined,
         selectedIcon: Icons.home_rounded,
       ),
-      FloatingBottomNavItem(
+      BottomNavItem(
         path: '/orders',
         label: 'Orders',
         icon: Icons.receipt_long_outlined,
         selectedIcon: Icons.receipt_long_rounded,
       ),
-      FloatingBottomNavItem(
+      BottomNavItem(
         path: '/pos',
         label: 'POS',
         icon: Icons.add_rounded,
         selectedIcon: Icons.add_rounded,
-        isCenterFab: true,
+        isCenterAction: true,
       ),
-      FloatingBottomNavItem(
+      BottomNavItem(
         path: '/inventory',
-        label: 'Stock',
+        label: 'Inventory',
         icon: Icons.inventory_2_outlined,
         selectedIcon: Icons.inventory_2_rounded,
       ),
-      FloatingBottomNavItem(
+      BottomNavItem(
         path: '/settings',
         label: 'More',
         icon: Icons.more_horiz_rounded,
@@ -151,7 +171,7 @@ class AppShell extends ConsumerWidget {
     return Scaffold(
       backgroundColor: AppColors.backgroundLight,
       body: UxHudOverlay(child: child),
-      bottomNavigationBar: FloatingBottomNav(
+      bottomNavigationBar: FixedBottomNav(
         selectedIndex: mobileIndex,
         items: mobileDestinations,
         onItemSelected: (index) {

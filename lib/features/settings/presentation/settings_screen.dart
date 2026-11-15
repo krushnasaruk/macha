@@ -55,6 +55,21 @@ class SettingsScreen extends ConsumerWidget {
           const SizedBox(height: 10),
           _buildGroupedCard([
             _SettingsTile(
+              icon: Icons.restaurant_menu_rounded,
+              title: 'Menu Catalog & Recipes',
+              onTap: () => context.push('/menu'),
+            ),
+            _SettingsTile(
+              icon: Icons.table_restaurant_rounded,
+              title: 'Table Management',
+              onTap: () => context.push('/tables'),
+            ),
+            _SettingsTile(
+              icon: Icons.soup_kitchen_rounded,
+              title: 'Kitchen Display (KDS)',
+              onTap: () => context.push('/kitchen'),
+            ),
+            _SettingsTile(
               icon: Icons.bar_chart_rounded,
               title: 'Business Analytics',
               onTap: () => context.push('/reports'),
@@ -170,19 +185,31 @@ class SettingsScreen extends ConsumerWidget {
         ),
         child: Row(
           children: [
-            // Left Circular dark coffee badge
-            Container(
-              width: 50,
-              height: 50,
-              decoration: const BoxDecoration(
-                color: AppColors.primary,
-                shape: BoxShape.circle,
-              ),
-              alignment: Alignment.center,
-              child: const Icon(
-                Icons.coffee_rounded,
-                color: AppColors.warmCream,
-                size: 26,
+            // Left Circular dark emblem
+            ClipRRect(
+              borderRadius: BorderRadius.circular(14),
+              child: Image.asset(
+                'assets/branding/macha/macha_app_icon_forest.png',
+                width: 50,
+                height: 50,
+                fit: BoxFit.cover,
+                errorBuilder: (_, __, ___) => Container(
+                  width: 50,
+                  height: 50,
+                  decoration: const BoxDecoration(
+                    color: AppColors.primary,
+                    shape: BoxShape.circle,
+                  ),
+                  alignment: Alignment.center,
+                  child: const Text(
+                    'Λ',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 26,
+                      fontWeight: FontWeight.w900,
+                    ),
+                  ),
+                ),
               ),
             ),
             const SizedBox(width: 14),
@@ -191,16 +218,17 @@ class SettingsScreen extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
-                    'CaféOS',
+                    'MΛCHA',
                     style: TextStyle(
-                      fontSize: 17,
-                      fontWeight: FontWeight.w800,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w900,
+                      letterSpacing: 1.0,
                       color: AppColors.primary,
                     ),
                   ),
                   const SizedBox(height: 2),
                   Text(
-                    'Premium Plan • ${identity.employee.name}',
+                    'Enterprise Café-Tech • ${identity.employee.name}',
                     style: const TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w500,

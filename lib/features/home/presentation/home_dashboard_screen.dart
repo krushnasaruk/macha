@@ -112,35 +112,41 @@ class _HomeDashboardContentState extends ConsumerState<_HomeDashboardContent> {
   Widget _buildTopHeader(BuildContext context, String employeeName) {
     return Row(
       children: [
-        // CaféOS Emblem
-        Container(
-          width: 38,
-          height: 38,
-          decoration: BoxDecoration(
-            color: AppColors.primary,
-            shape: BoxShape.circle,
-            boxShadow: [
-              BoxShadow(
-                color: AppColors.primary.withOpacity(0.22),
-                blurRadius: 8,
-                offset: const Offset(0, 3),
+        // MΛCHA Emblem
+        ClipRRect(
+          borderRadius: BorderRadius.circular(10),
+          child: Image.asset(
+            'assets/branding/macha/macha_app_icon_forest.png',
+            width: 38,
+            height: 38,
+            fit: BoxFit.cover,
+            errorBuilder: (_, __, ___) => Container(
+              width: 38,
+              height: 38,
+              decoration: const BoxDecoration(
+                color: AppColors.primary,
+                shape: BoxShape.circle,
               ),
-            ],
-          ),
-          alignment: Alignment.center,
-          child: const Icon(
-            Icons.coffee_rounded,
-            color: AppColors.warmCream,
-            size: 20,
+              alignment: Alignment.center,
+              child: const Text(
+                'Λ',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w900,
+                  fontSize: 20,
+                ),
+              ),
+            ),
           ),
         ),
         const SizedBox(width: 10),
-        Text(
-          'CaféOS',
-          style: AppTypography.titleLarge.copyWith(
-            fontWeight: FontWeight.w800,
+        const Text(
+          'MΛCHA',
+          style: TextStyle(
+            fontWeight: FontWeight.w900,
+            fontSize: 22,
+            letterSpacing: 1.2,
             color: AppColors.primary,
-            letterSpacing: -0.5,
           ),
         ),
         const Spacer(),

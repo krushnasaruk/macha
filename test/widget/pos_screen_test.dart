@@ -72,7 +72,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // Verify UI elements
-    expect(find.text('CaféOS POS'), findsOneWidget);
+    expect(find.text('MΛCHA POS'), findsOneWidget);
     expect(find.text('Classic Americano'), findsOneWidget);
     expect(find.text('Almond Croissant'), findsOneWidget);
     expect(find.text('Current Sale (0)'), findsOneWidget);

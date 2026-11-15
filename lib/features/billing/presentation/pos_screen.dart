@@ -4,6 +4,7 @@ import 'package:cafe_os/core/components/app_button.dart';
 import 'package:cafe_os/core/components/currency_text.dart';
 import 'package:cafe_os/core/components/floating_cart_bar.dart';
 import 'package:cafe_os/core/components/pill_filter_chip.dart';
+import 'package:cafe_os/core/services/image_storage_service.dart';
 import 'package:cafe_os/core/theme/app_colors.dart';
 import 'package:cafe_os/core/theme/app_spacing.dart';
 import 'package:cafe_os/core/theme/app_typography.dart';
@@ -53,7 +54,7 @@ class _PosScreenState extends ConsumerState<PosScreen> {
     return Scaffold(
       backgroundColor: AppColors.backgroundLight,
       appBar: AppBar(
-        title: const Text('CaféOS POS'),
+        title: const Text('MΛCHA POS'),
         actions: [
           // QR Scanner Icon (Reference Design)
           IconButton(
@@ -406,19 +407,27 @@ class _PosScreenState extends ConsumerState<PosScreen> {
                   child: Stack(
                     alignment: Alignment.center,
                     children: [
-                      // Drink Illustration
+                      // Food/Drink Illustration or Real Photograph
                       Center(
-                        child: Image.asset(
-                          asset,
-                          fit: BoxFit.contain,
-                          width: 105,
-                          height: 105,
-                          errorBuilder: (_, __, ___) => const Icon(
-                            Icons.coffee_rounded,
-                            size: 48,
-                            color: AppColors.primary,
-                          ),
-                        ),
+                        child: prod.imageUrl != null && prod.imageUrl!.isNotEmpty
+                            ? ImageStorageService.buildProductImage(
+                                prod.imageUrl,
+                                width: 105,
+                                height: 105,
+                                fit: BoxFit.contain,
+                                borderRadius: BorderRadius.circular(16),
+                              )
+                            : Image.asset(
+                                asset,
+                                fit: BoxFit.contain,
+                                width: 105,
+                                height: 105,
+                                errorBuilder: (_, __, ___) => const Icon(
+                                  Icons.coffee_rounded,
+                                  size: 48,
+                                  color: AppColors.primary,
+                                ),
+                              ),
                       ),
                       if (inCartCount > 0)
                         Positioned(

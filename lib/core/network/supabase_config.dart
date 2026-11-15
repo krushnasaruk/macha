@@ -24,5 +24,14 @@ abstract final class SupabaseConfig {
     }
   }
 
+  static bool get isConfigured {
+    try {
+      Supabase.instance.client;
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
+
   static SupabaseClient get client => Supabase.instance.client;
 }

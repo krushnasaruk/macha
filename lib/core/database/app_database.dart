@@ -1,9 +1,6 @@
-import 'dart:io';
 import 'package:drift/drift.dart';
-import 'package:drift/native.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:path/path.dart' as p;
-import 'package:path_provider/path_provider.dart';
+import 'connection/connection.dart' as impl;
 import 'tables/billing_tables.dart';
 import 'tables/menu_tables.dart';
 import 'tables/platform_tables.dart';
@@ -46,7 +43,7 @@ part 'app_database.g.dart';
   OrderStatusHistoryTable,
 ])
 class AppDatabase extends _$AppDatabase {
-  AppDatabase([QueryExecutor? e]) : super(e ?? _openConnection());
+  AppDatabase([QueryExecutor? e]) : super(e ?? impl.connect());
 
   /// In-memory constructor for unit tests.
   AppDatabase.memory(super.executor);
@@ -64,14 +61,6 @@ class AppDatabase extends _$AppDatabase {
         // Schema migrations will be handled here sequentially.
       },
     );
-  }
-
-  static QueryExecutor _openConnection() {
-    return LazyDatabase(() async {
-      final dbFolder = await getApplicationDocumentsDirectory();
-      final file = File(p.join(dbFolder.path, 'cafe_os_local.sqlite'));
-      return NativeDatabase.createInBackground(file);
-    });
   }
 }
 

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
+import '../ux/interaction/pressable.dart';
+import '../ux/interaction/single_flight.dart';
 
 enum AppButtonVariant { primary, secondary, outline, text, danger }
 
@@ -47,10 +49,13 @@ class AppButton extends StatelessWidget {
           );
 
     final effectiveOnPressed = isLoading ? null : onPressed;
+    final guardedOnPressed = effectiveOnPressed != null
+        ? singleFlightCallback(context, effectiveOnPressed)
+        : null;
 
     Widget button = switch (variant) {
       AppButtonVariant.primary => ElevatedButton(
-          onPressed: effectiveOnPressed,
+          onPressed: guardedOnPressed,
           style: ElevatedButton.styleFrom(
             backgroundColor: AppColors.primary,
             foregroundColor: Colors.white,
@@ -59,7 +64,7 @@ class AppButton extends StatelessWidget {
           child: child,
         ),
       AppButtonVariant.secondary => ElevatedButton(
-          onPressed: effectiveOnPressed,
+          onPressed: guardedOnPressed,
           style: ElevatedButton.styleFrom(
             backgroundColor: AppColors.secondary,
             foregroundColor: Colors.white,
@@ -68,7 +73,7 @@ class AppButton extends StatelessWidget {
           child: child,
         ),
       AppButtonVariant.outline => OutlinedButton(
-          onPressed: effectiveOnPressed,
+          onPressed: guardedOnPressed,
           style: OutlinedButton.styleFrom(
             foregroundColor: AppColors.primary,
             side: const BorderSide(color: AppColors.primary),
@@ -77,7 +82,7 @@ class AppButton extends StatelessWidget {
           child: child,
         ),
       AppButtonVariant.text => TextButton(
-          onPressed: effectiveOnPressed,
+          onPressed: guardedOnPressed,
           style: TextButton.styleFrom(
             foregroundColor: AppColors.primary,
             minimumSize: Size(isFullWidth ? double.infinity : 64, height ?? 48),
@@ -85,7 +90,7 @@ class AppButton extends StatelessWidget {
           child: child,
         ),
       AppButtonVariant.danger => ElevatedButton(
-          onPressed: effectiveOnPressed,
+          onPressed: guardedOnPressed,
           style: ElevatedButton.styleFrom(
             backgroundColor: AppColors.error,
             foregroundColor: Colors.white,
@@ -95,9 +100,14 @@ class AppButton extends StatelessWidget {
         ),
     };
 
-    if (isFullWidth) {
-      return SizedBox(width: double.infinity, child: button);
-    }
-    return button;
+    final renderedButton = isFullWidth
+        ? SizedBox(width: double.infinity, child: button)
+        : button;
+
+    return Pressable(
+      isInteractive: guardedOnPressed != null,
+      pressedScale: 0.985,
+      child: renderedButton,
+    );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../../../core/components/app_badge.dart';
 import '../../../core/components/app_button.dart';
 import '../../../core/components/app_card.dart';
@@ -8,6 +9,8 @@ import '../../../core/components/currency_text.dart';
 import '../../../core/components/offline_sync_indicator.dart';
 import '../../../core/components/state_indicators.dart';
 import '../../../core/theme/app_spacing.dart';
+import '../../../core/ux/interaction/hold_repeat.dart';
+import '../../../core/ux/loading/skeleton.dart';
 import '../../../core/values/money.dart';
 
 class ComponentGalleryScreen extends StatefulWidget {
@@ -21,6 +24,7 @@ class _ComponentGalleryScreenState extends State<ComponentGalleryScreen> {
   final _testController = TextEditingController(text: 'Espresso Blend');
   bool _selectedCard = false;
   bool _buttonLoading = false;
+  int _stepperCount = 1;
 
   @override
   void dispose() {
@@ -192,6 +196,108 @@ class _ComponentGalleryScreenState extends State<ComponentGalleryScreen> {
             child: AppErrorState(
               message: 'Failed to connect to local printer series B-2.',
               onRetry: () {},
+            ),
+          ),
+          const SizedBox(height: 24),
+
+          _sectionTitle('8. UX Primitives & Motion Lab (Stage 2)'),
+          AppCard(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'A. Pressable & Hold-to-Repeat Stepper',
+                  style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    HoldRepeat(
+                      onTrigger: () {
+                        if (_stepperCount > 1) setState(() => _stepperCount--);
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: Colors.grey.shade200,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: const Icon(Icons.remove, size: 20),
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    Text('Qty: $_stepperCount', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                    const SizedBox(width: 16),
+                    HoldRepeat(
+                      onTrigger: () {
+                        setState(() => _stepperCount++);
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: Colors.grey.shade200,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: const Icon(Icons.add, size: 20),
+                      ),
+                    ),
+                  ],
+                ),
+                const Divider(height: 24),
+                Text(
+                  'B. Shimmer Skeletons (150ms delay / 300ms min hold)',
+                  style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 12),
+                const Shimmer(
+                  child: Row(
+                    children: [
+                      SkeletonCircle(size: 44),
+                      SizedBox(width: 12),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SkeletonLine(width: 140, height: 16),
+                            SizedBox(height: 6),
+                            SkeletonLine(width: 80, height: 12),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const Divider(height: 24),
+                Text(
+                  'C. Haptic & Sensory Feedback',
+                  style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 8),
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: [
+                    AppButton(
+                      label: 'Selection Click',
+                      variant: AppButtonVariant.outline,
+                      height: 36,
+                      onPressed: () => HapticFeedback.selectionClick(),
+                    ),
+                    AppButton(
+                      label: 'Light Tap',
+                      variant: AppButtonVariant.outline,
+                      height: 36,
+                      onPressed: () => HapticFeedback.lightImpact(),
+                    ),
+                    AppButton(
+                      label: 'Heavy Confirm',
+                      variant: AppButtonVariant.outline,
+                      height: 36,
+                      onPressed: () => HapticFeedback.heavyImpact(),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
           const SizedBox(height: 32),

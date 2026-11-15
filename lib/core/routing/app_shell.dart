@@ -7,6 +7,7 @@ import '../identity/identity_provider.dart';
 import '../permissions/role_permissions.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_spacing.dart';
+import '../ux/metrics/ux_hud.dart';
 import 'app_router.dart';
 
 class AppShell extends ConsumerWidget {
@@ -93,7 +94,7 @@ class AppShell extends ConsumerWidget {
               }).toList(),
             ),
             const VerticalDivider(thickness: 1, width: 1),
-            Expanded(child: child),
+            Expanded(child: UxHudOverlay(child: child)),
           ],
         ),
       );
@@ -101,7 +102,7 @@ class AppShell extends ConsumerWidget {
 
     // Phone Bottom Navigation
     return Scaffold(
-      body: child,
+      body: UxHudOverlay(child: child),
       bottomNavigationBar: NavigationBar(
         selectedIndex: safeIndex,
         onDestinationSelected: (index) {

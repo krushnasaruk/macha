@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_spacing.dart';
+import '../ux/interaction/pressable.dart';
 
 class AppCard extends StatelessWidget {
   final Widget child;
@@ -36,7 +37,7 @@ class AppCard extends StatelessWidget {
         ? (isDark ? AppColors.primaryDark.withOpacity(0.3) : AppColors.primaryContainer.withOpacity(0.5))
         : (backgroundColor ?? (isDark ? AppColors.cardDark : AppColors.cardLight));
 
-    return Material(
+    final cardWidget = Material(
       color: bg,
       shape: RoundedRectangleBorder(
         side: borderSide ?? defaultBorder,
@@ -50,6 +51,14 @@ class AppCard extends StatelessWidget {
           child: child,
         ),
       ),
+    );
+
+    if (onTap == null) return cardWidget;
+
+    return Pressable(
+      isInteractive: true,
+      pressedScale: 0.988,
+      child: cardWidget,
     );
   }
 }

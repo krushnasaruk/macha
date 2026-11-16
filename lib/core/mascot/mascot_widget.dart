@@ -23,6 +23,9 @@ class MascotWidget extends StatefulWidget {
   final BubbleStyle bubbleStyle;
   final BubbleTailPosition tailPosition;
   final VoidCallback? onTap;
+  final bool animateTyping;
+  final bool enableTypingFeedback;
+  final VoidCallback? onTypingFinished;
 
   const MascotWidget({
     super.key,
@@ -42,6 +45,9 @@ class MascotWidget extends StatefulWidget {
     this.bubbleStyle = BubbleStyle.normal,
     this.tailPosition = BubbleTailPosition.left,
     this.onTap,
+    this.animateTyping = false,
+    this.enableTypingFeedback = true,
+    this.onTypingFinished,
   });
 
   /// Factory for neutral standing mascot
@@ -191,6 +197,9 @@ class _MascotWidgetState extends State<MascotWidget>
             title: widget.dialogueTitle,
             style: widget.bubbleStyle,
             tailPosition: widget.tailPosition,
+            animateTyping: widget.animateTyping,
+            enableTypingFeedback: widget.enableTypingFeedback,
+            onTypingFinished: widget.onTypingFinished,
           ),
           if (!isTailLeft) const SizedBox(width: 8),
           if (!isTailLeft) bearImage,
@@ -208,6 +217,9 @@ class _MascotWidgetState extends State<MascotWidget>
               title: widget.dialogueTitle,
               style: widget.bubbleStyle,
               tailPosition: widget.tailPosition,
+              animateTyping: widget.animateTyping,
+              enableTypingFeedback: widget.enableTypingFeedback,
+              onTypingFinished: widget.onTypingFinished,
             ),
           if (isTailBottom) const SizedBox(height: 8),
           bearImage,
@@ -218,6 +230,9 @@ class _MascotWidgetState extends State<MascotWidget>
               title: widget.dialogueTitle,
               style: widget.bubbleStyle,
               tailPosition: widget.tailPosition,
+              animateTyping: widget.animateTyping,
+              enableTypingFeedback: widget.enableTypingFeedback,
+              onTypingFinished: widget.onTypingFinished,
             ),
         ],
       );

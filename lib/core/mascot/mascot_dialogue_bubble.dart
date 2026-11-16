@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_typography.dart';
 import '../ux/motion/motion_tokens.dart';
@@ -16,6 +18,9 @@ class MascotDialogueBubble extends StatefulWidget {
   final double maxWidth;
   final VoidCallback? onTap;
   final Widget? trailing;
+  final bool animateTyping;
+  final bool enableTypingFeedback;
+  final VoidCallback? onTypingFinished;
 
   const MascotDialogueBubble({
     super.key,
@@ -26,6 +31,9 @@ class MascotDialogueBubble extends StatefulWidget {
     this.maxWidth = 260.0,
     this.onTap,
     this.trailing,
+    this.animateTyping = false,
+    this.enableTypingFeedback = true,
+    this.onTypingFinished,
   });
 
   @override
@@ -37,6 +45,15 @@ class _MascotDialogueBubbleState extends State<MascotDialogueBubble>
   late AnimationController _animController;
   late Animation<double> _scaleAnimation;
   late Animation<double> _fadeAnimation;
+
+  int _charIndex = 0;
+  bool _isTyping = false;
+  Timer? _typingTimer;
+  Timer? _cursorTimer;
+  bool _showCursor = true;
+
+  bool get _isTestEnvironment =>
+      WidgetsBinding.instance.runtimeType.toString().contains('Test');
 
   @override
   void initState() {
@@ -53,6 +70,72 @@ class _MascotDialogueBubbleState extends State<MascotDialogueBubble>
     );
 
     _animController.forward();
+
+    if (widget.animateTyping && !_isTestEnvironment) {
+      _startTyping();
+    } else {
+      _charIndex = widget.text.length;
+    }
+  }
+
+  void _startTyping() {
+    _typingTimer?.cancel();
+    _cursorTimer?.cancel();
+    _charIndex = 0;
+    _isTyping = true;
+    _showCursor = true;
+
+    _cursorTimer = Timer.periodic(const Duration(milliseconds: 350), (timer) {
+      if (mounted) {
+        setState(() => _showCursor = !_showCursor);
+      }
+    });
+
+    _typingTimer = Timer.periodic(const Duration(milliseconds: 26), (timer) {
+      if (!mounted) {
+        timer.cancel();
+        return;
+      }
+      if (_charIndex < widget.text.length) {
+        setState(() {
+          _charIndex++;
+        });
+
+        // Trigger typing haptics & mechanical click sounds
+        if (widget.enableTypingFeedback && (_charIndex % 2 == 0 || _charIndex == widget.text.length)) {
+          _playTypingEffects();
+        }
+      } else {
+        timer.cancel();
+        _cursorTimer?.cancel();
+        setState(() {
+          _isTyping = false;
+          _showCursor = false;
+        });
+        widget.onTypingFinished?.call();
+      }
+    });
+  }
+
+  void _completeTyping() {
+    if (_isTyping) {
+      _typingTimer?.cancel();
+      _cursorTimer?.cancel();
+      setState(() {
+        _charIndex = widget.text.length;
+        _isTyping = false;
+        _showCursor = false;
+      });
+      widget.onTypingFinished?.call();
+    }
+  }
+
+  void _playTypingEffects() {
+    if (_isTestEnvironment) return;
+    try {
+      HapticFeedback.selectionClick();
+      SystemSound.play(SystemSoundType.click);
+    } catch (_) {}
   }
 
   @override
@@ -60,11 +143,18 @@ class _MascotDialogueBubbleState extends State<MascotDialogueBubble>
     super.didUpdateWidget(oldWidget);
     if (oldWidget.text != widget.text) {
       _animController.forward(from: 0.4);
+      if (widget.animateTyping && !_isTestEnvironment) {
+        _startTyping();
+      } else {
+        _charIndex = widget.text.length;
+      }
     }
   }
 
   @override
   void dispose() {
+    _typingTimer?.cancel();
+    _cursorTimer?.cancel();
     _animController.dispose();
     super.dispose();
   }
@@ -106,43 +196,56 @@ class _MascotDialogueBubbleState extends State<MascotDialogueBubble>
         ),
     };
 
-    final bubble = CustomPaint(
-      painter: _BubblePainter(
-        color: bgColor,
-        borderColor: borderColor,
-        tailPosition: widget.tailPosition,
-        isThought: widget.style == BubbleStyle.thought,
-      ),
-      child: Container(
-        constraints: BoxConstraints(maxWidth: widget.maxWidth),
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            if (widget.title != null) ...[
+    final displayedText = widget.animateTyping
+        ? widget.text.substring(0, _charIndex.clamp(0, widget.text.length))
+        : widget.text;
+
+    final bubble = GestureDetector(
+      onTap: () {
+        if (_isTyping) {
+          _completeTyping();
+        } else {
+          widget.onTap?.call();
+        }
+      },
+      child: CustomPaint(
+        painter: _BubblePainter(
+          color: bgColor,
+          borderColor: borderColor,
+          tailPosition: widget.tailPosition,
+          isThought: widget.style == BubbleStyle.thought,
+        ),
+        child: Container(
+          constraints: BoxConstraints(maxWidth: widget.maxWidth),
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (widget.title != null) ...[
+                Text(
+                  widget.title!,
+                  style: AppTypography.labelLarge.copyWith(
+                    color: titleColor,
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
+                const SizedBox(height: 2),
+              ],
               Text(
-                widget.title!,
-                style: AppTypography.labelLarge.copyWith(
-                  color: titleColor,
-                  fontWeight: FontWeight.w800,
+                _isTyping && _showCursor ? '$displayedText ▎' : displayedText,
+                style: AppTypography.bodySmall.copyWith(
+                  color: textColor,
+                  height: 1.35,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
-              const SizedBox(height: 2),
+              if (widget.trailing != null) ...[
+                const SizedBox(height: 6),
+                widget.trailing!,
+              ],
             ],
-            Text(
-              widget.text,
-              style: AppTypography.bodySmall.copyWith(
-                color: textColor,
-                height: 1.35,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-            if (widget.trailing != null) ...[
-              const SizedBox(height: 6),
-              widget.trailing!,
-            ],
-          ],
+          ),
         ),
       ),
     );

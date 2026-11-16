@@ -5,6 +5,7 @@ import '../../features/settings/presentation/dev_tools_sheet.dart';
 import '../components/app_badge.dart';
 import '../components/fixed_bottom_nav.dart';
 import '../identity/identity_provider.dart';
+import '../mascot/mascot_guided_tour.dart';
 import '../permissions/role_permissions.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_spacing.dart';
@@ -112,7 +113,15 @@ class AppShell extends ConsumerWidget {
               }).toList(),
             ),
             const VerticalDivider(thickness: 1, width: 1),
-            Expanded(child: UxHudOverlay(child: child)),
+            Expanded(
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  UxHudOverlay(child: child),
+                  const GuidedTourOverlay(),
+                ],
+              ),
+            ),
           ],
         ),
       );
@@ -170,7 +179,13 @@ class AppShell extends ConsumerWidget {
 
     return Scaffold(
       backgroundColor: AppColors.backgroundLight,
-      body: UxHudOverlay(child: child),
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          UxHudOverlay(child: child),
+          const GuidedTourOverlay(),
+        ],
+      ),
       bottomNavigationBar: FixedBottomNav(
         selectedIndex: mobileIndex,
         items: mobileDestinations,

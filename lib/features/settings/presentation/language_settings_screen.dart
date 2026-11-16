@@ -53,9 +53,14 @@ class _LanguageSettingsScreenState extends State<LanguageSettingsScreen> {
       backgroundColor: AppColors.backgroundLight,
       appBar: AppBar(
         title: const Text('Language & Regional Settings'),
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.backgroundLight,
         foregroundColor: AppColors.primary,
         elevation: 0,
+        titleTextStyle: const TextStyle(
+          color: AppColors.primary,
+          fontWeight: FontWeight.w800,
+          fontSize: 20,
+        ),
       ),
       body: ListView(
         padding: const EdgeInsets.all(16),
@@ -140,18 +145,18 @@ class _LanguageSettingsScreenState extends State<LanguageSettingsScreen> {
             child: Column(
               children: [
                 ListTile(
-                  title: const Text('Default Currency Symbol'),
-                  subtitle: Text(_selectedCurrency),
-                  trailing: const Icon(Icons.arrow_drop_down_rounded),
+                  title: const Text('Default Currency Symbol', style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.w700, fontSize: 14)),
+                  subtitle: Text(_selectedCurrency, style: const TextStyle(color: AppColors.textSecondaryLight, fontSize: 12)),
+                  trailing: const Icon(Icons.arrow_drop_down_rounded, color: AppColors.primary),
                   onTap: () {
                     _selectCurrencyDialog(context);
                   },
                 ),
                 const Divider(height: 1),
                 ListTile(
-                  title: const Text('Time Display Standard'),
-                  subtitle: Text(_timeFormat),
-                  trailing: const Icon(Icons.arrow_drop_down_rounded),
+                  title: const Text('Time Display Standard', style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.w700, fontSize: 14)),
+                  subtitle: Text(_timeFormat, style: const TextStyle(color: AppColors.textSecondaryLight, fontSize: 12)),
+                  trailing: const Icon(Icons.arrow_drop_down_rounded, color: AppColors.primary),
                   onTap: () {
                     _selectTimeFormatDialog(context);
                   },

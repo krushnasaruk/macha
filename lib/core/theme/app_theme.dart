@@ -3,9 +3,9 @@ import 'app_colors.dart';
 import 'app_typography.dart';
 
 abstract final class AppTheme {
-  static const inputRadius = BorderRadius.all(Radius.circular(16));
-  static const buttonRadius = BorderRadius.all(Radius.circular(16));
-  static const cardRadius = BorderRadius.all(Radius.circular(20));
+  static const inputRadius = BorderRadius.all(Radius.circular(20));
+  static const buttonRadius = BorderRadius.all(Radius.circular(18));
+  static const cardRadius = BorderRadius.all(Radius.circular(22));
 
   static ThemeData get light {
     final textTheme = AppTypography.textTheme(AppColors.textPrimaryLight);
@@ -56,6 +56,20 @@ abstract final class AppTheme {
         color: AppColors.borderLight,
         thickness: 1,
         space: 1,
+      ),
+      listTileTheme: const ListTileThemeData(
+        textColor: AppColors.textPrimaryLight,
+        iconColor: AppColors.primary,
+        titleTextStyle: TextStyle(
+          color: AppColors.textPrimaryLight,
+          fontWeight: FontWeight.w700,
+          fontSize: 14,
+        ),
+        subtitleTextStyle: TextStyle(
+          color: AppColors.textSecondaryLight,
+          fontWeight: FontWeight.w500,
+          fontSize: 12,
+        ),
       ),
       inputDecorationTheme: const InputDecorationTheme(
         filled: true,
@@ -159,6 +173,20 @@ abstract final class AppTheme {
         color: AppColors.borderDark,
         thickness: 1,
         space: 1,
+      ),
+      listTileTheme: const ListTileThemeData(
+        textColor: AppColors.textPrimaryLight,
+        iconColor: AppColors.primary,
+        titleTextStyle: TextStyle(
+          color: AppColors.textPrimaryLight,
+          fontWeight: FontWeight.w700,
+          fontSize: 14,
+        ),
+        subtitleTextStyle: TextStyle(
+          color: AppColors.textSecondaryLight,
+          fontWeight: FontWeight.w500,
+          fontSize: 12,
+        ),
       ),
       inputDecorationTheme: const InputDecorationTheme(
         filled: true,

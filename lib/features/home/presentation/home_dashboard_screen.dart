@@ -407,93 +407,97 @@ class _HomeDashboardContentState extends ConsumerState<_HomeDashboardContent> {
               ),
             ),
           ),
-          const SizedBox(width: 10),
+          const SizedBox(width: 8),
           Expanded(
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
+              physics: const BouncingScrollPhysics(),
               child: Row(
                 children: crew.map((member) {
                   return Padding(
-                    padding: const EdgeInsets.only(right: 10),
-                    child: Pressable(
-                      onTap: () {
-                        HapticFeedback.selectionClick();
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('${member.name} (${member.role}) active on shift'),
-                            duration: const Duration(seconds: 1),
-                            behavior: SnackBarBehavior.floating,
-                          ),
-                        );
-                      },
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Stack(
-                            children: [
-                              Container(
-                                width: 34,
-                                height: 34,
-                                decoration: BoxDecoration(
-                                  color: member.isMascot
-                                      ? AppColors.primaryContainer
-                                      : AppColors.lavenderContainer,
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                    color: member.isMascot
-                                        ? AppColors.primary
-                                        : AppColors.softLavender,
-                                    width: 1.2,
-                                  ),
-                                ),
-                                clipBehavior: Clip.antiAlias,
-                                alignment: Alignment.center,
-                                child: member.isMascot
-                                    ? Image.asset(
-                                        'assets/mascot/poses/standing.png',
-                                        fit: BoxFit.contain,
-                                        width: 28,
-                                        height: 28,
-                                        errorBuilder: (_, __, ___) => const Icon(
-                                          Icons.pets_rounded,
-                                          size: 16,
-                                          color: AppColors.primary,
-                                        ),
-                                      )
-                                    : Text(
-                                        member.name[0],
-                                        style: const TextStyle(
-                                          fontWeight: FontWeight.w800,
-                                          fontSize: 13,
-                                          color: AppColors.primary,
-                                        ),
-                                      ),
-                              ),
-                              Positioned(
-                                right: 0,
-                                bottom: 0,
-                                child: Container(
-                                  width: 8,
-                                  height: 8,
-                                  decoration: BoxDecoration(
-                                    color: const Color(0xFF4A8060),
-                                    shape: BoxShape.circle,
-                                    border: Border.all(color: Colors.white, width: 1.5),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(width: 4),
-                          Text(
-                            member.name,
-                            style: const TextStyle(
-                              fontSize: 11,
-                              fontWeight: FontWeight.w600,
-                              color: AppColors.primary,
+                    padding: const EdgeInsets.only(right: 8),
+                    child: Tooltip(
+                      message: '${member.name} • ${member.role}',
+                      child: Pressable(
+                        onTap: () {
+                          HapticFeedback.selectionClick();
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('${member.name} (${member.role}) active on shift'),
+                              duration: const Duration(seconds: 1),
+                              behavior: SnackBarBehavior.floating,
                             ),
-                          ),
-                        ],
+                          );
+                        },
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Stack(
+                              children: [
+                                Container(
+                                  width: 34,
+                                  height: 34,
+                                  decoration: BoxDecoration(
+                                    color: member.isMascot
+                                        ? AppColors.primaryContainer
+                                        : AppColors.lavenderContainer,
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                      color: member.isMascot
+                                          ? AppColors.primary
+                                          : AppColors.softLavender,
+                                      width: 1.2,
+                                    ),
+                                  ),
+                                  clipBehavior: Clip.antiAlias,
+                                  alignment: Alignment.center,
+                                  child: member.isMascot
+                                      ? Image.asset(
+                                          'assets/mascot/poses/standing.png',
+                                          fit: BoxFit.contain,
+                                          width: 28,
+                                          height: 28,
+                                          errorBuilder: (_, __, ___) => const Icon(
+                                            Icons.pets_rounded,
+                                            size: 16,
+                                            color: AppColors.primary,
+                                          ),
+                                        )
+                                      : Text(
+                                          member.name[0],
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.w800,
+                                            fontSize: 13,
+                                            color: AppColors.primary,
+                                          ),
+                                        ),
+                                ),
+                                Positioned(
+                                  right: 0,
+                                  bottom: 0,
+                                  child: Container(
+                                    width: 8,
+                                    height: 8,
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xFF4A8060),
+                                      shape: BoxShape.circle,
+                                      border: Border.all(color: Colors.white, width: 1.5),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(width: 4),
+                            Text(
+                              member.name,
+                              style: const TextStyle(
+                                fontSize: 11,
+                                fontWeight: FontWeight.w700,
+                                color: AppColors.primary,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   );

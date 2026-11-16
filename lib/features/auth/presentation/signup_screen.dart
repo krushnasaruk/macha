@@ -116,53 +116,107 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                   Container(
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.circular(14),
-                      border: Border.all(color: AppColors.borderLight),
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(color: AppColors.borderLight, width: 1.2),
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppColors.primary.withOpacity(0.02),
+                          blurRadius: 8,
+                          offset: const Offset(0, 2),
+                        ),
+                      ],
                     ),
                     child: TextField(
                       controller: _cafeNameCtrl,
+                      style: const TextStyle(
+                        color: AppColors.primary,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                      ),
                       decoration: const InputDecoration(
                         labelText: 'Café / Business Name',
+                        labelStyle: TextStyle(
+                          color: AppColors.textSecondaryLight,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 13,
+                        ),
                         prefixIcon: Icon(Icons.storefront_rounded, color: AppColors.primary),
+                        filled: true,
+                        fillColor: Colors.white,
                         border: InputBorder.none,
-                        contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                        enabledBorder: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        contentPadding: EdgeInsets.symmetric(horizontal: 18, vertical: 15),
                       ),
                     ),
                   ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 14),
 
                   // Owner Name
                   Container(
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.circular(14),
-                      border: Border.all(color: AppColors.borderLight),
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(color: AppColors.borderLight, width: 1.2),
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppColors.primary.withOpacity(0.02),
+                          blurRadius: 8,
+                          offset: const Offset(0, 2),
+                        ),
+                      ],
                     ),
                     child: TextField(
                       controller: _ownerNameCtrl,
+                      style: const TextStyle(
+                        color: AppColors.primary,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                      ),
                       decoration: const InputDecoration(
                         labelText: 'Owner / Manager Full Name',
+                        labelStyle: TextStyle(
+                          color: AppColors.textSecondaryLight,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 13,
+                        ),
                         prefixIcon: Icon(Icons.person_outline_rounded, color: AppColors.primary),
+                        filled: true,
+                        fillColor: Colors.white,
                         border: InputBorder.none,
-                        contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                        enabledBorder: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        contentPadding: EdgeInsets.symmetric(horizontal: 18, vertical: 15),
                       ),
                     ),
                   ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 14),
 
                   // Business Type Dropdown
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                    padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 6),
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.circular(14),
-                      border: Border.all(color: AppColors.borderLight),
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(color: AppColors.borderLight, width: 1.2),
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppColors.primary.withOpacity(0.02),
+                          blurRadius: 8,
+                          offset: const Offset(0, 2),
+                        ),
+                      ],
                     ),
                     child: DropdownButtonHideUnderline(
                       child: DropdownButton<String>(
                         value: _businessType,
                         isExpanded: true,
                         icon: const Icon(Icons.arrow_drop_down_rounded, color: AppColors.primary),
+                        style: const TextStyle(
+                          color: AppColors.primary,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                        ),
                         items: const [
                           DropdownMenuItem(
                             value: 'Specialty Coffee Shop',
@@ -185,43 +239,85 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 14),
 
                   // Email Input
                   Container(
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.circular(14),
-                      border: Border.all(color: AppColors.borderLight),
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(color: AppColors.borderLight, width: 1.2),
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppColors.primary.withOpacity(0.02),
+                          blurRadius: 8,
+                          offset: const Offset(0, 2),
+                        ),
+                      ],
                     ),
                     child: TextField(
                       controller: _emailCtrl,
                       keyboardType: TextInputType.emailAddress,
+                      style: const TextStyle(
+                        color: AppColors.primary,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                      ),
                       decoration: const InputDecoration(
                         labelText: 'Admin Email',
+                        labelStyle: TextStyle(
+                          color: AppColors.textSecondaryLight,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 13,
+                        ),
                         prefixIcon: Icon(Icons.email_outlined, color: AppColors.primary),
+                        filled: true,
+                        fillColor: Colors.white,
                         border: InputBorder.none,
-                        contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                        enabledBorder: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        contentPadding: EdgeInsets.symmetric(horizontal: 18, vertical: 15),
                       ),
                     ),
                   ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 14),
 
                   // Password Input
                   Container(
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.circular(14),
-                      border: Border.all(color: AppColors.borderLight),
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(color: AppColors.borderLight, width: 1.2),
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppColors.primary.withOpacity(0.02),
+                          blurRadius: 8,
+                          offset: const Offset(0, 2),
+                        ),
+                      ],
                     ),
                     child: TextField(
                       controller: _passwordCtrl,
                       obscureText: true,
+                      style: const TextStyle(
+                        color: AppColors.primary,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                      ),
                       decoration: const InputDecoration(
                         labelText: 'Terminal Master PIN / Password',
+                        labelStyle: TextStyle(
+                          color: AppColors.textSecondaryLight,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 13,
+                        ),
                         prefixIcon: Icon(Icons.lock_outline_rounded, color: AppColors.primary),
+                        filled: true,
+                        fillColor: Colors.white,
                         border: InputBorder.none,
-                        contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                        enabledBorder: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        contentPadding: EdgeInsets.symmetric(horizontal: 18, vertical: 15),
                       ),
                     ),
                   ),

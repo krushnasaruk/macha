@@ -26,9 +26,14 @@ class _NotificationsSettingsScreenState
       backgroundColor: AppColors.backgroundLight,
       appBar: AppBar(
         title: const Text('Notifications & Alerts'),
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.backgroundLight,
         foregroundColor: AppColors.primary,
         elevation: 0,
+        titleTextStyle: const TextStyle(
+          color: AppColors.primary,
+          fontWeight: FontWeight.w800,
+          fontSize: 20,
+        ),
       ),
       body: ListView(
         padding: const EdgeInsets.all(16),
@@ -104,32 +109,32 @@ class _NotificationsSettingsScreenState
             child: Column(
               children: [
                 SwitchListTile(
-                  title: const Text('Incoming Order Ring'),
-                  subtitle: const Text('Rings terminal when table or counter order is placed'),
+                  title: const Text('Incoming Order Ring', style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.w700, fontSize: 14)),
+                  subtitle: const Text('Rings terminal when table or counter order is placed', style: TextStyle(color: AppColors.textSecondaryLight, fontSize: 12)),
                   value: _newOrderAlert,
                   activeColor: AppColors.primary,
                   onChanged: (val) => setState(() => _newOrderAlert = val),
                 ),
                 const Divider(height: 1),
                 SwitchListTile(
-                  title: const Text('Kitchen Ready to Serve Chime'),
-                  subtitle: const Text('Alerts floor staff when prep is bumped from KDS'),
+                  title: const Text('Kitchen Ready to Serve Chime', style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.w700, fontSize: 14)),
+                  subtitle: const Text('Alerts floor staff when prep is bumped from KDS', style: TextStyle(color: AppColors.textSecondaryLight, fontSize: 12)),
                   value: _kdsReadyAlert,
                   activeColor: AppColors.primary,
                   onChanged: (val) => setState(() => _kdsReadyAlert = val),
                 ),
                 const Divider(height: 1),
                 SwitchListTile(
-                  title: const Text('Low Stock & Safety Buffer Alert'),
-                  subtitle: const Text('Notifies when coffee beans, milk, or syrups run low'),
+                  title: const Text('Low Stock & Safety Buffer Alert', style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.w700, fontSize: 14)),
+                  subtitle: const Text('Notifies when coffee beans, milk, or syrups run low', style: TextStyle(color: AppColors.textSecondaryLight, fontSize: 12)),
                   value: _lowStockAlert,
                   activeColor: AppColors.primary,
                   onChanged: (val) => setState(() => _lowStockAlert = val),
                 ),
                 const Divider(height: 1),
                 SwitchListTile(
-                  title: const Text('Offline Mode Indicator'),
-                  subtitle: const Text('Shows friendly offline indicator if WiFi disconnects'),
+                  title: const Text('Offline Mode Indicator', style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.w700, fontSize: 14)),
+                  subtitle: const Text('Shows friendly offline indicator if WiFi disconnects', style: TextStyle(color: AppColors.textSecondaryLight, fontSize: 12)),
                   value: _offlineWarningAlert,
                   activeColor: AppColors.primary,
                   onChanged: (val) => setState(() => _offlineWarningAlert = val),
@@ -158,24 +163,24 @@ class _NotificationsSettingsScreenState
             child: Column(
               children: [
                 SwitchListTile(
-                  title: const Text('Mechanical Keystroke Sound'),
-                  subtitle: const Text('Plays authentic mechanical typewriter audio when typing'),
+                  title: const Text('Mechanical Keystroke Sound', style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.w700, fontSize: 14)),
+                  subtitle: const Text('Plays authentic mechanical typewriter audio when typing', style: TextStyle(color: AppColors.textSecondaryLight, fontSize: 12)),
                   value: _soundChime,
                   activeColor: AppColors.primary,
                   onChanged: (val) => setState(() => _soundChime = val),
                 ),
                 const Divider(height: 1),
                 SwitchListTile(
-                  title: const Text('Tactile Haptic Feedback'),
-                  subtitle: const Text('Vibrates subtly on order additions & cart buttons'),
+                  title: const Text('Tactile Haptic Feedback', style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.w700, fontSize: 14)),
+                  subtitle: const Text('Vibrates subtly on order additions & cart buttons', style: TextStyle(color: AppColors.textSecondaryLight, fontSize: 12)),
                   value: _hapticFeedback,
                   activeColor: AppColors.primary,
                   onChanged: (val) => setState(() => _hapticFeedback = val),
                 ),
                 const Divider(height: 1),
                 SwitchListTile(
-                  title: const Text('End of Shift Sales Summary'),
-                  subtitle: const Text('Sends daily revenue & drawer audit report at close'),
+                  title: const Text('End of Shift Sales Summary', style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.w700, fontSize: 14)),
+                  subtitle: const Text('Sends daily revenue & drawer audit report at close', style: TextStyle(color: AppColors.textSecondaryLight, fontSize: 12)),
                   value: _dailySalesSummary,
                   activeColor: AppColors.primary,
                   onChanged: (val) => setState(() => _dailySalesSummary = val),

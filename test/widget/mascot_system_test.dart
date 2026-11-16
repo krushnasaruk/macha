@@ -160,7 +160,7 @@ void main() {
 
       // Verify Step 1
       expect(find.text('Step 1 of 7'), findsOneWidget);
-      expect(find.text('Welcome to CaféOS!'), findsOneWidget);
+      expect(find.text('Welcome to MΛCHA!'), findsOneWidget);
 
       // Tap Next
       await tester.tap(find.text('Show Me Around'));

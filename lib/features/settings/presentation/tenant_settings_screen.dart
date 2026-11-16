@@ -5,6 +5,7 @@ import '../../../core/components/app_card.dart';
 import '../../../core/components/app_text_field.dart';
 import '../../../core/components/offline_sync_indicator.dart';
 import '../../../core/identity/identity_provider.dart';
+import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../data/repositories/tenant_settings_repository_impl.dart';
 
@@ -57,8 +58,17 @@ class _TenantSettingsScreenState extends ConsumerState<TenantSettingsScreen> {
     final repo = ref.watch(tenantSettingsRepositoryProvider);
 
     return Scaffold(
+      backgroundColor: AppColors.backgroundLight,
       appBar: AppBar(
         title: const Text('Tenant & Billing Settings'),
+        backgroundColor: AppColors.backgroundLight,
+        foregroundColor: AppColors.primary,
+        elevation: 0,
+        titleTextStyle: const TextStyle(
+          color: AppColors.primary,
+          fontWeight: FontWeight.w800,
+          fontSize: 20,
+        ),
         actions: const [
           Padding(
             padding: EdgeInsets.only(right: 16),
@@ -87,9 +97,9 @@ class _TenantSettingsScreenState extends ConsumerState<TenantSettingsScreen> {
           ),
           const SizedBox(height: 20),
 
-          Text(
+          const Text(
             'Fiscal & GST Configuration',
-            style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Colors.grey),
+            style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.primary),
           ),
           const SizedBox(height: 8),
           AppCard(

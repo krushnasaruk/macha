@@ -33,8 +33,12 @@ class _TablesScreenState extends ConsumerState<TablesScreen> {
     final tablesAsync = ref.watch(tablesStreamProvider);
 
     return Scaffold(
+      backgroundColor: AppColors.backgroundLight,
       appBar: AppBar(
         title: const Text('Dining Tables'),
+        backgroundColor: AppColors.backgroundLight,
+        foregroundColor: AppColors.primary,
+        elevation: 0,
         actions: [
           if (canManage)
             IconButton(

@@ -56,6 +56,15 @@ class _PosScreenState extends ConsumerState<PosScreen> {
       backgroundColor: AppColors.backgroundLight,
       appBar: AppBar(
         title: const Text('MΛCHA POS'),
+        backgroundColor: AppColors.backgroundLight,
+        foregroundColor: AppColors.primary,
+        elevation: 0,
+        titleTextStyle: const TextStyle(
+          color: AppColors.primary,
+          fontWeight: FontWeight.w800,
+          fontSize: 20,
+          letterSpacing: 0.5,
+        ),
         actions: [
           // QR Scanner Icon (Reference Design)
           IconButton(
@@ -238,12 +247,20 @@ class _PosScreenState extends ConsumerState<PosScreen> {
             ),
             child: TextField(
               controller: _searchCtrl,
+              style: const TextStyle(
+                color: AppColors.primary,
+                fontSize: 15,
+                fontWeight: FontWeight.w600,
+              ),
               decoration: InputDecoration(
                 hintText: 'Search menu...',
                 hintStyle: const TextStyle(
                   color: AppColors.textSecondaryLight,
                   fontSize: 14,
+                  fontWeight: FontWeight.w500,
                 ),
+                filled: true,
+                fillColor: Colors.white,
                 prefixIcon: const Icon(
                   Icons.search_rounded,
                   color: AppColors.primary,
@@ -251,7 +268,7 @@ class _PosScreenState extends ConsumerState<PosScreen> {
                 ),
                 suffixIcon: _searchQuery.isNotEmpty
                     ? IconButton(
-                        icon: const Icon(Icons.clear_rounded, size: 18),
+                        icon: const Icon(Icons.clear_rounded, size: 18, color: AppColors.primary),
                         onPressed: () {
                           setState(() {
                             _searchCtrl.clear();

@@ -81,3 +81,6 @@ coverage/
 supabase/.temp/
 .env
 !.env.example
+
+*.apk
+

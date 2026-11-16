@@ -45,7 +45,7 @@ class AppTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const inputBorderRadius = BorderRadius.all(Radius.circular(16));
+    const inputBorderRadius = BorderRadius.all(Radius.circular(20));
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

@@ -162,34 +162,72 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   Container(
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.circular(14),
-                      border: Border.all(color: AppColors.borderLight),
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(color: AppColors.borderLight, width: 1.2),
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppColors.primary.withOpacity(0.02),
+                          blurRadius: 8,
+                          offset: const Offset(0, 2),
+                        ),
+                      ],
                     ),
                     child: TextField(
                       controller: _emailCtrl,
                       keyboardType: TextInputType.emailAddress,
+                      style: const TextStyle(
+                        color: AppColors.primary,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                      ),
                       decoration: const InputDecoration(
                         labelText: 'Terminal Email / ID',
+                        labelStyle: TextStyle(
+                          color: AppColors.textSecondaryLight,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 13,
+                        ),
                         prefixIcon: Icon(Icons.email_outlined, color: AppColors.primary),
+                        filled: true,
+                        fillColor: Colors.white,
                         border: InputBorder.none,
-                        contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                        enabledBorder: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        contentPadding: EdgeInsets.symmetric(horizontal: 18, vertical: 15),
                       ),
                     ),
                   ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 14),
 
                   // Password Input
                   Container(
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.circular(14),
-                      border: Border.all(color: AppColors.borderLight),
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(color: AppColors.borderLight, width: 1.2),
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppColors.primary.withOpacity(0.02),
+                          blurRadius: 8,
+                          offset: const Offset(0, 2),
+                        ),
+                      ],
                     ),
                     child: TextField(
                       controller: _passwordCtrl,
                       obscureText: _obscurePassword,
+                      style: const TextStyle(
+                        color: AppColors.primary,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                      ),
                       decoration: InputDecoration(
                         labelText: 'Terminal PIN / Password',
+                        labelStyle: const TextStyle(
+                          color: AppColors.textSecondaryLight,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 13,
+                        ),
                         prefixIcon: const Icon(Icons.lock_outline_rounded, color: AppColors.primary),
                         suffixIcon: IconButton(
                           icon: Icon(
@@ -198,8 +236,12 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           ),
                           onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
                         ),
+                        filled: true,
+                        fillColor: Colors.white,
                         border: InputBorder.none,
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                        enabledBorder: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 18, vertical: 15),
                       ),
                     ),
                   ),

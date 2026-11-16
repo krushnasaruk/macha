@@ -143,21 +143,32 @@ class _MenuScreenState extends ConsumerState<MenuScreen> {
       appBar: AppBar(
         title: const Text('Menu Catalog'),
         backgroundColor: AppColors.backgroundLight,
+        foregroundColor: AppColors.primary,
         elevation: 0,
         actions: [
-          if (canManageMenu) ...[
-            IconButton(
-              icon: const Icon(Icons.create_new_folder_outlined),
-              tooltip: 'Add Category',
-              onPressed: () => _showAddCategoryDialog(context),
-            ),
-            IconButton(
-              icon: const Icon(Icons.add_circle_outline_rounded),
-              tooltip: 'Add Product',
-              onPressed: () => _showAddProductDialog(context),
-            ),
-          ],
+          IconButton(
+            icon: const Icon(Icons.create_new_folder_outlined),
+            tooltip: 'Add Category',
+            onPressed: () => _showAddCategoryDialog(context),
+          ),
+          IconButton(
+            icon: const Icon(Icons.add_circle_outline_rounded),
+            tooltip: 'Add Product',
+            onPressed: () => _showAddProductDialog(context),
+          ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        backgroundColor: AppColors.primary,
+        foregroundColor: Colors.white,
+        elevation: 4,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        icon: const Icon(Icons.add_rounded, size: 22),
+        label: const Text(
+          'Add Menu Item',
+          style: TextStyle(fontWeight: FontWeight.w700, letterSpacing: 0.3),
+        ),
+        onPressed: () => _showAddProductDialog(context),
       ),
       body: FutureBuilder<List<Category>>(
         future: repo.getCategories(identity.tenant.id),
@@ -259,14 +270,12 @@ class _MenuScreenState extends ConsumerState<MenuScreen> {
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
-                            if (canManageMenu) ...[
-                              const SizedBox(height: 14),
-                              AppButton(
-                                label: 'Add First Product',
-                                icon: Icons.add,
-                                onPressed: () => _showAddProductDialog(context),
-                              ),
-                            ],
+                            const SizedBox(height: 14),
+                            AppButton(
+                              label: 'Add First Product',
+                              icon: Icons.add,
+                              onPressed: () => _showAddProductDialog(context),
+                            ),
                           ],
                         ),
                       );

@@ -41,8 +41,8 @@ class TourStep {
   static List<TourStep> buildStepsForRole(UserRole role) {
     final allSteps = [
       TourStep(
-        title: 'Welcome to CaféOS!',
-        dialogue: 'Hey there, chef! Welcome to MΛCHA. I\'m Barnaby, your kitchen & counter companion. Let\'s explore your café command center!',
+        title: 'Welcome to MΛCHA!',
+        dialogue: 'Hey there chef! Welcome to MΛCHA 🌿 I\'m Barnaby. Let\'s explore your café command center!',
         description: 'Track real-time sales, order volume, and daily rotating specials right from your home dashboard.',
         path: '/home',
         pose: MascotPose.waving,
@@ -51,7 +51,7 @@ class TourStep {
       ),
       TourStep(
         title: 'POS & Billing Counter',
-        dialogue: 'Ready for your first order? This is where the magic happens! Tap any item to ring it up instantly.',
+        dialogue: 'Here is your POS counter ☕! Tap any item to ring up tickets instantly with 1-tap checkout.',
         description: 'One-tap item selection, category filtering, and 1-tap exact cash tender makes morning rushes effortless.',
         path: '/pos',
         pose: MascotPose.holding,
@@ -60,7 +60,7 @@ class TourStep {
       ),
       TourStep(
         title: 'Live Orders Queue',
-        dialogue: 'All your orders stream here live. Track prep stages without losing a single ticket!',
+        dialogue: 'All tickets stream here live 📋! Track orders in real-time from New to Ready to Serve.',
         description: 'Monitor real-time stages: New ➔ Preparing ➔ Ready to Serve with table and customer tracking.',
         path: '/orders',
         pose: MascotPose.pointing,
@@ -69,7 +69,7 @@ class TourStep {
       ),
       TourStep(
         title: 'Kitchen Display System (KDS)',
-        dialogue: 'Let\'s keep the line moving! Filter tickets by station and bump completed orders with 5s undo.',
+        dialogue: 'Keep the kitchen moving 🍳! View station prep tickets and bump finished dishes with 5s undo.',
         description: 'Color-coded elapsed timers and instant bump actions ensure hot coffee and fresh food reach tables fast.',
         path: '/kitchen',
         pose: MascotPose.cooking,
@@ -78,7 +78,7 @@ class TourStep {
       ),
       TourStep(
         title: 'Inventory & Supplies',
-        dialogue: 'Never run out of espresso beans mid-rush! Stock auto-deducts with recipes, and low-stock alerts give you advance notice.',
+        dialogue: 'Never run out of ingredients 📦! Real-time stock tracking and low-stock alerts give advance notice.',
         description: 'Automated recipe deduction, batch adjustments, and low-stock warnings keep your hoppers full.',
         path: '/inventory',
         pose: MascotPose.carrying,
@@ -87,7 +87,7 @@ class TourStep {
       ),
       TourStep(
         title: 'Reports & Performance',
-        dialogue: 'And here\'s how your café is doing! View revenue, payment methods, and cash drawer reconciliations with zero math.',
+        dialogue: 'Here is your café performance 📊! Instant revenue KPIs, bestselling items, and cashier drawer audits.',
         description: 'Real-time sales charts, hourly breakdowns, and drawer audits keep your business finances rock solid.',
         path: '/reports',
         pose: MascotPose.thinking,
@@ -96,7 +96,7 @@ class TourStep {
       ),
       TourStep(
         title: 'You\'re All Set!',
-        dialogue: 'That\'s the tour! You are officially ready to run the café, chef. I\'m always right here if you need a hand!',
+        dialogue: 'You are all set to run the café, chef! 🎉 I\'m always right here whenever you need me.',
         description: 'Have a phenomenal shift! Remember, Chef Barnaby is always by your side.',
         path: '/home',
         pose: MascotPose.celebrating,
@@ -228,109 +228,63 @@ class _GuidedTourOverlayState extends ConsumerState<GuidedTourOverlay>
             ),
           ),
 
-          // 2. Glowing Feature Label Pill Badge anchored directly on the spotlight
+          // 2. Glowing Animated Beacon Pin on Target Feature
           Positioned(
-            top: (targetRect.top - 36).clamp(16.0, screenSize.height - 120),
+            top: (targetRect.top - 44).clamp(16.0, screenSize.height - 140),
             left: 20,
             child: AnimatedBuilder(
               animation: _pulseController,
-              builder: (context, child) => Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                decoration: BoxDecoration(
-                  color: AppColors.primary,
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(
-                    color: AppColors.matchaGreen.withOpacity(0.6 + 0.4 * _pulseController.value),
-                    width: 1.5,
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: AppColors.matchaGreen.withOpacity(0.3 * _pulseController.value),
-                      blurRadius: 10,
-                      spreadRadius: 2,
-                    ),
-                  ],
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Icon(
-                      Icons.gps_fixed_rounded,
-                      color: AppColors.matchaGreen,
-                      size: 14,
-                    ),
-                    const SizedBox(width: 6),
-                    Text(
-                      step.featureHighlightLabel,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w700,
-                        letterSpacing: 0.2,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-
-          // 3. Animated Directional Bouncing Arrow pointing UP towards the feature
-          Positioned(
-            top: targetRect.bottom + 8,
-            left: 0,
-            right: 0,
-            child: AnimatedBuilder(
-              animation: _pulseController,
               builder: (context, child) => Transform.translate(
-                offset: Offset(0, -6 * _pulseController.value),
-                child: Center(
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF231C18),
-                      borderRadius: BorderRadius.circular(16),
-                      border: Border.all(color: AppColors.matchaGreen.withOpacity(0.5)),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.25),
-                          blurRadius: 8,
-                          offset: const Offset(0, 4),
-                        ),
-                      ],
+                offset: Offset(0, -4 * _pulseController.value),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
+                  decoration: BoxDecoration(
+                    color: AppColors.primary,
+                    borderRadius: BorderRadius.circular(24),
+                    border: Border.all(
+                      color: AppColors.matchaGreen,
+                      width: 2,
                     ),
-                    child: const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          Icons.arrow_upward_rounded,
-                          color: AppColors.matchaGreen,
-                          size: 16,
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.matchaGreen.withOpacity(0.45 * _pulseController.value + 0.15),
+                        blurRadius: 16,
+                        spreadRadius: 3,
+                      ),
+                    ],
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(
+                        Icons.auto_awesome_rounded,
+                        color: AppColors.matchaGreen,
+                        size: 16,
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        step.featureHighlightLabel,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w800,
+                          letterSpacing: 0.3,
                         ),
-                        SizedBox(width: 6),
-                        Text(
-                          'Pointed Feature Above',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 11,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ),
             ),
           ),
 
-          // 4. Chef Barnaby Guided Tour Card (Docked neatly at bottom)
+          // 3. Chef Barnaby Guided Tour Card (Docked neatly at bottom)
           Positioned(
             bottom: 12,
             left: 14,
             right: 14,
             child: Container(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.fromLTRB(16, 14, 16, 14),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(22),
@@ -388,8 +342,8 @@ class _GuidedTourOverlayState extends ConsumerState<GuidedTourOverlay>
                       // Mascot Image
                       MascotWidget(
                         pose: step.pose,
-                        height: 95,
-                        width: 80,
+                        height: 90,
+                        width: 78,
                         animate: true,
                       ),
                       const SizedBox(width: 10),
@@ -403,39 +357,11 @@ class _GuidedTourOverlayState extends ConsumerState<GuidedTourOverlay>
                           animateTyping: true,
                           enableTypingFeedback: true,
                           maxWidth: double.infinity,
-                          trailing: const Text(
-                            '💡 Tap bubble to reveal all',
-                            style: TextStyle(
-                              fontSize: 10,
-                              color: AppColors.textMutedLight,
-                              fontStyle: FontStyle.italic,
-                            ),
-                          ),
                         ),
                       ),
                     ],
                   ),
                   const SizedBox(height: 12),
-
-                  // Title and Short Operational Summary
-                  Text(
-                    step.title,
-                    style: AppTypography.titleMedium.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.primary,
-                    ),
-                  ),
-                  const SizedBox(height: 2),
-                  Text(
-                    step.description,
-                    style: AppTypography.bodySmall.copyWith(
-                      color: AppColors.textSecondaryLight,
-                      height: 1.3,
-                    ),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const SizedBox(height: 14),
 
                   // Bottom Controls (Dots & Navigation Buttons)
                   Row(
@@ -544,9 +470,18 @@ class _SpotlightOverlayPainter extends CustomPainter {
 
     canvas.drawPath(path, backdropPaint);
 
+    // Outer soft pulsing halo
+    final outerGlowPaint = Paint()
+      ..color = AppColors.matchaGreen.withOpacity(0.3 * glowProgress)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 8.0
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 6);
+
+    canvas.drawRRect(targetRRect, outerGlowPaint);
+
     // Glowing highlight border around the target cut-out
     final glowPaint = Paint()
-      ..color = AppColors.matchaGreen.withOpacity(0.4 + 0.4 * glowProgress)
+      ..color = AppColors.matchaGreen.withOpacity(0.6 + 0.4 * glowProgress)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2.5;
 

@@ -41,8 +41,12 @@ class _ComponentGalleryScreenState extends State<ComponentGalleryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.backgroundLight,
       appBar: AppBar(
         title: const Text('Design System & Component Gallery'),
+        backgroundColor: AppColors.backgroundLight,
+        foregroundColor: AppColors.primary,
+        elevation: 0,
         actions: const [
           Padding(
             padding: EdgeInsets.only(right: 16),
@@ -637,8 +641,8 @@ class _ComponentGalleryScreenState extends State<ComponentGalleryScreen> {
       child: Text(
         title,
         style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              color: Theme.of(context).colorScheme.primary,
-              fontWeight: FontWeight.bold,
+              color: AppColors.primary,
+              fontWeight: FontWeight.w800,
             ),
       ),
     );

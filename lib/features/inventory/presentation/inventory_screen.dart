@@ -259,17 +259,25 @@ class _InventoryScreenState extends State<InventoryScreen> {
               child: Container(
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(24),
                   border: Border.all(color: AppColors.borderLight, width: 1.2),
                 ),
                 child: TextField(
                   controller: _searchCtrl,
+                  style: const TextStyle(
+                    color: AppColors.primary,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600,
+                  ),
                   decoration: InputDecoration(
                     hintText: 'Search inventory items...',
                     hintStyle: const TextStyle(
                       color: AppColors.textSecondaryLight,
                       fontSize: 14,
+                      fontWeight: FontWeight.w500,
                     ),
+                    filled: true,
+                    fillColor: Colors.white,
                     prefixIcon: const Icon(
                       Icons.search_rounded,
                       color: AppColors.primary,
@@ -277,7 +285,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
                     ),
                     suffixIcon: _searchQuery.isNotEmpty
                         ? IconButton(
-                            icon: const Icon(Icons.clear_rounded, size: 18),
+                            icon: const Icon(Icons.clear_rounded, size: 18, color: AppColors.primary),
                             onPressed: () {
                               setState(() {
                                 _searchCtrl.clear();

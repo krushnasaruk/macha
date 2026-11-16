@@ -13,6 +13,7 @@ import '../../../core/mascot/mascot_celebration.dart';
 import '../../../core/mascot/mascot_dialogue_bubble.dart';
 import '../../../core/mascot/mascot_guided_tour.dart';
 import '../../../core/mascot/mascot_widget.dart';
+import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/ux/interaction/hold_repeat.dart';
 import '../../../core/ux/loading/skeleton.dart';
@@ -481,10 +482,76 @@ class _ComponentGalleryScreenState extends State<ComponentGalleryScreen> {
                     ],
                   ),
                 ),
+                const SizedBox(height: 16),
+                Text(
+                  'F. 12 Official Hand-Drawn Mascot Poses',
+                  style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 10),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      _buildPoseThumbnail('Standing', MascotPose.standing),
+                      const SizedBox(width: 12),
+                      _buildPoseThumbnail('Sitting', MascotPose.sitting),
+                      const SizedBox(width: 12),
+                      _buildPoseThumbnail('Walking', MascotPose.walking),
+                      const SizedBox(width: 12),
+                      _buildPoseThumbnail('Leaning', MascotPose.leaning),
+                      const SizedBox(width: 12),
+                      _buildPoseThumbnail('Waving', MascotPose.waving),
+                      const SizedBox(width: 12),
+                      _buildPoseThumbnail('Pointing', MascotPose.pointing),
+                      const SizedBox(width: 12),
+                      _buildPoseThumbnail('Carrying', MascotPose.carrying),
+                      const SizedBox(width: 12),
+                      _buildPoseThumbnail('Holding', MascotPose.holding),
+                      const SizedBox(width: 12),
+                      _buildPoseThumbnail('Celebrating', MascotPose.celebrating),
+                      const SizedBox(width: 12),
+                      _buildPoseThumbnail('Thinking', MascotPose.thinking),
+                      const SizedBox(width: 12),
+                      _buildPoseThumbnail('Cooking', MascotPose.cooking),
+                      const SizedBox(width: 12),
+                      _buildPoseThumbnail('Resting', MascotPose.resting),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
           const SizedBox(height: 32),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPoseThumbnail(String name, MascotPose pose) {
+    return Container(
+      width: 100,
+      padding: const EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        color: AppColors.creamContainer,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: AppColors.borderLight),
+      ),
+      child: Column(
+        children: [
+          MascotWidget(
+            pose: pose,
+            height: 80,
+            animate: false,
+          ),
+          const SizedBox(height: 6),
+          Text(
+            name,
+            style: const TextStyle(
+              fontSize: 11,
+              fontWeight: FontWeight.w600,
+              color: AppColors.primary,
+            ),
+          ),
         ],
       ),
     );

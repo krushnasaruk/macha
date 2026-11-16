@@ -17,6 +17,7 @@ class MascotEmptyState extends StatelessWidget {
   final MascotStateIllustration? stateIllustration;
   final MascotAction? action;
   final MascotExpression? expression;
+  final MascotPose? pose;
   final double mascotHeight;
 
   const MascotEmptyState({
@@ -26,9 +27,10 @@ class MascotEmptyState extends StatelessWidget {
     this.chefQuote,
     this.actionLabel,
     this.onAction,
-    this.stateIllustration = MascotStateIllustration.emptyPlate,
+    this.stateIllustration,
     this.action,
     this.expression,
+    this.pose,
     this.mascotHeight = 150.0,
   });
 
@@ -39,7 +41,7 @@ class MascotEmptyState extends StatelessWidget {
         chefQuote: 'The counter is quiet right now. Let\'s ring up a new customer!',
         actionLabel: onNewOrder != null ? 'New Order' : null,
         onAction: onNewOrder,
-        stateIllustration: MascotStateIllustration.emptyPlate,
+        pose: MascotPose.resting,
       );
 
   /// Factory for clear kitchen screen
@@ -47,7 +49,7 @@ class MascotEmptyState extends StatelessWidget {
         title: 'Kitchen is Clear, Chef!',
         description: 'All pending tickets have been prepared and served.',
         chefQuote: 'Great work! Take a breath while we wait for the next rush.',
-        expression: MascotExpression.proud,
+        pose: MascotPose.cooking,
       );
 
   /// Factory for empty menu screen
@@ -57,7 +59,7 @@ class MascotEmptyState extends StatelessWidget {
         chefQuote: 'Every great café starts with a killer signature brew!',
         actionLabel: onAddProduct != null ? 'Add First Product' : null,
         onAction: onAddProduct,
-        action: MascotAction.holdingMenu,
+        pose: MascotPose.holding,
       );
 
   /// Factory for offline state
@@ -67,7 +69,7 @@ class MascotEmptyState extends StatelessWidget {
         chefQuote: 'Looks like the internet took a coffee break! Don\'t worry, I\'ve saved everything right here.',
         actionLabel: onRetry != null ? 'Check Connection' : null,
         onAction: onRetry,
-        stateIllustration: MascotStateIllustration.offlineConcerned,
+        pose: MascotPose.thinking,
       );
 
   @override
@@ -80,6 +82,7 @@ class MascotEmptyState extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             MascotWidget(
+              pose: pose,
               stateIllustration: stateIllustration,
               action: action,
               expression: expression,

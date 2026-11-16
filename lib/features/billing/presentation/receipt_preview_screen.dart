@@ -96,7 +96,7 @@ class _ReceiptPreviewScreenState extends ConsumerState<ReceiptPreviewScreen> {
                 children: [
                   // Success Mascot Header
                   const MascotWidget(
-                    action: MascotAction.holdingReceipt,
+                    pose: MascotPose.celebrating,
                     height: 110,
                     dialogue: 'Payment settled! Order sent to kitchen.',
                     dialogueTitle: 'Chef Barnaby',

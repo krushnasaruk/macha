@@ -18,6 +18,7 @@ class TourStep {
   final MascotInteraction? interaction;
   final MascotStateIllustration? stateIllustration;
   final MascotExpression? expression;
+  final MascotPose? pose;
 
   const TourStep({
     required this.title,
@@ -28,6 +29,7 @@ class TourStep {
     this.interaction,
     this.stateIllustration,
     this.expression,
+    this.pose,
   });
 }
 
@@ -65,49 +67,49 @@ class _MascotGuidedTourModalState extends ConsumerState<MascotGuidedTourModal> {
         dialogue: 'Hey there, chef! Welcome to CaféOS.',
         description: 'I\'m Chef Barnaby, your kitchen & counter companion. Let me show you how we run things!',
         path: '/pos',
-        interaction: MascotInteraction.welcoming,
+        pose: MascotPose.waving,
       ),
       const TourStep(
         title: 'POS & Billing Counter',
         dialogue: 'Ready for your first order? This is where the magic happens!',
         description: 'Tap any product to add it to the cart. 1-tap exact cash tender makes rushes effortless.',
         path: '/pos',
-        action: MascotAction.holdingCoffeeCup,
+        pose: MascotPose.holding,
       ),
       const TourStep(
         title: 'Live Orders Queue',
         dialogue: 'All your orders live here. No more losing track of who is waiting!',
         description: 'Track real-time order stages: Created ➔ Confirmed ➔ Preparing ➔ Ready to Serve.',
         path: '/orders',
-        action: MascotAction.holdingReceipt,
+        pose: MascotPose.pointing,
       ),
       const TourStep(
         title: 'Kitchen Display System (KDS)',
         dialogue: 'Let\'s keep the kitchen moving!',
         description: 'Filter by prep station, track elapsed minutes, and tap to bump tickets with 5s undo.',
         path: '/kitchen',
-        action: MascotAction.holdingTray,
+        pose: MascotPose.cooking,
       ),
       const TourStep(
         title: 'Inventory & Supplies',
         dialogue: 'Let\'s make sure we never run out of the good stuff!',
         description: 'Automated recipe deduction and reorder warnings keep your bean hoppers full.',
         path: '/inventory',
-        stateIllustration: MascotStateIllustration.lowInventoryWarning,
+        pose: MascotPose.carrying,
       ),
       const TourStep(
         title: 'Reports & Performance',
         dialogue: 'And here\'s how your café is doing. Looking good, chef!',
         description: 'View daily sales, category breakdowns, and cash drawer balance with zero math.',
         path: '/reports',
-        interaction: MascotInteraction.lookingDashboard,
+        pose: MascotPose.thinking,
       ),
       const TourStep(
         title: 'You\'re All Set!',
         dialogue: 'That\'s the tour! You\'re officially ready, chef!',
         description: 'Have a great shift! Remember, I\'m always here if you need a hand.',
         path: '/pos',
-        interaction: MascotInteraction.celebratingTask,
+        pose: MascotPose.celebrating,
       ),
     ];
 
@@ -176,6 +178,7 @@ class _MascotGuidedTourModalState extends ConsumerState<MascotGuidedTourModal> {
 
               // Mascot with speech bubble
               MascotWidget(
+                pose: step.pose,
                 action: step.action,
                 interaction: step.interaction,
                 stateIllustration: step.stateIllustration,

@@ -63,7 +63,7 @@ class MascotCelebration extends StatelessWidget {
             children: [
               // Celebrating Barnaby with confetti
               const MascotWidget(
-                interaction: MascotInteraction.celebratingTask,
+                pose: MascotPose.celebrating,
                 height: 160,
                 dialogue: 'Another order cooked & served to perfection!',
                 dialogueTitle: 'Chef Barnaby',

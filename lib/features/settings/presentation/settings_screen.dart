@@ -267,8 +267,8 @@ class SettingsScreen extends ConsumerWidget {
       child: Row(
         children: [
           const MascotWidget(
-            expression: MascotExpression.happy,
-            height: 56,
+            pose: MascotPose.waving,
+            height: 64,
           ),
           const SizedBox(width: 14),
           const Expanded(

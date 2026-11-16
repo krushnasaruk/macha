@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/components/status_pill.dart';
 import '../../../core/identity/identity_provider.dart';
+import '../../../core/mascot/mascot_asset_registry.dart';
+import '../../../core/mascot/mascot_widget.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_typography.dart';
 import '../../../core/ux/interaction/pressable.dart';
@@ -210,26 +212,38 @@ class _HomeDashboardContentState extends ConsumerState<_HomeDashboardContent> {
   }
 
   Widget _buildGreeting(String employeeName) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Text(
-          'Good Morning!',
-          style: AppTypography.headlineMedium.copyWith(
-            fontWeight: FontWeight.w800,
-            color: AppColors.primary,
-            fontSize: 26,
-            letterSpacing: -0.5,
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Good Morning!',
+                style: AppTypography.headlineMedium.copyWith(
+                  fontWeight: FontWeight.w800,
+                  color: AppColors.primary,
+                  fontSize: 26,
+                  letterSpacing: -0.5,
+                ),
+              ),
+              const SizedBox(height: 3),
+              Text(
+                'Let’s make today brewing great ☕',
+                style: AppTypography.bodyMedium.copyWith(
+                  color: AppColors.textSecondaryLight,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
           ),
         ),
-        const SizedBox(height: 3),
-        Text(
-          'Let’s make today brewing great ☕',
-          style: AppTypography.bodyMedium.copyWith(
-            color: AppColors.textSecondaryLight,
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
-          ),
+        const MascotWidget(
+          pose: MascotPose.waving,
+          height: 60,
+          animate: true,
         ),
       ],
     );

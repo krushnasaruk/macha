@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_typography.dart';
 import '../ux/interaction/pressable.dart';
@@ -64,32 +65,44 @@ class FixedBottomNav extends StatelessWidget {
               final isSelected = index == selectedIndex;
 
               if (item.isCenterAction) {
-                // Primary Center POS Action Button
+                // Primary Center POS Action Button (Elevated Circle with tactile depth)
                 return Expanded(
                   child: Pressable(
-                    onTap: () => onItemSelected(index),
+                    onTap: () {
+                      HapticFeedback.mediumImpact();
+                      onItemSelected(index);
+                    },
                     child: Center(
                       child: Container(
-                        width: 48,
-                        height: 48,
+                        width: 50,
+                        height: 50,
                         decoration: BoxDecoration(
-                          color: isSelected
-                              ? AppColors.primary
-                              : AppColors.primary.withOpacity(0.92),
+                          gradient: const LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                            colors: [
+                              AppColors.primaryLight,
+                              AppColors.primary,
+                            ],
+                          ),
                           shape: BoxShape.circle,
                           boxShadow: [
                             BoxShadow(
-                              color: AppColors.primary.withOpacity(0.3),
-                              blurRadius: 10,
-                              offset: const Offset(0, 3),
+                              color: AppColors.primary.withOpacity(0.35),
+                              blurRadius: 12,
+                              offset: const Offset(0, 4),
                             ),
                           ],
+                          border: Border.all(
+                            color: Colors.white.withOpacity(0.2),
+                            width: 1.5,
+                          ),
                         ),
                         alignment: Alignment.center,
                         child: const Icon(
                           Icons.add_rounded,
                           color: AppColors.backgroundLight,
-                          size: 28,
+                          size: 30,
                         ),
                       ),
                     ),
@@ -97,23 +110,36 @@ class FixedBottomNav extends StatelessWidget {
                 );
               }
 
-              // Standard Navigation Item
+              // Standard Navigation Item (Sleek pill highlight + active indicator dot)
               return Expanded(
                 child: Pressable(
-                  onTap: () => onItemSelected(index),
+                  onTap: () {
+                    HapticFeedback.selectionClick();
+                    onItemSelected(index);
+                  },
                   child: Container(
                     color: Colors.transparent,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(
-                          isSelected ? item.selectedIcon : item.icon,
-                          color: isSelected
-                              ? AppColors.primary
-                              : AppColors.textSecondaryLight,
-                          size: 23,
+                        AnimatedContainer(
+                          duration: const Duration(milliseconds: 200),
+                          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
+                          decoration: BoxDecoration(
+                            color: isSelected
+                                ? AppColors.primary.withOpacity(0.08)
+                                : Colors.transparent,
+                            borderRadius: BorderRadius.circular(14),
+                          ),
+                          child: Icon(
+                            isSelected ? item.selectedIcon : item.icon,
+                            color: isSelected
+                                ? AppColors.primary
+                                : AppColors.textSecondaryLight,
+                            size: 22,
+                          ),
                         ),
-                        const SizedBox(height: 3),
+                        const SizedBox(height: 2),
                         Text(
                           item.label,
                           style: AppTypography.bodySmall.copyWith(
@@ -126,6 +152,18 @@ class FixedBottomNav extends StatelessWidget {
                             letterSpacing: -0.2,
                           ),
                         ),
+                        if (isSelected)
+                          Container(
+                            margin: const EdgeInsets.only(top: 2),
+                            width: 4,
+                            height: 4,
+                            decoration: const BoxDecoration(
+                              color: AppColors.primary,
+                              shape: BoxShape.circle,
+                            ),
+                          )
+                        else
+                          const SizedBox(height: 6),
                       ],
                     ),
                   ),

@@ -77,17 +77,17 @@ class SettingsScreen extends ConsumerWidget {
             _SettingsTile(
               icon: Icons.print_outlined,
               title: 'Print Settings',
-              onTap: () => _showPrintSettingsDialog(context),
+              onTap: () => context.push('/settings/print'),
             ),
             _SettingsTile(
               icon: Icons.group_outlined,
               title: 'Staff Management',
-              onTap: () => DevToolsSheet.show(context),
+              onTap: () => context.push('/settings/staff'),
             ),
             _SettingsTile(
               icon: Icons.card_giftcard_rounded,
               title: 'Offers & Rewards',
-              onTap: () => _showOffersDialog(context),
+              onTap: () => context.push('/settings/offers'),
             ),
           ]),
           const SizedBox(height: 16),
@@ -108,12 +108,12 @@ class SettingsScreen extends ConsumerWidget {
             _SettingsTile(
               icon: Icons.notifications_none_rounded,
               title: 'Notifications',
-              onTap: () => _showNotificationsDialog(context),
+              onTap: () => context.push('/settings/notifications'),
             ),
             _SettingsTile(
               icon: Icons.translate_rounded,
               title: 'Language',
-              onTap: () => _showLanguageDialog(context),
+              onTap: () => context.push('/settings/language'),
             ),
             _SettingsTile(
               icon: Icons.developer_mode_rounded,
@@ -382,69 +382,6 @@ class SettingsScreen extends ConsumerWidget {
     );
   }
 
-  void _showPrintSettingsDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text('Thermal Printer Settings'),
-        content: const Text(
-          'ESC/POS Bluetooth & LAN thermal receipt printer configuration is connected and ready.',
-        ),
-        actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('OK')),
-        ],
-      ),
-    );
-  }
-
-  void _showOffersDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text('Offers & Discounts'),
-        content: const Text(
-          'Active promotions:\n• Happy Hours (10% off on hot brews)\n• Loyalty member ₹50 off on ₹500+',
-        ),
-        actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Close')),
-        ],
-      ),
-    );
-  }
-
-  void _showNotificationsDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text('Notification Preferences'),
-        content: const Text('All order alerts and inventory alerts are enabled for this terminal.'),
-        actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('OK')),
-        ],
-      ),
-    );
-  }
-
-  void _showLanguageDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text('Select Language'),
-        content: const Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ListTile(title: Text('English (US/IN)'), trailing: Icon(Icons.check_rounded)),
-            ListTile(title: Text('Hindi (हिंदी)')),
-            ListTile(title: Text('Marathi (मराठी)')),
-          ],
-        ),
-        actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
-        ],
-      ),
-    );
-  }
-
   void _showLogoutConfirmDialog(BuildContext context, WidgetRef ref) {
     showDialog(
       context: context,
@@ -460,7 +397,7 @@ class SettingsScreen extends ConsumerWidget {
             ),
             onPressed: () {
               Navigator.pop(ctx);
-              DevToolsSheet.show(context);
+              context.go('/login');
             },
             child: const Text('Log Out'),
           ),

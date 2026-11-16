@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../features/auth/presentation/intro_screen.dart';
+import '../../features/auth/presentation/login_screen.dart';
+import '../../features/auth/presentation/signup_screen.dart';
 import '../../features/billing/presentation/pos_screen.dart';
 import '../../features/home/presentation/home_dashboard_screen.dart';
 import '../../features/inventory/presentation/inventory_screen.dart';
@@ -10,7 +13,12 @@ import '../../features/orders/presentation/orders_screen.dart';
 import '../../features/orders/presentation/tables_screen.dart';
 import '../../features/reports/presentation/reports_screen.dart';
 import '../../features/settings/presentation/component_gallery_screen.dart';
+import '../../features/settings/presentation/language_settings_screen.dart';
+import '../../features/settings/presentation/notifications_settings_screen.dart';
+import '../../features/settings/presentation/offers_settings_screen.dart';
+import '../../features/settings/presentation/print_settings_screen.dart';
 import '../../features/settings/presentation/settings_screen.dart';
+import '../../features/settings/presentation/staff_settings_screen.dart';
 import '../../features/settings/presentation/tenant_settings_screen.dart';
 import '../identity/identity_models.dart';
 import '../identity/identity_provider.dart';
@@ -99,7 +107,13 @@ final appRouterProvider = Provider<GoRouter>((ref) {
     initialLocation: _firstAllowedPath(identity.role),
     redirect: (context, state) {
       final currentPath = state.uri.path;
-      if (currentPath == '/gallery') return null; // Dev gallery is open
+      if (currentPath == '/gallery' ||
+          currentPath == '/intro' ||
+          currentPath == '/login' ||
+          currentPath == '/signup' ||
+          currentPath.startsWith('/settings/')) {
+        return null;
+      }
 
       final match = allDestinations.firstWhere(
         (d) => d.path == currentPath,
@@ -118,6 +132,18 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       return null;
     },
     routes: [
+      GoRoute(
+        path: '/intro',
+        builder: (context, state) => const IntroScreen(),
+      ),
+      GoRoute(
+        path: '/login',
+        builder: (context, state) => const LoginScreen(),
+      ),
+      GoRoute(
+        path: '/signup',
+        builder: (context, state) => const SignUpScreen(),
+      ),
       ShellRoute(
         builder: (context, state, child) {
           return AppShell(child: child);
@@ -168,6 +194,26 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/settings/tenant',
         builder: (context, state) => const TenantSettingsScreen(),
+      ),
+      GoRoute(
+        path: '/settings/print',
+        builder: (context, state) => const PrintSettingsScreen(),
+      ),
+      GoRoute(
+        path: '/settings/offers',
+        builder: (context, state) => const OffersSettingsScreen(),
+      ),
+      GoRoute(
+        path: '/settings/staff',
+        builder: (context, state) => const StaffSettingsScreen(),
+      ),
+      GoRoute(
+        path: '/settings/notifications',
+        builder: (context, state) => const NotificationsSettingsScreen(),
+      ),
+      GoRoute(
+        path: '/settings/language',
+        builder: (context, state) => const LanguageSettingsScreen(),
       ),
     ],
   );

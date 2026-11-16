@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cafe_os/core/components/app_button.dart';
 import 'package:cafe_os/core/components/currency_text.dart';
@@ -485,20 +486,59 @@ class _PosScreenState extends ConsumerState<PosScreen> {
                         ],
                       ),
                     ),
-                    Container(
-                      width: 30,
-                      height: 30,
-                      decoration: const BoxDecoration(
-                        color: AppColors.primary,
-                        shape: BoxShape.circle,
+                    if (inCartCount > 0 && prod.variants.isEmpty && prod.modifierGroups.isEmpty)
+                      Container(
+                        height: 32,
+                        decoration: BoxDecoration(
+                          color: AppColors.primaryContainer,
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            InkWell(
+                              onTap: () => _decrementProduct(prod),
+                              child: const Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 6, vertical: 4),
+                                child: Icon(Icons.remove_rounded, size: 16, color: AppColors.primary),
+                              ),
+                            ),
+                            Text(
+                              '$inCartCount',
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 13,
+                                color: AppColors.primary,
+                              ),
+                            ),
+                            InkWell(
+                              onTap: () => _handleProductTap(prod),
+                              child: const Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 6, vertical: 4),
+                                child: Icon(Icons.add_rounded, size: 16, color: AppColors.primary),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    else
+                      InkWell(
+                        onTap: () => _handleProductTap(prod),
+                        child: Container(
+                          width: 32,
+                          height: 32,
+                          decoration: const BoxDecoration(
+                            color: AppColors.primary,
+                            shape: BoxShape.circle,
+                          ),
+                          alignment: Alignment.center,
+                          child: const Icon(
+                            Icons.add_rounded,
+                            color: Colors.white,
+                            size: 20,
+                          ),
+                        ),
                       ),
-                      alignment: Alignment.center,
-                      child: const Icon(
-                        Icons.add_rounded,
-                        color: Colors.white,
-                        size: 20,
-                      ),
-                    ),
                   ],
                 ),
               ],
@@ -507,6 +547,14 @@ class _PosScreenState extends ConsumerState<PosScreen> {
         ),
       ),
     );
+  }
+
+  void _decrementProduct(Product prod) {
+    final cart = ref.read(cartControllerProvider);
+    final match = cart.items.where((item) => item.productId == prod.id).toList();
+    if (match.isNotEmpty) {
+      ref.read(cartControllerProvider.notifier).decrementQuantity(match.first.id);
+    }
   }
 
   String _productAsset(String name) {
@@ -736,66 +784,136 @@ class _PosScreenState extends ConsumerState<PosScreen> {
                   )
                 : ListView.separated(
                     itemCount: cart.items.length,
-                    separatorBuilder: (_, __) => const Divider(height: 1),
+                    separatorBuilder: (_, __) => const SizedBox(height: 4),
                     itemBuilder: (context, idx) {
                       final item = cart.items[idx];
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8),
+                      final asset = _productAsset(item.productName);
+                      return Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: AppColors.warmCream,
+                          borderRadius: BorderRadius.circular(14),
+                          border: Border.all(color: AppColors.borderLight, width: 0.8),
+                        ),
                         child: Row(
                           children: [
+                            // Thumbnail
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(8),
+                              child: Image.asset(
+                                asset,
+                                width: 42,
+                                height: 42,
+                                fit: BoxFit.contain,
+                                errorBuilder: (_, __, ___) => const Icon(
+                                  Icons.coffee_rounded,
+                                  size: 26,
+                                  color: AppColors.primary,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 10),
                             Expanded(
-                              flex: 3,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
                                     item.productName,
-                                    style: AppTypography.bodyMedium.copyWith(
-                                      fontWeight: FontWeight.w600,
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14,
+                                      color: AppColors.primary,
+                                    ),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  if (item.variantName != null) ...[
+                                    const SizedBox(height: 2),
+                                    Text(
+                                      item.variantName!,
+                                      style: const TextStyle(
+                                        fontSize: 11,
+                                        color: AppColors.textSecondaryLight,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ],
+                                  if (item.selectedModifiers.isNotEmpty) ...[
+                                    const SizedBox(height: 2),
+                                    Text(
+                                      item.selectedModifiers.map((m) => m.name).join(', '),
+                                      style: const TextStyle(
+                                        fontSize: 10,
+                                        color: AppColors.matchaGreen,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ],
+                                  const SizedBox(height: 3),
+                                  CurrencyText(
+                                    item.unitPrice,
+                                    style: const TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold,
+                                      color: AppColors.primary,
                                     ),
                                   ),
-                                  if (item.variantName != null)
-                                    Text(item.variantName!,
-                                        style: AppTypography.labelSmall),
-                                  CurrencyText(item.unitPrice,
-                                      style: AppTypography.labelSmall),
                                 ],
                               ),
                             ),
                             // Stepper
-                            Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                IconButton(
-                                  icon: const Icon(Icons.remove_circle_outline,
-                                      size: 20),
-                                  onPressed: () => ref
-                                      .read(cartControllerProvider.notifier)
-                                      .decrementQuantity(item.id),
-                                ),
-                                Text(
-                                  '${item.quantity}',
-                                  style: AppTypography.titleSmall.copyWith(
-                                    fontWeight: FontWeight.bold,
+                            Container(
+                              height: 32,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(16),
+                                border: Border.all(color: AppColors.borderLight),
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  InkWell(
+                                    onTap: () {
+                                      HapticFeedback.lightImpact();
+                                      ref.read(cartControllerProvider.notifier).decrementQuantity(item.id);
+                                    },
+                                    child: const Padding(
+                                      padding: EdgeInsets.symmetric(horizontal: 6, vertical: 4),
+                                      child: Icon(Icons.remove_rounded, size: 16, color: AppColors.primary),
+                                    ),
                                   ),
-                                ),
-                                IconButton(
-                                  icon: const Icon(Icons.add_circle_outline,
-                                      size: 20),
-                                  onPressed: () => ref
-                                      .read(cartControllerProvider.notifier)
-                                      .incrementQuantity(item.id),
-                                ),
-                              ],
+                                  Text(
+                                    '${item.quantity}',
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 13,
+                                      color: AppColors.primary,
+                                    ),
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      HapticFeedback.lightImpact();
+                                      ref.read(cartControllerProvider.notifier).incrementQuantity(item.id);
+                                    },
+                                    child: const Padding(
+                                      padding: EdgeInsets.symmetric(horizontal: 6, vertical: 4),
+                                      child: Icon(Icons.add_rounded, size: 16, color: AppColors.primary),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
+                            const SizedBox(width: 8),
                             // Line Total
-                            Expanded(
-                              flex: 2,
+                            SizedBox(
+                              width: 58,
                               child: CurrencyText(
                                 item.unitPrice * item.quantity,
                                 textAlign: TextAlign.right,
-                                style: AppTypography.bodyMedium.copyWith(
-                                  fontWeight: FontWeight.bold,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: 13,
+                                  color: AppColors.primary,
                                 ),
                               ),
                             ),
@@ -914,17 +1032,39 @@ class _PosScreenState extends ConsumerState<PosScreen> {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
+      backgroundColor: Colors.white,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
       builder: (_) => DraggableScrollableSheet(
-        initialChildSize: 0.75,
-        minChildSize: 0.4,
+        initialChildSize: 0.80,
+        minChildSize: 0.45,
         maxChildSize: 0.95,
         expand: false,
         builder: (ctx, scrollController) {
-          return Consumer(
-            builder: (context, ref, _) {
-              final liveCart = ref.watch(cartControllerProvider);
-              return _buildCartPane(liveCart);
-            },
+          return Column(
+            children: [
+              // Grab handle
+              Center(
+                child: Container(
+                  margin: const EdgeInsets.only(top: 10, bottom: 6),
+                  width: 40,
+                  height: 4,
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade300,
+                    borderRadius: BorderRadius.circular(2),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Consumer(
+                  builder: (context, ref, _) {
+                    final liveCart = ref.watch(cartControllerProvider);
+                    return _buildCartPane(liveCart);
+                  },
+                ),
+              ),
+            ],
           );
         },
       ),
